@@ -1,17 +1,43 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Only the two HIGH MEDIA accounts can read or write anything.
-    // Replace the two emails with the ones you put in config.js.
-    function isTeam() {
-      return request.auth != null
-        && request.auth.token.email in [
-          'FAISAL_EMAIL_HERE',
-          'ABDULRAHMAN_EMAIL_HERE'
-        ];
+
+    function signedIn() { return request.auth != null; }
+
+    // Does the signed-in account hold this seat ("faisal" or "abdulrahman")?
+    function holds(seat) {
+      return exists(/databases/$(database)/documents/members/$(seat))
+        && get(/databases/$(database)/documents/members/$(seat)).data.uid == request.auth.uid;
     }
-    match /{document=**} {
-      allow read, write: if isTeam();
+    function isTeam() { return signedIn() && (holds('faisal') || holds('abdulrahman')); }
+
+    // Public: only whether each seat has been set up (no names, no ids).
+    match /seats/{seat} {
+      allow read: if true;
+      allow create: if signedIn()
+        && seat in ['faisal', 'abdulrahman']
+        && request.resource.data.keys().hasOnly(['claimed', 'at'])
+        && getAfter(/databases/$(database)/documents/members/$(seat)).data.uid == request.auth.uid;
+      allow update, delete: if false;
+    }
+
+    // Who holds each seat. The first person to set up a seat keeps it;
+    // nobody can take over a seat that is already set up, and one account
+    // cannot hold both seats.
+    match /members/{seat} {
+      allow read: if signedIn() && (resource.data.uid == request.auth.uid || isTeam());
+      allow create: if signedIn()
+        && seat in ['faisal', 'abdulrahman']
+        && !exists(/databases/$(database)/documents/members/$(seat))
+        && !(holds('faisal') || holds('abdulrahman'))
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.keys().hasOnly(['uid', 'username', 'claimedAt']);
+      allow update, delete: if false;
+    }
+
+    // Everything else (tasks, leads, notes, portfolio, activity): the two of you only.
+    match /{collection}/{document=**} {
+      allow read, write: if collection != 'members' && collection != 'seats' && isTeam();
     }
   }
 }

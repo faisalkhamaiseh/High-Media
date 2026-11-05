@@ -522,6 +522,12 @@ en: {
   wrongPass: "Wrong password. Try again.", tooMany: "Too many attempts. Wait a few minutes and try again.", offlineErr: "Can't reach the server. Check your connection and try again.",
   forgotPass: "Forgot your password?", resetSent: "A password reset link was sent to {email}.", notTeam: "This account isn't on the HIGH MEDIA team.",
   noEmail: "No email is set for {name} in config.js.", setupTitle: "Connect the database", setupBody: "This copy of the portal isn't connected to a database yet. Add your Firebase settings to <b>config.js</b>, then reload. The steps are in the README.",
+  setupAcc: "Set up your account", setupAccSub: "First time here, {name}? Choose the username and password you'll use from now on.",
+  signInSub: "Enter your username and password.", username: "Username", confirmPassword: "Confirm password", createAccount: "Create account", creating: "Creating your account…",
+  userRule: "3–20 characters: letters (Arabic or English), numbers, . _ -", passRule: "At least 8 characters.", notSetUp: "Not set up yet",
+  eUserFormat: "Usernames are 3–20 characters: letters, numbers, . _ -", ePassShort: "Use at least 8 characters for the password.", ePassMismatch: "The two passwords don't match.",
+  eUserTaken: "That username is taken. Choose another.", eSeatTaken: "{name}'s account was already set up. Sign in instead.", eWrongLogin: "Wrong username or password.",
+  forgotHelp: "A forgotten password is reset from the Firebase console. The steps are in the README.",
   loadErr: "Couldn't load the database. Check your connection and reload the page.", eNoPermission: "You don't have permission to change this. Check that your email is listed in the database rules.",
   nav_overview: "Overview", nav_tasks: "Tasks", nav_leads: "Leads & clients", nav_portfolio: "Portfolio", nav_activity: "Activity",
   signedIn: "Signed in", signOut: "Sign out", switchLang: "العربية", close: "Close",
@@ -625,6 +631,12 @@ ar: {
   wrongPass: "كلمة المرور غير صحيحة. حاول مرة أخرى.", tooMany: "محاولات كثيرة. انتظر بضع دقائق ثم حاول مرة أخرى.", offlineErr: "تعذّر الوصول إلى الخادم. تحقق من اتصالك وحاول مرة أخرى.",
   forgotPass: "نسيت كلمة المرور؟", resetSent: "أُرسل رابط إعادة تعيين كلمة المرور إلى {email}.", notTeam: "هذا الحساب ليس ضمن فريق HIGH MEDIA.",
   noEmail: "لم يُحدَّد بريد {name} في ملف config.js.", setupTitle: "ربط قاعدة البيانات", setupBody: "هذه النسخة من البوابة غير مربوطة بقاعدة بيانات بعد. أضف إعدادات Firebase في ملف <b>config.js</b> ثم أعد تحميل الصفحة. الخطوات موجودة في ملف README.",
+  setupAcc: "أنشئ حسابك", setupAccSub: "أول مرة تدخل يا {name}؟ اختر اسم المستخدم وكلمة المرور التي ستستخدمها من الآن فصاعدًا.",
+  signInSub: "أدخل اسم المستخدم وكلمة المرور.", username: "اسم المستخدم", confirmPassword: "تأكيد كلمة المرور", createAccount: "إنشاء الحساب", creating: "جارٍ إنشاء حسابك…",
+  userRule: "من 3 إلى 20 حرفًا: أحرف عربية أو إنجليزية، أرقام، . _ -", passRule: "8 أحرف على الأقل.", notSetUp: "لم يُنشأ الحساب بعد",
+  eUserFormat: "اسم المستخدم من 3 إلى 20 حرفًا: أحرف أو أرقام أو . _ -", ePassShort: "استخدم 8 أحرف على الأقل لكلمة المرور.", ePassMismatch: "كلمتا المرور غير متطابقتين.",
+  eUserTaken: "اسم المستخدم مستخدم. اختر اسمًا آخر.", eSeatTaken: "حساب {name} أُنشئ مسبقًا. سجّل الدخول بدلًا من ذلك.", eWrongLogin: "اسم المستخدم أو كلمة المرور غير صحيحة.",
+  forgotHelp: "كلمة المرور المنسية تُعاد من لوحة Firebase. الخطوات موجودة في ملف README.",
   loadErr: "تعذّر تحميل قاعدة البيانات. تحقق من اتصالك وأعد تحميل الصفحة.", eNoPermission: "لا تملك صلاحية لتعديل هذا. تأكد أن بريدك مضاف في قواعد قاعدة البيانات.",
   nav_overview: "نظرة عامة", nav_tasks: "المهام", nav_leads: "العملاء", nav_portfolio: "أعمالنا", nav_activity: "السجل",
   signedIn: "مسجّل الدخول", signOut: "تسجيل الخروج", switchLang: "English", close: "إغلاق",
@@ -773,7 +785,7 @@ const WEEKDAYS = { en: ["Sunday","Monday","Tuesday","Wednesday","Thursday","Frid
 
 /* ---------- State ---------- */
 const S = {
-  db: null, user: null, auth: null, mode: "pin", dbState: "loading", isOwner: false, readOnly: false, unsubs: [],
+  db: null, user: null, auth: null, seats: {}, mode: "pin", dbState: "loading", isOwner: false, readOnly: false, unsubs: [],
   me: null, loginAt: Date.now(), seenAt: 0,
   tasks: [], leads: [], portfolio: [], activity: [], members: {}, loaded: {}, slow: false,
   view: "overview",
@@ -1137,18 +1149,31 @@ function renderLogin() {
   } else if (!L.member) {
     panel = `${top}<h1>${t("whoSigning")}</h1><p class="lp-sub">${t(S.mode === "firebase" ? "pickPass" : "pickName")}</p>
       <div style="display:flex;flex-direction:column;gap:10px">
-      ${MIDS.map(id => `<button class="who" data-action="pick" data-id="${id}">${av(id, "lg")}<span><b>${esc(mName(id))}</b><small>${esc(MEMBERS[id].role[LANG])}</small></span><span class="go">${ic("arrow")}</span></button>`).join("")}
+      ${MIDS.map(id => `<button class="who" data-action="pick" data-id="${id}">${av(id, "lg")}<span><b>${esc(mName(id))}</b><small>${S.mode === "firebase" && S.loaded.seats && !S.seats[id] ? t("notSetUp") : esc(MEMBERS[id].role[LANG])}</small></span><span class="go">${ic("arrow")}</span></button>`).join("")}
       </div>`;
   } else if (S.mode === "firebase") {
-    const nm = esc(mName(L.member));
-    panel = `<div class="lp-top"><button class="btn ghost sm" data-action="pick-back">${ic("back")} ${t("notX", { name: nm })}</button>${langBtn()}</div>
-      <div class="pin-head">${av(L.member, "xl")}<h1>${t("welcomeBack", { name: nm })}</h1></div>
+    const nm = esc(mName(L.member)); const claimed = !!S.seats[L.member];
+    const back = `<div class="lp-top"><button class="btn ghost sm" data-action="pick-back">${ic("back")} ${t("notX", { name: nm })}</button>${langBtn()}</div>`;
+    const errHTML = `<div class="err" role="alert" style="text-align:start">${L.error ? t(L.error, { name: nm }) : ""}</div>`;
+    if (!S.loaded.seats) panel = `${back}<div class="pin-head">${av(L.member, "xl")}<h1>${t("checking")}</h1></div>`;
+    else if (claimed) panel = `${back}
+      <div class="pin-head">${av(L.member, "xl")}<h1>${t("welcomeBack", { name: nm })}</h1><p class="lp-sub">${t("signInSub")}</p></div>
       <form class="sec" data-form="fb-login" style="gap:12px">
-        <div class="fld"><label for="fb-pass">${t("password")}</label><input class="inp" type="password" id="fb-pass" name="password" autocomplete="current-password" required minlength="6" dir="ltr" style="height:46px" autofocus></div>
-        <div class="err" role="alert" style="text-align:start">${L.error ? t(L.error, { name: nm }) : ""}</div>
+        <div class="fld"><label for="fb-user">${t("username")}</label><input class="inp" id="fb-user" name="username" autocomplete="username" required dir="auto" style="height:46px" autocapitalize="none" spellcheck="false"></div>
+        <div class="fld"><label for="fb-pass">${t("password")}</label><input class="inp" type="password" id="fb-pass" name="password" autocomplete="current-password" required dir="ltr" style="height:46px"></div>
+        ${errHTML}
         <button class="btn primary" type="submit" style="min-height:46px" ${L.busy ? "disabled" : ""}>${L.busy ? t("signingIn") : t("signIn")}</button>
       </form>
-      <div style="text-align:center"><button class="linkbtn" data-action="fb-forgot">${t("forgotPass")}</button></div>`;
+      <div style="text-align:center">${L.forgot ? `<p class="lp-sub" style="font-size:13px">${t("forgotHelp")}</p>` : `<button class="linkbtn" data-action="forgot">${t("forgotPass")}</button>`}</div>`;
+    else panel = `${back}
+      <div class="pin-head">${av(L.member, "xl")}<h1>${t("setupAcc")}</h1><p class="lp-sub">${t("setupAccSub", { name: nm })}</p></div>
+      <form class="sec" data-form="fb-create" style="gap:12px">
+        <div class="fld"><label for="fb-nuser">${t("username")}</label><input class="inp" id="fb-nuser" name="username" autocomplete="username" required dir="auto" style="height:46px" autocapitalize="none" spellcheck="false"><small class="lp-sub" style="font-size:12px">${t("userRule")}</small></div>
+        <div class="fld"><label for="fb-npass">${t("password")}</label><input class="inp" type="password" id="fb-npass" name="password" autocomplete="new-password" required dir="ltr" style="height:46px"><small class="lp-sub" style="font-size:12px">${t("passRule")}</small></div>
+        <div class="fld"><label for="fb-npass2">${t("confirmPassword")}</label><input class="inp" type="password" id="fb-npass2" name="password2" autocomplete="new-password" required dir="ltr" style="height:46px"></div>
+        ${errHTML}
+        <button class="btn primary" type="submit" style="min-height:46px" ${L.busy ? "disabled" : ""}>${L.busy ? t("creating") : t("createAccount")}</button>
+      </form>`;
   } else {
     const mode = pinMode(); const nm = esc(mName(L.member));
     const head = mode === "loading" ? t("checking") : mode === "enter" ? t("welcomeBack", { name: nm }) : mode === "create" ? t("createPin") : t("enterAgain");
@@ -1162,6 +1187,8 @@ function renderLogin() {
       <div class="pad">${keys}</div>
       ${mode === "enter" ? `<div style="text-align:center">${L.forgot ? `<p class="lp-sub" style="font-size:13px">${t("onlyOwnerReset")}${S.isOwner ? ` <button class="linkbtn" data-action="reset-pin">${t("resetPinFor", { name: nm })}</button>` : ""}</p>` : `<button class="linkbtn" data-action="forgot">${t("forgot")}</button>`}</div>` : ""}`;
   }
+  const keepVals = {}; let focusId = null;
+  document.querySelectorAll(".login-panel input").forEach(i => { if (i.id) keepVals[i.id] = i.value; }); if (document.activeElement && document.activeElement.closest && document.activeElement.closest(".login-panel")) focusId = document.activeElement.id;
   $("#app").innerHTML = `<div class="login">
     <section class="login-brand">
       <div class="lb-row"><span class="eyebrow">HIGH MEDIA</span><span class="eyebrow">${t("teamPortal")}</span></div>
@@ -1170,6 +1197,9 @@ function renderLogin() {
     </section>
     <section class="login-panel"><div class="lp-inner">${panel}</div></section>
   </div>`;
+  Object.keys(keepVals).forEach(id => { const i = document.getElementById(id); if (i) i.value = keepVals[id]; });
+  const fi = (focusId && document.getElementById(focusId)) || (window.matchMedia("(min-width: 861px)").matches && document.querySelector(".login-panel form input"));
+  if (fi) fi.focus({ preventScroll: true });
 }
 
 /* ---------- Derived data ---------- */
@@ -1658,12 +1688,6 @@ document.addEventListener("click", async e => {
     case "pin": pinDigit(el.dataset.d); break;
     case "pin-del": S.login.pin = S.login.pin.slice(0, -1); render(); break;
     case "forgot": S.login.forgot = true; render(); break;
-    case "fb-forgot": {
-      const email = ((window.HM_CONFIG || {}).members || {})[S.login.member];
-      if (!email) { S.login.error = "noEmail"; render(); break; }
-      try { await S.auth.sendPasswordResetEmail(email); toast(esc(t("resetSent", { email })), "good"); } catch (err) { toast(t((err && err.code || "").includes("network") ? "offlineErr" : "eSave"), "bad"); }
-      break;
-    }
     case "reset-pin": { const m = S.login.member; if (await guard(() => S.db.doc("members/" + m).set({ pinHash: null, resetAt: now() }))) { toast(esc(t("pinResetDone", { name: mName(m) })), "good"); S.login.forgot = false; render(); } break; }
     case "logout": signOut(); break;
     case "new-task": openDrawer("new-task"); break;
@@ -1750,7 +1774,8 @@ document.addEventListener("submit", async e => {
   const fd = new FormData(f); const g = k => (fd.get(k) || "").toString().trim();
   const btn = f.querySelector('button[type="submit"]'); if (btn) btn.disabled = true;
   try {
-    if (kind === "fb-login") { await fbSignIn(fd.get("password") || ""); return; }
+    if (kind === "fb-login") { await fbSignIn((fd.get("username") || "").toString(), (fd.get("password") || "").toString()); return; }
+    if (kind === "fb-create") { await fbCreate((fd.get("username") || "").toString(), (fd.get("password") || "").toString(), (fd.get("password2") || "").toString()); return; }
     if (kind === "new-task") {
       if (!g("title")) return;
       const id = await createTask({ title: g("title"), category: g("category"), assignee: g("assignee"), due: g("due"), priority: g("priority"), clientId: g("clientId"), description: g("description"), useTemplate: !!fd.get("useTemplate") });
@@ -1822,24 +1847,58 @@ function subscribe() {
 }
 function stopData() {
   S.unsubs.forEach(u => { try { u(); } catch (e) {} }); S.unsubs = [];
-  S.tasks = []; S.leads = []; S.portfolio = []; S.activity = []; S.loaded = {}; S.subscribed = false;
+  S.tasks = []; S.leads = []; S.portfolio = []; S.activity = []; S.loaded = { seats: S.loaded.seats, members: S.loaded.members }; S.subscribed = false;
 }
 
 /* ---------- Firebase mode (any device, outside claude.ai) ---------- */
 function loadScript(src) {
   return new Promise((res, rej) => { const el = document.createElement("script"); el.src = src; el.onload = res; el.onerror = () => rej(new Error("load " + src)); document.head.appendChild(el); });
 }
-function memberFromEmail(email) {
-  const m = (window.HM_CONFIG || {}).members || {}; const e = String(email || "").toLowerCase();
-  return MIDS.find(id => String(m[id] || "").toLowerCase() === e) || null;
+function userEmail(u) {
+  const bytes = new TextEncoder().encode(String(u).trim().toLowerCase());
+  return "u" + Array.from(bytes).map(x => x.toString(16).padStart(2, "0")).join("") + "@users.highmedia.app";
 }
-async function fbSignIn(pw) {
-  const id = S.login.member; const email = ((window.HM_CONFIG || {}).members || {})[id];
-  if (!email) { S.login.error = "noEmail"; render(); return; }
+const USER_RE = /^[\p{L}\p{N}._-]{3,20}$/u;
+async function resolveMember(u) {
+  const snap = await S.db.collection("members").where("uid", "==", u.uid).limit(1).get();
+  return snap.empty ? null : snap.docs[0].id;
+}
+function enterAs(id) {
+  if (S.me !== id) { S.me = id; S.loginAt = now(); S.seenAt = store.get("seen." + id) || 0; }
+  S.login = { member: null, pin: "", first: "", error: "", busy: false, shake: false, forgot: false };
+  if (!S.subscribed) { S.subscribed = true; subscribe(); }
+  if (!VIEWS.includes(location.hash.slice(1))) { S.view = "overview"; try { history.replaceState(null, "", "#overview"); } catch (e) {} }
+}
+async function fbSignIn(username, pw) {
+  if (!username.trim() || !pw) return;
   S.login.busy = true; S.login.error = ""; render();
-  try { await S.auth.signInWithEmailAndPassword(email, pw); }
-  catch (e) { const c = (e && e.code) || ""; S.login.error = c.includes("too-many") ? "tooMany" : c.includes("network") ? "offlineErr" : "wrongPass"; }
+  try { await S.auth.signInWithEmailAndPassword(userEmail(username), pw); }
+  catch (e) { const c = (e && e.code) || ""; S.login.error = c.includes("too-many") ? "tooMany" : c.includes("network") ? "offlineErr" : "eWrongLogin"; }
   S.login.busy = false; render();
+}
+async function fbCreate(username, pw, pw2) {
+  const L = S.login; const seat = L.member; L.error = "";
+  if (!USER_RE.test(username.trim())) { L.error = "eUserFormat"; return render(); }
+  if (pw.length < 8) { L.error = "ePassShort"; return render(); }
+  if (pw !== pw2) { L.error = "ePassMismatch"; return render(); }
+  L.busy = true; S.creating = true; render();
+  let cred;
+  try { cred = await S.auth.createUserWithEmailAndPassword(userEmail(username), pw); }
+  catch (e) {
+    const c = (e && e.code) || ""; S.creating = false; L.busy = false;
+    L.error = c.includes("email-already-in-use") ? "eUserTaken" : c.includes("network") ? "offlineErr" : c.includes("weak-password") ? "ePassShort" : c.includes("too-many") ? "tooMany" : "eSave";
+    return render();
+  }
+  try {
+    const at = now(); const batch = S.db.batch();
+    batch.set(S.db.doc("members/" + seat), { uid: cred.user.uid, username: username.trim(), claimedAt: at });
+    batch.set(S.db.doc("seats/" + seat), { claimed: true, at });
+    await batch.commit();
+  } catch (e) {
+    try { await cred.user.delete(); } catch (x) { try { await S.auth.signOut(); } catch (y) {} }
+    S.creating = false; L.busy = false; L.error = "eSeatTaken"; return render();
+  }
+  S.creating = false; enterAs(seat); render();
 }
 async function bootFirebase(cfg) {
   S.mode = "firebase";
@@ -1850,16 +1909,15 @@ async function bootFirebase(cfg) {
   } catch (e) { S.dbState = "failed"; render(); return; }
   const fdb = firebase.firestore();
   try { await fdb.enablePersistence({ synchronizeTabs: true }); } catch (e) {}
-  S.db = fdb; S.auth = firebase.auth(); S.dbState = "ready"; S.loaded.members = true;
-  S.auth.onAuthStateChanged(u => {
+  S.db = fdb; S.auth = firebase.auth(); S.dbState = "ready"; S.loaded.members = true; S.seats = {};
+  fdb.collection("seats").onSnapshot(snap => { const m = {}; snap.docs.forEach(d => { m[d.id] = !!(d.data() || {}).claimed; }); S.seats = m; S.loaded.seats = true; schedule(); }, () => { S.loaded.seats = true; schedule(); });
+  S.auth.onAuthStateChanged(async u => {
     S.authReady = true;
+    if (S.creating) return;
     if (u) {
-      const id = memberFromEmail(u.email);
-      if (!id) { S.login.error = "notTeam"; S.auth.signOut(); render(); return; }
-      if (S.me !== id) { S.me = id; S.loginAt = now(); S.seenAt = store.get("seen." + id) || 0; }
-      S.login = { member: null, pin: "", first: "", error: "", busy: false, shake: false, forgot: false };
-      if (!S.subscribed) { S.subscribed = true; subscribe(); }
-      if (!VIEWS.includes(location.hash.slice(1))) { S.view = "overview"; try { history.replaceState(null, "", "#overview"); } catch (e) {} }
+      let id = null; try { id = await resolveMember(u); } catch (e) {}
+      if (!id) { S.login.error = "notTeam"; try { await S.auth.signOut(); } catch (e) {} render(); return; }
+      enterAs(id);
     } else { if (S.subscribed) stopData(); S.me = null; }
     render();
   });
