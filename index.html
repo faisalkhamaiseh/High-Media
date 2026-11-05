@@ -581,7 +581,7 @@ en: {
   taskTitle: "Task title", statusL: "Status", checkOff: "Check off {s}", uncheck: "Uncheck {s}", removeStep: "Remove step", markDoneAria: "Mark “{t}” complete", markDone: "Mark complete",
   business: "Business", bizPh: "e.g. Noor Dental Clinic", contact: "Contact name", phone: "Phone", copyNumber: "Copy number", whatsapp: "WhatsApp",
   addNumberHint: "Add a number to copy it or open WhatsApp.", service: "Service", source: "Source", notSet: "Not set", budget: "Budget or quote",
-  budgetPh: "e.g. 4,500 SAR website + 1,200/month social", stage: "Stage", inStageSince: "In this stage since {dt}", lostOnFull: "Lost on {dt}",
+  budgetPh: "e.g. 450 JOD website + 120 JOD/month social media", stage: "Stage", inStageSince: "In this stage since {dt}", lostOnFull: "Lost on {dt}",
   noReason: "No reason recorded.", reopenDiscussion: "Reopen as “In discussion”", whyLost: "Why did it fall through?", lostPh: "e.g. Budget too low, went with another agency",
   markLost: "Mark as lost", cancel: "Cancel", clientSinceFull: "Client since <b>{d}</b> · {n} portfolio projects", addToPortfolio: "Add to portfolio",
   process: "Our process with them", processHint: "Plan the steps for this lead, e.g. first call, send examples, send quote, follow up.",
@@ -690,7 +690,7 @@ ar: {
   taskTitle: "عنوان المهمة", statusL: "الحالة", checkOff: "إنجاز {s}", uncheck: "إلغاء إنجاز {s}", removeStep: "حذف الخطوة", markDoneAria: "تحديد «{t}» كمنجزة", markDone: "تحديد كمنجزة",
   business: "النشاط التجاري", bizPh: "مثال: عيادة نور للأسنان", contact: "اسم جهة الاتصال", phone: "رقم الجوال", copyNumber: "نسخ الرقم", whatsapp: "واتساب",
   addNumberHint: "أضف رقمًا لنسخه أو فتح واتساب.", service: "الخدمة", source: "المصدر", notSet: "غير محدد", budget: "الميزانية أو عرض السعر",
-  budgetPh: "مثال: 4,500 ريال للموقع + 1,200 شهريًا للسوشيال", stage: "المرحلة", inStageSince: "في هذه المرحلة منذ {dt}", lostOnFull: "فُقد في {dt}",
+  budgetPh: "مثال: 450 دينار للموقع + 120 دينار شهريًا للسوشيال ميديا", stage: "المرحلة", inStageSince: "في هذه المرحلة منذ {dt}", lostOnFull: "فُقد في {dt}",
   noReason: "لم يُسجَّل سبب.", reopenDiscussion: "إعادة فتحه كـ«قيد النقاش»", whyLost: "لماذا لم تتم الصفقة؟", lostPh: "مثال: الميزانية منخفضة، اختار وكالة أخرى",
   markLost: "تحديد كمفقود", cancel: "إلغاء", clientSinceFull: "عميل منذ <b>{d}</b> · {n} مشاريع في المعرض", addToPortfolio: "إضافة إلى المعرض",
   process: "خطواتنا معه", processHint: "خطط خطوات هذا العميل، مثل: أول مكالمة، إرسال نماذج، إرسال عرض السعر، المتابعة.",
@@ -847,6 +847,8 @@ function waLink(phone) {
   if (!phone) return ""; const p = String(phone).trim(); const d = p.replace(/\D/g, "");
   if (p.startsWith("+")) return "https://wa.me/" + d;
   if (d.startsWith("00")) return "https://wa.me/" + d.slice(2);
+  if (/^07\d{8}$/.test(d)) return "https://wa.me/962" + d.slice(1);
+  if (/^7\d{8}$/.test(d)) return "https://wa.me/962" + d;
   return "";
 }
 const uid = () => Math.random().toString(36).slice(2, 10) + now().toString(36).slice(-4);
@@ -1573,7 +1575,7 @@ function leadDrawer(l) {
     <div class="fgrid">
       <div class="fld"><label for="lb-${l.id}">${t("business")}</label><input class="inp" id="lb-${l.id}" data-field="business" data-lead="${l.id}" value="${esc(draft("lb-" + l.id, l.business))}" dir="auto" placeholder="${t("bizPh")}"></div>
       <div class="fld"><label for="ln-${l.id}">${t("contact")}</label><input class="inp" id="ln-${l.id}" data-field="name" data-lead="${l.id}" value="${esc(draft("ln-" + l.id, l.name))}" dir="auto"></div>
-      <div class="fld"><label for="lp-${l.id}">${t("phone")}</label><input class="inp ltr" id="lp-${l.id}" data-field="phone" data-lead="${l.id}" value="${esc(draft("lp-" + l.id, l.phone))}" inputmode="tel" dir="ltr" placeholder="+966 5x xxx xxxx"></div>
+      <div class="fld"><label for="lp-${l.id}">${t("phone")}</label><input class="inp ltr" id="lp-${l.id}" data-field="phone" data-lead="${l.id}" value="${esc(draft("lp-" + l.id, l.phone))}" inputmode="tel" dir="ltr" placeholder="+962 7x xxx xxxx"></div>
       <div class="fld"><label aria-hidden="true">&nbsp;</label><div class="phone">${l.phone ? `<button class="btn sm" data-action="copy" data-text="${esc(l.phone)}">${ic("copy")} ${t("copyNumber")}</button>${wa ? `<a class="btn sm" href="${wa}" target="_blank" rel="noopener">${ic("ext")} ${t("whatsapp")}</a>` : ""}` : `<span class="lp-sub" style="font-size:12.5px">${t("addNumberHint")}</span>`}</div></div>
       <div class="fld full"><label for="lsg-${l.id}">${t("clientCat")}</label><select class="sel" id="lsg-${l.id}" data-field="segment" data-lead="${l.id}">${l.segment ? "" : `<option value="">${t("uncategorized")}</option>`}${segOptions(l.segment, false)}</select></div>
       <div class="fld"><label for="ls-${l.id}">${t("service")}</label><select class="sel" id="ls-${l.id}" data-field="service" data-lead="${l.id}">${SERVICE_KEYS.map(k => `<option value="${k}" ${l.service === k ? "selected" : ""}>${svL(k)}</option>`).join("")}</select></div>
@@ -1616,7 +1618,7 @@ function newLeadForm() {
   const body = `<form class="sec" data-form="new-lead" style="gap:16px"><div class="fgrid">
     <div class="fld"><label for="nl-biz">${t("business")}</label><input class="inp" id="nl-biz" name="business" data-autofocus dir="auto" placeholder="${t("bizPh")}"></div>
     <div class="fld"><label for="nl-name">${t("contact")}</label><input class="inp" id="nl-name" name="name" dir="auto"></div>
-    <div class="fld"><label for="nl-phone">${t("phone")}</label><input class="inp" id="nl-phone" name="phone" inputmode="tel" dir="ltr" placeholder="+966 5x xxx xxxx"></div>
+    <div class="fld"><label for="nl-phone">${t("phone")}</label><input class="inp" id="nl-phone" name="phone" inputmode="tel" dir="ltr" placeholder="+962 7x xxx xxxx"></div>
     <div class="fld full"><label for="nl-seg">${t("clientCat")}</label><select class="sel" id="nl-seg" name="segment" required>${segOptions(S.lf.seg !== "all" && S.lf.seg !== "none" ? S.lf.seg : "", true)}</select></div>
     <div class="fld"><label for="nl-svc">${t("service")}</label><select class="sel" id="nl-svc" name="service">${SERVICE_KEYS.map(k => `<option value="${k}">${svL(k)}</option>`).join("")}</select></div>
     <div class="fld"><label for="nl-src">${t("source")}</label><select class="sel" id="nl-src" name="source"><option value="">${t("notSet")}</option>${SOURCE_KEYS.map(k => `<option value="${k}">${srcL(k)}</option>`).join("")}</select></div>
