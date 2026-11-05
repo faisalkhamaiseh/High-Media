@@ -534,6 +534,10 @@ en: {
   bannerNotConnected: "The portal isn't connected. Open it while signed in to claude.ai to load and save your data.",
   bannerReadOnly: "You can view the portal but not change it. Ask Faisal to share it with your account as a <b>Contributor</b>.",
   bannerSlow: "Can't reach the portal's data yet. Check your connection; it will load as soon as it can.",
+  dbErrPerm: "The database refused access (permission-denied). In Firebase → Firestore Database → Rules, check the HIGH MEDIA rules are published there (not in Realtime Database).",
+  dbErrMissing: "The Firestore database doesn't exist yet. In Firebase → Build → Firestore Database, click “Create database” (keep the default database ID).",
+  dbErrOffline: "The database server can't be reached from this device. Check the internet connection, or that Firestore has been created in Firebase.",
+  dbErrOther: "The database returned an error: {err}",
   newTask: "New task", newLead: "New lead",
   morning: "Good morning", afternoon: "Good afternoon", evening: "Good evening", greet: "{g}, {name}",
   kYourOpen: "Your open tasks", kOverdue: "{n} overdue", kNewFrom: "{n} new from {name}", kNothingOverdue: "Nothing overdue",
@@ -650,6 +654,10 @@ ar: {
   bannerNotConnected: "البوابة غير متصلة. افتحها وأنت مسجّل الدخول في claude.ai لتحميل بياناتك وحفظها.",
   bannerReadOnly: "يمكنك مشاهدة البوابة دون تعديلها. اطلب من فيصل مشاركتها مع حسابك بصلاحية <b>مساهم</b>.",
   bannerSlow: "تعذّر الوصول إلى بيانات البوابة حتى الآن. تحقق من اتصالك، وستُحمَّل فور توفرها.",
+  dbErrPerm: "قاعدة البيانات رفضت الوصول (permission-denied). في Firebase ← Firestore Database ← Rules تأكد أن قواعد HIGH MEDIA منشورة هناك (وليس في Realtime Database).",
+  dbErrMissing: "قاعدة Firestore غير موجودة بعد. في Firebase ← Build ← Firestore Database اضغط «Create database» (اترك معرّف القاعدة الافتراضي).",
+  dbErrOffline: "تعذّر الوصول إلى خادم قاعدة البيانات من هذا الجهاز. تحقق من الإنترنت، أو أن Firestore تم إنشاؤها في Firebase.",
+  dbErrOther: "قاعدة البيانات أرجعت خطأ: {err}",
   newTask: "مهمة جديدة", newLead: "عميل محتمل جديد",
   morning: "صباح الخير", afternoon: "مساء الخير", evening: "مساء الخير", greet: "{g} يا {name}",
   kYourOpen: "مهامك المفتوحة", kOverdue: "{n} متأخرة", kNewFrom: "{n} جديدة من {name}", kNothingOverdue: "لا توجد مهام متأخرة",
@@ -1271,7 +1279,10 @@ function banners() {
   let h = "";
   if (S.dbState === "absent") h += `<div class="banner">${t("bannerNotConnected")}</div>`;
   if (S.readOnly) h += `<div class="banner">${t("bannerReadOnly")}</div>`;
-  if (S.slow && !S.loaded.tasks) h += `<div class="banner">${t("bannerSlow")}</div>`;
+  if (S.dataErr) {
+    const e = String(S.dataErr); const key = /permission/i.test(e) ? "dbErrPerm" : /not[- ]?found|does not exist|NOT_FOUND|failed-precondition/i.test(e) ? "dbErrMissing" : /unavailable|offline|network|deadline/i.test(e) ? "dbErrOffline" : "dbErrOther";
+    h += `<div class="banner" role="alert">${t(key, { err: esc(e) })}<br><span class="mono" style="opacity:.7">${esc(e)}</span></div>`;
+  } else if (S.slow && !S.loaded.tasks) h += `<div class="banner">${t("bannerSlow")}</div>`;
   return h;
 }
 const ph = (eyebrow, title, actions) => `<header class="ph"><div><p class="eyebrow">${eyebrow}</p><h1>${title}</h1></div>${actions ? `<div class="ph-actions">${actions}</div>` : ""}</header>`;
@@ -1859,9 +1870,12 @@ document.addEventListener("drop", async e => {
 /* ---------- Boot ---------- */
 function subscribe() {
   const db = S.db;
-  const timer = setTimeout(() => { if (!S.loaded.tasks) { S.slow = true; schedule(); } }, 10000);
+  const timer = setTimeout(() => {
+    if (S.loaded.tasks) return; S.slow = true; schedule();
+    if (S.mode === "firebase") db.collection("tasks").limit(1).get({ source: "server" }).then(() => {}).catch(e => { S.dataErr = (e && (e.code ? e.code + ": " : "") + (e.message || "")) || "error"; schedule(); });
+  }, 10000);
   const done = k => snap => { if (!snap.metadata.fromCache) { S.loaded[k] = true; if (k === "tasks") { clearTimeout(timer); S.slow = false; } } };
-  const fail = k => () => { S.loaded[k] = true; if (k === "tasks") clearTimeout(timer); schedule(); };
+  const fail = k => e => { S.loaded[k] = true; if (k === "tasks") clearTimeout(timer); if (e && k !== "members") S.dataErr = (e.code ? e.code + ": " : "") + (e.message || ""); schedule(); };
   const keep = u => { S.unsubs.push(u); };
   if (S.mode === "firebase") S.loaded.members = true;
   else keep(db.collection("members").onSnapshot(snap => { const m = {}; snap.docs.forEach(d => { m[d.id] = d.data(); }); S.members = m; done("members")(snap); schedule(); }, fail("members")));
@@ -1881,7 +1895,7 @@ function subscribe() {
 }
 function stopData() {
   S.unsubs.forEach(u => { try { u(); } catch (e) {} }); S.unsubs = [];
-  S.tasks = []; S.leads = []; S.portfolio = []; S.activity = []; S.loaded = { seats: S.loaded.seats, members: S.loaded.members }; S.subscribed = false;
+  S.dataErr = null; S.slow = false; S.tasks = []; S.leads = []; S.portfolio = []; S.activity = []; S.loaded = { seats: S.loaded.seats, members: S.loaded.members }; S.subscribed = false;
 }
 
 /* ---------- Firebase mode (any device, outside claude.ai) ---------- */
