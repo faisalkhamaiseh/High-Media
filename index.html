@@ -7,6 +7,14 @@
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <script>window.HM_HOSTED = true;</script>
 <script src="config.js"></script>
+<script>
+/* Fallback: the HIGH MEDIA Firebase project (public web settings), used if config.js is missing, empty or cached from an older version. */
+(function () {
+  var HM_DEFAULT = { firebase: { apiKey: "AIzaSyD68Vc6GFJLRDhzPnJvh3aaLi6wYHxyQto", authDomain: "high-media-87805.firebaseapp.com", projectId: "high-media-87805", storageBucket: "high-media-87805.firebasestorage.app", messagingSenderId: "862611923735", appId: "1:862611923735:web:a5ee3e6c813643d754cd52" } };
+  var c = window.HM_CONFIG;
+  if (!c || !c.firebase || !c.firebase.apiKey) window.HM_CONFIG = HM_DEFAULT;
+})();
+</script>
 </head>
 <body>
 <title>HIGH MEDIA Portal</title>
