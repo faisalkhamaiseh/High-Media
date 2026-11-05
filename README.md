@@ -24,14 +24,22 @@ Team work-management portal for HIGH MEDIA (Faisal & Abdulrahman): websites, onl
 
 The portal stores its data in **Firebase** (Google). The free plan is more than enough for two people.
 
-1. **Create the project.** Go to https://console.firebase.google.com → *Add project* → name it `high-media` → you can turn Google Analytics off → *Create*.
-2. **Turn on the database.** *Build → Firestore Database → Create database* → choose a location near you (e.g. `europe-west` or `me-central`) → *Start in production mode*.
-3. **Paste the security rules.** In Firestore → *Rules*, replace everything with the contents of `firestore.rules`, put your two real emails in place of `FAISAL_EMAIL_HERE` and `ABDULRAHMAN_EMAIL_HERE`, then *Publish*.
-4. **Turn on sign-in.** *Build → Authentication → Get started → Email/Password → Enable → Save*.
-5. **Add the two accounts.** Authentication → *Users → Add user*: one for Faisal, one for Abdulrahman, each with an email and a password (6+ characters).
-6. **Get the web settings.** *Project settings* (gear icon) → *General* → *Your apps* → the `</>` (Web) icon → name it `portal` → *Register app*. Copy the `firebaseConfig` values.
-7. **Fill in `config.js`** with those values and the same two emails, then commit it. (These values are not secret; the rules in step 3 protect the data.)
-8. **Allow your web address.** Authentication → *Settings → Authorized domains → Add domain*: add the address where the portal is hosted (e.g. `high-media.vercel.app`).
+1. **Create the project.** Go to https://console.firebase.google.com → *Create a project* → name it `high-media` → turn Google Analytics off → *Create project*.
+2. **Turn on the database.** *Build → Firestore Database → Create database* → choose a location near you (e.g. `me-central2`) → *Start in production mode*.
+3. **Paste the security rules.** Firestore → *Rules* → delete everything → paste the contents of `firestore.rules` → *Publish*. No editing needed.
+   If you get "Line 1: Parse error", an invisible character was copied in front of line 1: delete line 1 and type `rules_version = '2';` by hand.
+4. **Turn on sign-in.** *Build → Authentication → Get started → Email/Password → Enable → Save*. Do **not** add users; each of you creates your own account in the portal.
+5. **Get the web settings.** Gear icon → *Project settings* → *Your apps* → the `</>` (Web) icon → name it `portal` → *Register app*. Copy the `firebaseConfig` values into `config.js` and commit. (They are not secret; the rules protect the data.)
+6. **Allow your web address.** Authentication → *Settings → Authorized domains → Add domain*: add the address where the portal is hosted (e.g. `high-media.vercel.app`).
+
+### First sign-in
+Open the portal and pick your name. The first time, it shows **Set up your account**: choose your username and password (8+ characters). From then on you sign in with them, and each device stays signed in.
+Each name can be set up once; the first person to set it up keeps it. Set up both accounts soon after the site goes live.
+
+### Forgotten password
+1. Firebase → Authentication → *Users*: delete that person's user.
+2. Firebase → Firestore → *Data*: delete the documents `members/<name>` and `seats/<name>` (`faisal` or `abdulrahman`).
+3. Open the portal and set up the account again. Tasks, leads and notes are kept.
 
 ## Hosting on Vercel
 1. Go to https://vercel.com/new and import this GitHub repository.
