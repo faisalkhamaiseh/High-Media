@@ -3,7 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0B0D17">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<script>window.HM_HOSTED = true;</script>
+<script src="config.js"></script>
 </head>
 <body>
 <title>HIGH MEDIA Portal</title>
@@ -515,6 +518,11 @@ en: {
   forgot: "Forgot your PIN?", onlyOwnerReset: "Only the portal's owner can reset a PIN.", resetPinFor: "Reset {name}'s PIN", pinResetDone: "{name}'s PIN was reset. They can choose a new one now.",
   signInContinue: "Sign in to continue", needsAccount: "<b>The portal needs your claude.ai account.</b><br>Open this page while signed in to claude.ai, and make sure it has been shared with you as a Contributor or Editor.",
   digitsEntered: "{n} of 4 digits entered", deleteDigit: "Delete digit",
+  pickPass: "Pick your name, then enter your password.", password: "Password", signIn: "Sign in", signingIn: "Signing in…",
+  wrongPass: "Wrong password. Try again.", tooMany: "Too many attempts. Wait a few minutes and try again.", offlineErr: "Can't reach the server. Check your connection and try again.",
+  forgotPass: "Forgot your password?", resetSent: "A password reset link was sent to {email}.", notTeam: "This account isn't on the HIGH MEDIA team.",
+  noEmail: "No email is set for {name} in config.js.", setupTitle: "Connect the database", setupBody: "This copy of the portal isn't connected to a database yet. Add your Firebase settings to <b>config.js</b>, then reload. The steps are in the README.",
+  loadErr: "Couldn't load the database. Check your connection and reload the page.", eNoPermission: "You don't have permission to change this. Check that your email is listed in the database rules.",
   nav_overview: "Overview", nav_tasks: "Tasks", nav_leads: "Leads & clients", nav_portfolio: "Portfolio", nav_activity: "Activity",
   signedIn: "Signed in", signOut: "Sign out", switchLang: "العربية", close: "Close",
   bannerNotConnected: "The portal isn't connected. Open it while signed in to claude.ai to load and save your data.",
@@ -613,6 +621,11 @@ ar: {
   forgot: "نسيت الرمز؟", onlyOwnerReset: "مالك البوابة فقط يمكنه إعادة تعيين الرمز.", resetPinFor: "إعادة تعيين رمز {name}", pinResetDone: "تمت إعادة تعيين رمز {name}. يمكنه اختيار رمز جديد الآن.",
   signInContinue: "سجّل الدخول للمتابعة", needsAccount: "<b>البوابة تحتاج حسابك في claude.ai.</b><br>افتح هذه الصفحة وأنت مسجّل الدخول في claude.ai، وتأكد أنها مشاركة معك بصلاحية مساهم أو محرر.",
   digitsEntered: "تم إدخال {n} من 4 أرقام", deleteDigit: "حذف رقم",
+  pickPass: "اختر اسمك ثم أدخل كلمة المرور.", password: "كلمة المرور", signIn: "تسجيل الدخول", signingIn: "جارٍ تسجيل الدخول…",
+  wrongPass: "كلمة المرور غير صحيحة. حاول مرة أخرى.", tooMany: "محاولات كثيرة. انتظر بضع دقائق ثم حاول مرة أخرى.", offlineErr: "تعذّر الوصول إلى الخادم. تحقق من اتصالك وحاول مرة أخرى.",
+  forgotPass: "نسيت كلمة المرور؟", resetSent: "أُرسل رابط إعادة تعيين كلمة المرور إلى {email}.", notTeam: "هذا الحساب ليس ضمن فريق HIGH MEDIA.",
+  noEmail: "لم يُحدَّد بريد {name} في ملف config.js.", setupTitle: "ربط قاعدة البيانات", setupBody: "هذه النسخة من البوابة غير مربوطة بقاعدة بيانات بعد. أضف إعدادات Firebase في ملف <b>config.js</b> ثم أعد تحميل الصفحة. الخطوات موجودة في ملف README.",
+  loadErr: "تعذّر تحميل قاعدة البيانات. تحقق من اتصالك وأعد تحميل الصفحة.", eNoPermission: "لا تملك صلاحية لتعديل هذا. تأكد أن بريدك مضاف في قواعد قاعدة البيانات.",
   nav_overview: "نظرة عامة", nav_tasks: "المهام", nav_leads: "العملاء", nav_portfolio: "أعمالنا", nav_activity: "السجل",
   signedIn: "مسجّل الدخول", signOut: "تسجيل الخروج", switchLang: "English", close: "إغلاق",
   bannerNotConnected: "البوابة غير متصلة. افتحها وأنت مسجّل الدخول في claude.ai لتحميل بياناتك وحفظها.",
@@ -760,7 +773,7 @@ const WEEKDAYS = { en: ["Sunday","Monday","Tuesday","Wednesday","Thursday","Frid
 
 /* ---------- State ---------- */
 const S = {
-  db: null, user: null, dbState: "loading", isOwner: false, readOnly: false,
+  db: null, user: null, auth: null, mode: "pin", dbState: "loading", isOwner: false, readOnly: false, unsubs: [],
   me: null, loginAt: Date.now(), seenAt: 0,
   tasks: [], leads: [], portfolio: [], activity: [], members: {}, loaded: {}, slow: false,
   view: "overview",
@@ -895,6 +908,7 @@ function toast(html, kind = "") {
 function writeErr(e) {
   const code = e && e.code;
   if (code === "invalid_argument") { S.readOnly = true; toast(t("eReadOnly"), "bad"); schedule(); }
+  else if (code === "permission-denied") toast(t("eNoPermission"), "bad");
   else if (code === "quota_exceeded") toast(t("eQuota"), "bad");
   else if (code === "resource_exhausted") toast(t("eRate"), "bad");
   else toast(t("eSave"), "bad");
@@ -1103,6 +1117,7 @@ function signIn(id) {
 }
 function signOut() {
   if (S.me) store.set("seen." + S.me, now());
+  if (S.mode === "firebase" && S.auth) { S.auth.signOut().catch(() => {}); stopData(); }
   store.del("session"); S.me = null; closeDrawer(true); $("#app").innerHTML = ""; render();
 }
 document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden" && S.me) store.set("seen." + S.me, now()); });
@@ -1111,13 +1126,29 @@ document.addEventListener("visibilitychange", () => { if (document.visibilitySta
 function renderLogin() {
   const L = S.login; let panel;
   const top = `<div class="lp-top"><p class="eyebrow">${t("teamPortal")}</p>${langBtn()}</div>`;
-  if (S.dbState === "absent") {
+  if (S.dbState === "setup") {
+    panel = `${top}<h1>${t("setupTitle")}</h1><div class="notice">${t("setupBody")}</div>`;
+  } else if (S.dbState === "failed") {
+    panel = `${top}<h1>${t("signInContinue")}</h1><div class="notice">${t("loadErr")}</div>`;
+  } else if (S.dbState === "absent") {
     panel = `${top}<h1>${t("signInContinue")}</h1><div class="notice">${t("needsAccount")}</div>`;
+  } else if (S.mode === "firebase" && !S.authReady) {
+    panel = `${top}<h1>${t("checking")}</h1>`;
   } else if (!L.member) {
-    panel = `${top}<h1>${t("whoSigning")}</h1><p class="lp-sub">${t("pickName")}</p>
+    panel = `${top}<h1>${t("whoSigning")}</h1><p class="lp-sub">${t(S.mode === "firebase" ? "pickPass" : "pickName")}</p>
       <div style="display:flex;flex-direction:column;gap:10px">
       ${MIDS.map(id => `<button class="who" data-action="pick" data-id="${id}">${av(id, "lg")}<span><b>${esc(mName(id))}</b><small>${esc(MEMBERS[id].role[LANG])}</small></span><span class="go">${ic("arrow")}</span></button>`).join("")}
       </div>`;
+  } else if (S.mode === "firebase") {
+    const nm = esc(mName(L.member));
+    panel = `<div class="lp-top"><button class="btn ghost sm" data-action="pick-back">${ic("back")} ${t("notX", { name: nm })}</button>${langBtn()}</div>
+      <div class="pin-head">${av(L.member, "xl")}<h1>${t("welcomeBack", { name: nm })}</h1></div>
+      <form class="sec" data-form="fb-login" style="gap:12px">
+        <div class="fld"><label for="fb-pass">${t("password")}</label><input class="inp" type="password" id="fb-pass" name="password" autocomplete="current-password" required minlength="6" dir="ltr" style="height:46px" autofocus></div>
+        <div class="err" role="alert" style="text-align:start">${L.error ? t(L.error, { name: nm }) : ""}</div>
+        <button class="btn primary" type="submit" style="min-height:46px" ${L.busy ? "disabled" : ""}>${L.busy ? t("signingIn") : t("signIn")}</button>
+      </form>
+      <div style="text-align:center"><button class="linkbtn" data-action="fb-forgot">${t("forgotPass")}</button></div>`;
   } else {
     const mode = pinMode(); const nm = esc(mName(L.member));
     const head = mode === "loading" ? t("checking") : mode === "enter" ? t("welcomeBack", { name: nm }) : mode === "create" ? t("createPin") : t("enterAgain");
@@ -1627,6 +1658,12 @@ document.addEventListener("click", async e => {
     case "pin": pinDigit(el.dataset.d); break;
     case "pin-del": S.login.pin = S.login.pin.slice(0, -1); render(); break;
     case "forgot": S.login.forgot = true; render(); break;
+    case "fb-forgot": {
+      const email = ((window.HM_CONFIG || {}).members || {})[S.login.member];
+      if (!email) { S.login.error = "noEmail"; render(); break; }
+      try { await S.auth.sendPasswordResetEmail(email); toast(esc(t("resetSent", { email })), "good"); } catch (err) { toast(t((err && err.code || "").includes("network") ? "offlineErr" : "eSave"), "bad"); }
+      break;
+    }
     case "reset-pin": { const m = S.login.member; if (await guard(() => S.db.doc("members/" + m).set({ pinHash: null, resetAt: now() }))) { toast(esc(t("pinResetDone", { name: mName(m) })), "good"); S.login.forgot = false; render(); } break; }
     case "logout": signOut(); break;
     case "new-task": openDrawer("new-task"); break;
@@ -1666,7 +1703,7 @@ document.addEventListener("click", async e => {
   }
 });
 document.addEventListener("keydown", e => {
-  if (!S.me && S.login.member) {
+  if (!S.me && S.login.member && S.mode === "pin") {
     if (/^\d$/.test(e.key)) { pinDigit(e.key); e.preventDefault(); }
     else if (e.key === "Backspace") { S.login.pin = S.login.pin.slice(0, -1); render(); }
     return;
@@ -1713,10 +1750,11 @@ document.addEventListener("submit", async e => {
   const fd = new FormData(f); const g = k => (fd.get(k) || "").toString().trim();
   const btn = f.querySelector('button[type="submit"]'); if (btn) btn.disabled = true;
   try {
+    if (kind === "fb-login") { await fbSignIn(fd.get("password") || ""); return; }
     if (kind === "new-task") {
       if (!g("title")) return;
       const id = await createTask({ title: g("title"), category: g("category"), assignee: g("assignee"), due: g("due"), priority: g("priority"), clientId: g("clientId"), description: g("description"), useTemplate: !!fd.get("useTemplate") });
-      if (id) { closeDrawer(); if (S.view !== "tasks") location.hash = "tasks"; }
+      if (id) { closeDrawer(); const as = g("assignee"); if (S.tf.who === "mine" && as !== S.me && as !== "both") S.tf.who = "all"; if (S.tf.cat !== "all" && S.tf.cat !== g("category")) S.tf.cat = "all"; if (S.view !== "tasks") location.hash = "tasks"; }
     } else if (kind === "new-lead") {
       if (!g("name") && !g("business")) { toast(t("needNameOrBiz"), "bad"); return; }
       if (!g("segment")) { toast(t("needCat"), "bad"); return; }
@@ -1765,8 +1803,10 @@ function subscribe() {
   const timer = setTimeout(() => { if (!S.loaded.tasks) { S.slow = true; schedule(); } }, 10000);
   const done = k => snap => { if (!snap.metadata.fromCache) { S.loaded[k] = true; if (k === "tasks") { clearTimeout(timer); S.slow = false; } } };
   const fail = k => () => { S.loaded[k] = true; if (k === "tasks") clearTimeout(timer); schedule(); };
-  db.collection("members").onSnapshot(snap => { const m = {}; snap.docs.forEach(d => { m[d.id] = d.data(); }); S.members = m; done("members")(snap); schedule(); }, fail("members"));
-  db.collection("tasks").onSnapshot(snap => {
+  const keep = u => { S.unsubs.push(u); };
+  if (S.mode === "firebase") S.loaded.members = true;
+  else keep(db.collection("members").onSnapshot(snap => { const m = {}; snap.docs.forEach(d => { m[d.id] = d.data(); }); S.members = m; done("members")(snap); schedule(); }, fail("members")));
+  keep(db.collection("tasks").onSnapshot(snap => {
     if (S.me && S.loaded.tasks) snap.docChanges().forEach(ch => {
       const d = ch.doc.data();
       if (ch.type === "added" && d.createdBy && d.createdBy !== S.me && d.createdAt > S.loginAt - 60000)
@@ -1775,19 +1815,69 @@ function subscribe() {
         toast(t("tPartnerDone", { name: esc(mName(d.completedBy)), t: esc(d.title) }), "good");
     });
     S.tasks = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); done("tasks")(snap); schedule();
-  }, fail("tasks"));
-  db.collection("leads").onSnapshot(snap => { S.leads = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); done("leads")(snap); schedule(); }, fail("leads"));
-  db.collection("portfolio").onSnapshot(snap => { S.portfolio = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); done("portfolio")(snap); schedule(); }, fail("portfolio"));
-  db.collection("activity").orderBy("at", "desc").limit(300).onSnapshot(snap => { S.activity = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); done("activity")(snap); schedule(); }, fail("activity"));
+  }, fail("tasks")));
+  keep(db.collection("leads").onSnapshot(snap => { S.leads = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); done("leads")(snap); schedule(); }, fail("leads")));
+  keep(db.collection("portfolio").onSnapshot(snap => { S.portfolio = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); done("portfolio")(snap); schedule(); }, fail("portfolio")));
+  keep(db.collection("activity").orderBy("at", "desc").limit(300).onSnapshot(snap => { S.activity = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); done("activity")(snap); schedule(); }, fail("activity")));
+}
+function stopData() {
+  S.unsubs.forEach(u => { try { u(); } catch (e) {} }); S.unsubs = [];
+  S.tasks = []; S.leads = []; S.portfolio = []; S.activity = []; S.loaded = {}; S.subscribed = false;
+}
+
+/* ---------- Firebase mode (any device, outside claude.ai) ---------- */
+function loadScript(src) {
+  return new Promise((res, rej) => { const el = document.createElement("script"); el.src = src; el.onload = res; el.onerror = () => rej(new Error("load " + src)); document.head.appendChild(el); });
+}
+function memberFromEmail(email) {
+  const m = (window.HM_CONFIG || {}).members || {}; const e = String(email || "").toLowerCase();
+  return MIDS.find(id => String(m[id] || "").toLowerCase() === e) || null;
+}
+async function fbSignIn(pw) {
+  const id = S.login.member; const email = ((window.HM_CONFIG || {}).members || {})[id];
+  if (!email) { S.login.error = "noEmail"; render(); return; }
+  S.login.busy = true; S.login.error = ""; render();
+  try { await S.auth.signInWithEmailAndPassword(email, pw); }
+  catch (e) { const c = (e && e.code) || ""; S.login.error = c.includes("too-many") ? "tooMany" : c.includes("network") ? "offlineErr" : "wrongPass"; }
+  S.login.busy = false; render();
+}
+async function bootFirebase(cfg) {
+  S.mode = "firebase";
+  const base = "https://www.gstatic.com/firebasejs/10.12.2/";
+  try {
+    if (!window.firebase) { await loadScript(base + "firebase-app-compat.js"); await Promise.all([loadScript(base + "firebase-auth-compat.js"), loadScript(base + "firebase-firestore-compat.js")]); }
+    if (!firebase.apps.length) firebase.initializeApp(cfg.firebase);
+  } catch (e) { S.dbState = "failed"; render(); return; }
+  const fdb = firebase.firestore();
+  try { await fdb.enablePersistence({ synchronizeTabs: true }); } catch (e) {}
+  S.db = fdb; S.auth = firebase.auth(); S.dbState = "ready"; S.loaded.members = true;
+  S.auth.onAuthStateChanged(u => {
+    S.authReady = true;
+    if (u) {
+      const id = memberFromEmail(u.email);
+      if (!id) { S.login.error = "notTeam"; S.auth.signOut(); render(); return; }
+      if (S.me !== id) { S.me = id; S.loginAt = now(); S.seenAt = store.get("seen." + id) || 0; }
+      S.login = { member: null, pin: "", first: "", error: "", busy: false, shake: false, forgot: false };
+      if (!S.subscribed) { S.subscribed = true; subscribe(); }
+      if (!VIEWS.includes(location.hash.slice(1))) { S.view = "overview"; try { history.replaceState(null, "", "#overview"); } catch (e) {} }
+    } else { if (S.subscribed) stopData(); S.me = null; }
+    render();
+  });
 }
 async function boot() {
-  const sess = store.get("session");
-  if (sess && MIDS.includes(sess.id) && now() - sess.at < 30 * DAY) { S.me = sess.id; S.seenAt = store.get("seen." + sess.id) || 0; }
+  const c = window.claude; const cfg = window.HM_CONFIG;
+  const inArtifact = !!(c && c.use);
+  if (inArtifact) {
+    const sess = store.get("session");
+    if (sess && MIDS.includes(sess.id) && now() - sess.at < 30 * DAY) { S.me = sess.id; S.seenAt = store.get("seen." + sess.id) || 0; }
+  }
   const h = location.hash.slice(1);
   if (VIEWS.includes(h)) S.view = h; else if (MIDS.includes(h) && !S.me) S.login.member = h;
   render();
-  const c = window.claude;
-  if (!c || !c.use) { S.dbState = "absent"; render(); return; }
+  if (!inArtifact) {
+    if (cfg && cfg.firebase && cfg.firebase.apiKey) { S.mode = "firebase"; render(); return bootFirebase(cfg); }
+    S.dbState = window.HM_HOSTED ? "setup" : "absent"; render(); return;
+  }
   const [db, user] = await Promise.all([c.use("db").catch(() => null), c.use("user").catch(() => null)]);
   S.user = user;
   if (!db) { S.dbState = "absent"; render(); return; }
@@ -1796,7 +1886,7 @@ async function boot() {
     try { S.isOwner = await user.isOwner(); } catch (e) {}
     try { const w = await user.can("data.write"); if (w === false) S.readOnly = true; } catch (e) {}
   }
-  subscribe(); render();
+  S.subscribed = true; subscribe(); render();
 }
 boot();
 })();
