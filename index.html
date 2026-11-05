@@ -1,0 +1,1806 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>HIGH MEDIA Portal</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Cairo:wght@600;700;800&display=swap">
+<style>
+/* Layout: sidebar app shell (icon rail on tablets, bottom tab bar on phones), side drawer for details; dark navy brand ground first, light theme mirrored; full RTL for Arabic via logical properties. */
+:root{
+  --bg:#0B0D17; --surface:#121524; --surface-2:#181C2E; --surface-3:#20253B; --line:#272C45; --line-2:#343A58;
+  --fg:#F4F2EE; --fg-2:#B4B2C8; --muted:#7D7E98;
+  --violet:#8B63F7; --coral:#F05A35; --coral-deep:#8E3A2B; --ink-on-accent:#FFFFFF;
+  --c-faisal:var(--violet); --c-abd:var(--coral);
+  --good:#3DBE86; --warn:#E9B341; --bad:#FF5C7A; --info:#6EA8FF;
+  --tint-violet:rgba(139,99,247,.16); --tint-coral:rgba(240,90,53,.16); --tint-good:rgba(61,190,134,.15);
+  --tint-warn:rgba(233,179,65,.15); --tint-bad:rgba(255,92,122,.15); --tint-info:rgba(110,168,255,.15); --tint-pink:rgba(232,92,170,.16); --tint-teal:rgba(47,191,174,.15);
+  --pink:#EC74B8; --teal:#3CC9B8;
+  --shadow:0 18px 50px rgba(0,0,0,.45);
+  --dot:rgba(255,255,255,.06);
+  --f-brand:"Archivo","Arial Black","Helvetica Neue",Arial,sans-serif;
+  --f-display:"Archivo","Arial Black","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){ :root:not([data-theme="dark"]){
+  --bg:#F5F4F1; --surface:#FFFFFF; --surface-2:#F0EFF5; --surface-3:#E6E4EF; --line:#E3E1EA; --line-2:#D2CFDD;
+  --fg:#11131F; --fg-2:#4D4E66; --muted:#7A7B92;
+  --violet:#6A3FE6; --coral:#E04E2A; --coral-deep:#B5462E;
+  --good:#18925C; --warn:#A87406; --bad:#D22D52; --info:#2F6FD6;
+  --tint-violet:rgba(106,63,230,.10); --tint-coral:rgba(224,78,42,.10); --tint-good:rgba(24,146,92,.10);
+  --tint-warn:rgba(168,116,6,.12); --tint-bad:rgba(210,45,82,.10); --tint-info:rgba(47,111,214,.10); --tint-pink:rgba(196,51,133,.10); --tint-teal:rgba(17,140,126,.10);
+  --pink:#C43385; --teal:#118C7E;
+  --shadow:0 18px 50px rgba(17,19,31,.16); --dot:rgba(17,19,31,.07);
+  color-scheme:light;
+}}
+:root[data-theme="light"]{
+  --bg:#F5F4F1; --surface:#FFFFFF; --surface-2:#F0EFF5; --surface-3:#E6E4EF; --line:#E3E1EA; --line-2:#D2CFDD;
+  --fg:#11131F; --fg-2:#4D4E66; --muted:#7A7B92;
+  --violet:#6A3FE6; --coral:#E04E2A; --coral-deep:#B5462E;
+  --good:#18925C; --warn:#A87406; --bad:#D22D52; --info:#2F6FD6;
+  --tint-violet:rgba(106,63,230,.10); --tint-coral:rgba(224,78,42,.10); --tint-good:rgba(24,146,92,.10);
+  --tint-warn:rgba(168,116,6,.12); --tint-bad:rgba(210,45,82,.10); --tint-info:rgba(47,111,214,.10); --tint-pink:rgba(196,51,133,.10); --tint-teal:rgba(17,140,126,.10);
+  --pink:#C43385; --teal:#118C7E;
+  --shadow:0 18px 50px rgba(17,19,31,.16); --dot:rgba(17,19,31,.07);
+  color-scheme:light;
+}
+:root[lang="ar"]{
+  --f-display:"Cairo","IBM Plex Sans Arabic",Tahoma,Arial,sans-serif;
+  --f-body:"IBM Plex Sans Arabic","Figtree",Tahoma,"Segoe UI",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--fg)}
+body{font-family:var(--f-body);font-size:14.5px;line-height:1.5;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;touch-action:manipulation}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--violet);outline-offset:2px;border-radius:6px}
+h1,h2,h3,h4{margin:0;text-wrap:balance}
+p{margin:0}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:12px;letter-spacing:-.01em}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:600}
+:root[lang="ar"] .eyebrow,:root[lang="ar"] .sec-h h3,:root[lang="ar"] .day-h{letter-spacing:0;text-transform:none;font-size:12.5px}
+.num{font-variant-numeric:tabular-nums}
+.ic{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+[dir="rtl"] .ic.flip{transform:scaleX(-1)}
+.ltr{direction:ltr;unicode-bidi:isolate}
+
+/* Wordmark (always Latin brand type) */
+.wm{display:flex;flex-direction:column;line-height:.86;direction:ltr}
+.wm b{font-family:var(--f-brand);font-stretch:125%;font-weight:900;letter-spacing:-.01em;font-size:56px;color:var(--fg)}
+.wm span{font-family:var(--f-brand);font-stretch:125%;font-weight:300;letter-spacing:.42em;font-size:26px;color:var(--fg-2);margin-top:12px}
+.wm.sm b{font-size:19px}
+.wm.sm span{font-size:9px;margin-top:5px;letter-spacing:.5em}
+.logo{display:block;flex:none;max-width:100%;height:auto}
+.logo .pill{fill:var(--fg)}
+
+/* Language switch */
+.langbtn{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 11px;border-radius:9px;border:1px solid var(--line);background:transparent;color:var(--fg-2);font-size:13px;font-weight:600;white-space:nowrap}
+.langbtn:hover{color:var(--fg);background:var(--surface-2)}
+.langbtn .ic{width:16px;height:16px}
+.langbtn .ar{font-family:"IBM Plex Sans Arabic",Tahoma,sans-serif}
+.langbtn .en{font-family:"Figtree",Arial,sans-serif}
+
+/* Login */
+.login{min-height:100vh;min-height:100dvh;display:grid;grid-template-columns:1.15fr 1fr}
+.login-brand{--bg:#0B0D17;--fg:#F4F2EE;--fg-2:#B4B2C8;--muted:#7D7E98;--line:#272C45;--dot:rgba(255,255,255,.06);--coral-deep:#8E3A2B;color:var(--fg);
+  position:relative;display:flex;flex-direction:column;justify-content:space-between;gap:40px;
+  padding-block:44px;padding-left:max(48px,env(safe-area-inset-left,0px));padding-right:max(48px,env(safe-area-inset-right,0px));
+  background-color:var(--bg);background-image:radial-gradient(var(--dot) 1px,transparent 1.2px);background-size:22px 22px;border-inline-end:1px solid var(--line);min-width:0}
+.lb-row{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.lockup{display:flex;align-items:center;gap:36px;flex-wrap:wrap;direction:ltr}
+[dir="rtl"] .lockup{justify-content:flex-end}
+.lb-foot{display:flex;justify-content:space-between;align-items:center;gap:16px;border-top:1px solid var(--line);padding-top:20px;color:var(--fg-2);flex-wrap:wrap}
+.dots{display:flex;gap:8px}.dots i{width:10px;height:10px;border-radius:50%;background:var(--violet)}.dots i:nth-child(2){background:var(--coral)}.dots i:nth-child(3){background:var(--fg)}
+.login-panel{display:flex;align-items:center;justify-content:center;padding-block:40px;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px));background:var(--surface);min-width:0}
+.lp-inner{width:100%;max-width:400px;display:flex;flex-direction:column;gap:22px}
+.lp-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.lp-inner h1{font-family:var(--f-display);font-stretch:112%;font-weight:800;font-size:28px;letter-spacing:-.01em}
+:root[lang="ar"] .lp-inner h1,:root[lang="ar"] .ph h1{letter-spacing:0}
+.lp-sub{color:var(--fg-2)}
+.who{display:flex;align-items:center;gap:14px;width:100%;text-align:start;padding:16px;border-radius:14px;border:1px solid var(--line);background:var(--surface-2);transition:border-color .15s,transform .15s}
+.who:hover{border-color:var(--line-2);transform:translateY(-1px)}
+.who b{display:block;font-size:16px}
+.who small{color:var(--muted);font-size:12.5px}
+.who .go{margin-inline-start:auto;color:var(--muted)}
+.av{width:30px;height:30px;border-radius:50%;background:var(--violet);color:#fff;display:inline-grid;place-items:center;font-weight:700;font-size:13px;flex:none;font-family:var(--f-display);font-stretch:110%;line-height:1}
+.av.lg{width:48px;height:48px;font-size:19px}
+.av.xl{width:64px;height:64px;font-size:26px}
+.av.sm{width:22px;height:22px;font-size:10px}
+.avs{display:inline-flex}.avs .av+.av{margin-inline-start:-7px;box-shadow:0 0 0 2px var(--surface)}
+.pin-head{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+.pin-dots{display:flex;justify-content:center;gap:16px;margin-block:4px;direction:ltr}
+.pin-dots i{width:14px;height:14px;border-radius:50%;border:2px solid var(--line-2)}
+.pin-dots i.on{background:var(--fg);border-color:var(--fg)}
+.pin-dots.shake{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-8px)}50%{transform:translateX(8px)}75%{transform:translateX(-4px)}}
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;direction:ltr}
+.pad button{height:56px;border-radius:14px;border:1px solid var(--line);background:var(--surface-2);font-size:20px;font-weight:600;font-variant-numeric:tabular-nums}
+.pad button:hover{background:var(--surface-3)}
+.pad button:disabled{visibility:hidden}
+.err{color:var(--bad);font-size:13px;min-height:20px;text-align:center}
+.linkbtn{background:none;border:0;padding:0;color:var(--fg-2);text-decoration:underline;text-underline-offset:3px}
+.notice{padding:14px 16px;border-radius:12px;background:var(--surface-2);border:1px solid var(--line);color:var(--fg-2)}
+.notice b{color:var(--fg)}
+
+/* Shell */
+.shell{display:grid;grid-template-columns:248px minmax(0,1fr);min-height:100vh;min-height:100dvh}
+.side{position:sticky;top:env(safe-area-inset-top,0px);height:100vh;height:100dvh;display:flex;flex-direction:column;gap:28px;padding-block:24px;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));border-inline-end:1px solid var(--line);background:var(--surface)}
+.side-brand{display:flex;align-items:center;gap:12px;padding-inline:6px;direction:ltr}
+[dir="rtl"] .side-brand{justify-content:flex-end}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;text-decoration:none;color:var(--fg-2);font-weight:500}
+.nav a:hover{background:var(--surface-2);color:var(--fg)}
+.nav a.on{background:var(--surface-3);color:var(--fg)}
+.nav a.on .ic{color:var(--violet)}
+.nav em{margin-inline-start:auto;font-style:normal;font-size:11.5px;font-weight:600;min-width:22px;text-align:center;padding:1px 7px;border-radius:999px;background:var(--surface-3);color:var(--fg-2);font-variant-numeric:tabular-nums}
+.nav a.on em{background:var(--bg)}
+.side-lang{display:flex}
+.side-lang .langbtn{width:100%;justify-content:center}
+.side-foot{margin-top:auto;display:flex;align-items:center;gap:10px;padding:12px;border-radius:12px;background:var(--surface-2)}
+.side-lang + .side-foot{margin-top:0}
+.side-foot b{display:block;font-size:13.5px}.side-foot small{color:var(--muted);font-size:12px}
+.iconbtn{margin-inline-start:auto;display:inline-grid;place-items:center;width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:transparent;color:var(--fg-2);flex:none}
+.iconbtn:hover{color:var(--fg);background:var(--surface-3)}
+.main{min-width:0;padding-block:28px 64px;padding-left:max(32px,env(safe-area-inset-left,0px));padding-right:max(32px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1320px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+.mhead{display:none}
+
+/* Page header */
+.ph{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.ph h1{font-family:var(--f-display);font-stretch:118%;font-weight:800;font-size:30px;letter-spacing:-.015em;margin-top:6px}
+.ph-actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:38px;padding:0 15px;border-radius:10px;border:1px solid var(--line-2);background:var(--surface);font-weight:600;font-size:13.5px;white-space:nowrap;text-decoration:none}
+.btn:hover{background:var(--surface-2)}
+.btn.primary{background:var(--violet);border-color:transparent;color:var(--ink-on-accent)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.good{background:var(--good);border-color:transparent;color:#fff}
+.btn.danger{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 40%,transparent)}
+.btn.danger.solid{background:var(--bad);color:#fff}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--fg-2)}
+.btn.sm{min-height:30px;padding:0 10px;font-size:12.5px;border-radius:8px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.banner{padding:12px 16px;border-radius:12px;border:1px solid var(--line);background:var(--tint-warn);color:var(--fg)}
+
+/* Cards */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;min-width:0}
+.card-h{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.card-h h2{font-size:15px;font-weight:700}
+.card-h p{color:var(--muted);font-size:12.5px}
+.g2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:18px}
+.g2.even{grid-template-columns:repeat(2,minmax(0,1fr))}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 18px;display:flex;flex-direction:column;gap:4px;text-decoration:none;min-width:0}
+.kpi:hover{border-color:var(--line-2)}
+.kpi .k-l{color:var(--fg-2);font-size:12.5px;font-weight:600}
+.kpi .k-v{font-family:var(--f-display);font-stretch:112%;font-weight:800;font-size:32px;font-variant-numeric:tabular-nums;line-height:1.1}
+.kpi .k-s{font-size:12.5px;color:var(--muted)}
+.kpi .k-s.bad{color:var(--bad)}
+
+/* Segmented + filters */
+.seg{display:inline-flex;padding:3px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line);gap:2px;max-width:100%}
+.seg button{border:0;background:transparent;padding:6px 12px;border-radius:7px;font-size:13px;font-weight:600;color:var(--fg-2);white-space:nowrap}
+.seg button.on{background:var(--surface);color:var(--fg);box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.seg.status{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.seg.status button{padding:7px 4px}
+.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.sel,.inp{height:36px;border-radius:10px;border:1px solid var(--line);background:var(--surface);padding:0 11px;font-size:13.5px;min-width:0;max-width:100%}
+.search{position:relative;flex:1 1 200px;max-width:320px}
+.search .ic{position:absolute;inset-inline-start:10px;top:9px;color:var(--muted)}
+.search input{width:100%;padding-inline-start:34px}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);overflow-x:auto}
+.tabs button{border:0;background:none;padding:10px 14px;font-weight:600;color:var(--fg-2);border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tabs button.on{color:var(--fg);border-color:var(--violet)}
+.tabs button em{font-style:normal;color:var(--muted);margin-inline-start:6px;font-variant-numeric:tabular-nums}
+
+/* Chips */
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:22px;padding:0 8px;border-radius:6px;font-size:11.5px;font-weight:600;white-space:nowrap;background:var(--surface-3);color:var(--fg-2)}
+.chip.website{background:var(--tint-violet);color:var(--violet)}
+.chip.reels{background:var(--tint-coral);color:var(--coral)}
+.chip.posts{background:var(--tint-pink);color:var(--pink)}
+.chip.page{background:var(--tint-teal);color:var(--teal)}
+.chip.st-potential{background:var(--tint-info);color:var(--info)}
+.chip.st-discussion{background:var(--tint-violet);color:var(--violet)}
+.chip.st-closing{background:var(--tint-warn);color:var(--warn)}
+.chip.st-client{background:var(--tint-good);color:var(--good)}
+.chip.st-lost{background:var(--tint-bad);color:var(--bad)}
+.chip.sgc-doctor{background:var(--tint-teal);color:var(--teal)}
+.chip.sgc-store{background:var(--tint-violet);color:var(--violet)}
+.chip.sgc-restaurant{background:var(--tint-coral);color:var(--coral)}
+.chip.sgc-beauty{background:var(--tint-pink);color:var(--pink)}
+.chip.sgc-realestate{background:var(--tint-info);color:var(--info)}
+.chip.sgc-company{background:var(--tint-warn);color:var(--warn)}
+.fchips{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;scrollbar-width:thin;max-width:100%}
+.fchip{display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:0 13px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--fg-2);font-weight:600;font-size:13px;white-space:nowrap}
+.fchip:hover{border-color:var(--line-2);color:var(--fg)}
+.fchip.on{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+.fchip em{font-style:normal;font-size:11.5px;opacity:.7;font-variant-numeric:tabular-nums}
+.fchip .dot{width:8px;height:8px;border-radius:50%}
+.chip.hi{background:var(--tint-bad);color:var(--bad)}
+.chip.new{background:var(--coral);color:#fff}
+.due{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--muted);white-space:nowrap}
+.due.soon{color:var(--warn)}.due.over{color:var(--bad);font-weight:600}
+.due .ic{width:14px;height:14px}
+
+/* Board */
+.board{display:grid;grid-template-columns:repeat(var(--cols,4),minmax(250px,1fr));gap:14px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+.col{background:var(--surface-2);border:1px solid var(--line);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:10px;min-height:180px;scroll-snap-align:start;min-width:0}
+.col.drop{border-color:var(--violet);background:var(--tint-violet)}
+.col-h{display:flex;align-items:center;gap:8px;padding:2px 4px 4px}
+.col-h b{font-size:13px}
+.col-h em{font-style:normal;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.col-h .sw{width:8px;height:8px;border-radius:50%;background:var(--muted)}
+.col-empty{color:var(--muted);font-size:12.5px;padding:14px 6px;text-align:center;border:1px dashed var(--line-2);border-radius:12px}
+.tcard{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 12px 11px;display:flex;flex-direction:column;gap:8px;cursor:pointer;transition:border-color .15s;min-width:0}
+.tcard:hover{border-color:var(--line-2)}
+.tcard.dragging{opacity:.5}
+.tcard h4{font-size:14px;font-weight:600;line-height:1.4;overflow-wrap:anywhere}
+.tc-top{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.tc-client{font-size:12.5px;color:var(--fg-2);overflow-wrap:anywhere}
+.tc-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.prog{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--muted)}
+.prog .bar{flex:1;height:4px;border-radius:4px;background:var(--surface-3);overflow:hidden}
+.prog .bar span{display:block;height:100%;background:var(--violet);border-radius:4px}
+.stamp{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--fg-2);padding-top:8px;border-top:1px solid var(--line);flex-wrap:wrap}
+.stamp .ic{width:14px;height:14px;color:var(--good)}
+.more{align-self:center}
+
+/* Queue list */
+.list{display:flex;flex-direction:column}
+.qi{display:flex;gap:12px;align-items:flex-start;padding:11px 2px;border-top:1px solid var(--line)}
+.qi:first-child{border-top:0}
+.ck{width:24px;height:24px;border-radius:7px;border:1.5px solid var(--line-2);background:transparent;display:grid;place-items:center;color:transparent;flex:none;margin-top:1px}
+.ck:hover{border-color:var(--good);color:var(--good)}
+.ck.on{background:var(--good);border-color:var(--good);color:#fff}
+.ck .ic{width:14px;height:14px;stroke-width:2.6}
+.qi-main{flex:1;min-width:0;cursor:pointer}
+.qi-main b{font-weight:600;display:block;overflow-wrap:anywhere}
+.qi-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px;font-size:12px;color:var(--muted)}
+.empty{padding:26px 10px;text-align:center;color:var(--muted);display:flex;flex-direction:column;gap:10px;align-items:center}
+.empty b{color:var(--fg);font-size:14.5px}
+
+/* Chart */
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:6px}
+.legend span{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--fg-2)}
+.legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.legend b{color:var(--fg);font-variant-numeric:tabular-nums}
+.chart{position:relative;direction:ltr}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart .gl{stroke:var(--line);stroke-width:1}
+.chart .base{stroke:var(--line-2);stroke-width:1}
+.chart text{fill:var(--muted);font-family:var(--f-body);font-size:11px}
+.chart .hit{fill:transparent;cursor:default}
+.chart .hit:hover{fill:var(--surface-2)}
+.tip{position:absolute;pointer-events:none;background:var(--surface-3);border:1px solid var(--line-2);border-radius:10px;padding:8px 10px;font-size:12px;box-shadow:var(--shadow);white-space:nowrap;z-index:3}
+[dir="rtl"] .tip{direction:rtl}
+.tip b{display:block;margin-bottom:3px}
+.tip div{display:flex;align-items:center;gap:7px;color:var(--fg-2)}
+.tip i{width:8px;height:8px;border-radius:2px;display:inline-block}
+.split{display:flex;height:10px;border-radius:6px;overflow:hidden;gap:2px;margin-top:6px;background:var(--surface-3)}
+.split span{display:block;height:100%}
+details.tbl{margin-top:10px}
+details.tbl summary{cursor:pointer;color:var(--fg-2);font-size:12.5px}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{text-align:start;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{color:var(--muted);font-weight:600;font-size:12px}
+td.n,th.n{text-align:end;font-variant-numeric:tabular-nums}
+
+/* Pipeline glance */
+.pipe{display:flex;flex-direction:column;gap:10px}
+.pipe-row{display:grid;grid-template-columns:minmax(90px,130px) 1fr 32px;align-items:center;gap:12px;font-size:13px;text-decoration:none}
+.pipe-row .track{height:8px;border-radius:6px;background:var(--surface-3);overflow:hidden}
+.pipe-row .track span{display:block;height:100%;border-radius:6px}
+.pipe-row b{text-align:end;font-variant-numeric:tabular-nums}
+
+/* Feed */
+.feed{display:flex;flex-direction:column}
+.fi{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:start;padding:9px 0;border-top:1px solid var(--line)}
+.fi:first-child{border-top:0}
+.fi p{font-size:13.5px;color:var(--fg-2);overflow-wrap:anywhere}
+.fi p b{color:var(--fg);font-weight:600}
+.fi .mono{color:var(--muted);padding-top:2px;white-space:nowrap}
+.day-h{font-size:12px;font-weight:700;color:var(--fg-2);padding:14px 0 4px;letter-spacing:.04em;text-transform:uppercase}
+
+/* Rows */
+.lcard .tc-client{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.rows{display:flex;flex-direction:column;gap:8px}
+.row{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr) auto;gap:14px;align-items:center;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface);cursor:pointer}
+.row:hover{border-color:var(--line-2)}
+.row b{display:block;overflow-wrap:anywhere}
+.row small{color:var(--muted);font-size:12.5px}
+
+/* Portfolio */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(290px,100%),1fr));gap:18px}
+.proj{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.cover{position:relative;aspect-ratio:16/9;max-width:100%;overflow:hidden;background:var(--bg);background-image:radial-gradient(var(--dot) 1px,transparent 1.2px);background-size:16px 16px;display:grid;place-items:center;padding:18px}
+.browser{width:88%;border-radius:10px;border:1px solid var(--line-2);background:var(--surface);overflow:hidden;box-shadow:var(--shadow)}
+.browser .bar{display:flex;align-items:center;gap:5px;padding:7px 9px;border-bottom:1px solid var(--line);background:var(--surface-2);direction:ltr}
+.browser .bar i{width:6px;height:6px;border-radius:50%;background:var(--line-2)}
+.browser .bar span{margin-left:8px;font-family:var(--f-mono);font-size:10.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.browser .pg{padding:14px;display:flex;flex-direction:column;gap:7px}
+.browser .pg b{font-family:var(--f-display);font-stretch:115%;font-weight:800;font-size:17px;line-height:1.2;overflow-wrap:anywhere}
+.browser .pg i{display:block;height:6px;border-radius:4px;background:var(--surface-3)}
+.browser .pg i.acc{width:38%;height:10px;background:linear-gradient(90deg,var(--violet),var(--coral))}
+.igrid{display:grid;grid-template-columns:repeat(3,44px);gap:4px}
+.igrid i{width:44px;height:44px;border-radius:5px;background:var(--surface-3)}
+.igrid i:nth-child(2n){background:var(--tint-violet)}.igrid i:nth-child(3n){background:var(--tint-coral)}
+.igrid i:nth-child(5){background:linear-gradient(135deg,var(--violet),var(--coral))}
+.cover .tag{position:absolute;inset-inline-start:12px;top:12px}
+.proj-b{padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1}
+.proj-b h3{font-size:16px;font-weight:700;overflow-wrap:anywhere}
+.proj-b .client{color:var(--fg-2);font-size:13px}
+.proj-b p.sum{color:var(--fg-2);font-size:13.5px;overflow-wrap:anywhere}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.proj-f{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:12px;border-top:1px solid var(--line)}
+.proj-f .due{margin-inline-start:auto}
+.extl{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:13px;text-decoration:none;color:var(--violet)}
+.extl:hover{text-decoration:underline}
+.extl .ic{width:15px;height:15px}
+
+/* Drawer */
+.scrim{position:fixed;inset:0;background:rgba(5,6,12,.55);z-index:40;animation:fade .15s}
+.drawer{position:fixed;top:0;bottom:0;inset-inline-end:0;width:min(600px,100%);background:var(--surface);border-inline-start:1px solid var(--line);z-index:41;display:flex;flex-direction:column;box-shadow:var(--shadow);animation:slide .2s ease-out;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+[dir="rtl"] .drawer{animation-name:slidertl}
+@keyframes slide{from{transform:translateX(24px);opacity:.4}}
+@keyframes slidertl{from{transform:translateX(-24px);opacity:.4}}
+@keyframes fade{from{opacity:0}}
+.d-head{display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid var(--line)}
+.d-head .meta{font-size:12.5px;color:var(--muted);overflow-wrap:anywhere;min-width:0}
+.d-head h2{font-size:17px;flex:1}
+.d-body{flex:1;overflow-y:auto;padding:20px 20px 40px;display:flex;flex-direction:column;gap:22px;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.d-body > *{flex-shrink:0}
+.title-in{width:100%;border:1px solid transparent;background:transparent;font-family:var(--f-display);font-stretch:108%;font-weight:800;font-size:22px;line-height:1.35;padding:6px 8px;margin-inline-start:-8px;border-radius:10px;resize:none;overflow:hidden}
+.title-in:hover{border-color:var(--line)}
+.title-in:focus{border-color:var(--line-2);background:var(--surface-2);outline:none}
+.fgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 14px}
+.fld{display:flex;flex-direction:column;gap:6px;min-width:0}
+.fld.full{grid-column:1/-1}
+.fld label,.lbl{font-size:12px;font-weight:600;color:var(--fg-2)}
+.fld .inp,.fld .sel{width:100%;height:40px}
+textarea.inp{height:auto;min-height:84px;padding:9px 11px;resize:vertical;line-height:1.5;width:100%}
+.sec{display:flex;flex-direction:column;gap:10px}
+.sec-h{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.sec-h h3{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-2)}
+.sec-h small{color:var(--muted);font-size:12px}
+.steps{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.step{display:flex;gap:11px;align-items:flex-start;padding:10px 12px;border-top:1px solid var(--line);background:var(--surface)}
+.step:first-child{border-top:0}
+.step .txt{flex:1;min-width:0}
+.step .txt span{display:block;overflow-wrap:anywhere}
+.step.done .txt span{color:var(--muted);text-decoration:line-through}
+.step .by{font-size:11.5px;color:var(--muted);margin-top:2px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.step .x{border:0;background:none;color:var(--muted);padding:4px;border-radius:6px;opacity:.6}
+.step .x:hover{opacity:1;color:var(--bad)}
+.addrow{display:flex;gap:8px}
+.addrow .inp{flex:1;height:40px}
+.stepper{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.stepper button{display:flex;flex-direction:column;align-items:flex-start;gap:3px;padding:9px 10px;border-radius:10px;border:1px solid var(--line);background:var(--surface-2);text-align:start;min-width:0}
+.stepper button b{font-size:12.5px}
+.stepper button small{font-size:11px;color:var(--muted);font-family:var(--f-mono)}
+.stepper button.past{border-color:transparent;background:var(--tint-violet)}
+.stepper button.cur{border-color:var(--violet);background:var(--tint-violet)}
+.stepper button.cur.client{border-color:var(--good);background:var(--tint-good)}
+.tl{display:flex;flex-direction:column;border-inline-start:2px solid var(--line);margin-inline-start:6px}
+.tl-i{position:relative;padding-bottom:12px;padding-inline-start:18px;font-size:13px;color:var(--fg-2)}
+.tl-i::before{content:"";position:absolute;inset-inline-start:-6px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--surface);border:2px solid var(--line-2)}
+.tl-i b{color:var(--fg);font-weight:600}
+.tl-i .mono{display:block;color:var(--muted);margin-top:1px}
+.note{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--surface-2);display:flex;flex-direction:column;gap:8px}
+.note-h{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--fg-2);flex-wrap:wrap}
+.note-h .mono{color:var(--muted)}
+.note-h .end{margin-inline-start:auto}
+.note p{white-space:pre-wrap;overflow-wrap:anywhere}
+.phone{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.lostbox{border:1px solid color-mix(in srgb,var(--bad) 35%,transparent);background:var(--tint-bad);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.callout{border-radius:12px;padding:12px 14px;background:var(--tint-good);display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap}
+.d-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.d-actions .grow{flex:1}
+.confirm{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px;color:var(--fg-2)}
+.check-l{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--fg-2)}
+.check-l input{margin-top:3px;accent-color:var(--violet);width:18px;height:18px;flex:none}
+
+/* Toasts */
+#toasts{position:fixed;inset-inline-end:max(20px,env(safe-area-inset-right,0px));bottom:max(20px,env(safe-area-inset-bottom,0px));z-index:60;display:flex;flex-direction:column;gap:8px;max-width:min(380px,calc(100vw - 32px))}
+.toast{background:var(--surface-3);border:1px solid var(--line-2);border-inline-start:3px solid var(--violet);border-radius:12px;padding:11px 14px;box-shadow:var(--shadow);font-size:13.5px;animation:fade .2s}
+.toast.bad{border-inline-start-color:var(--bad)}.toast.good{border-inline-start-color:var(--good)}.toast.coral{border-inline-start-color:var(--coral)}
+.toast b{font-weight:700}
+.skel{color:var(--muted);padding:40px;text-align:center}
+
+/* ---------- Responsive ---------- */
+@media (max-width:1180px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.g2,.g2.even{grid-template-columns:minmax(0,1fr)}}
+/* Tablet: icon rail */
+@media (min-width:861px) and (max-width:1100px){
+  .shell{grid-template-columns:84px minmax(0,1fr)}
+  .side{padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px));align-items:center}
+  .side-brand .wm,.nav a span,.side-foot>div,.side-lang .lt{display:none}
+  .side-lang .langbtn{padding:0;width:44px}
+  .nav a{justify-content:center;position:relative;padding:12px}
+  .nav em{position:absolute;top:2px;inset-inline-end:2px;min-width:0;padding:0 5px;font-size:10px}
+  .side-foot{flex-direction:column;padding:8px}
+  .side-foot .iconbtn{margin-inline-start:0}
+  .main{padding-left:max(28px,env(safe-area-inset-left,0px));padding-right:max(28px,env(safe-area-inset-right,0px))}
+}
+/* Phones and small tablets: bottom tab bar */
+@media (max-width:860px){
+  .login{grid-template-columns:minmax(0,1fr)}
+  .login-brand{border-inline-end:0;border-bottom:1px solid var(--line);padding-block:24px;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));gap:20px}
+  .login-brand .lb-foot{display:none}
+  .lockup{gap:20px}
+  .lockup .logo{width:60px}
+  .wm b{font-size:36px}.wm span{font-size:16px;margin-top:8px}
+  .login-panel{align-items:flex-start;padding-block:28px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .side{position:fixed;top:auto;bottom:0;left:0;right:0;height:auto;z-index:30;flex-direction:row;padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));border-inline-end:0;border-top:1px solid var(--line)}
+  .side-brand,.side-foot,.side-lang{display:none}
+  .nav{flex-direction:row;width:100%;justify-content:space-between}
+  .nav a{flex:1;flex-direction:column;gap:3px;padding:6px 2px;font-size:10.5px;position:relative;justify-content:center;text-align:center;line-height:1.2;min-width:0}
+  .nav a span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .nav em{position:absolute;top:0;inset-inline-start:calc(50% + 6px);margin:0;min-width:0;padding:0 5px;font-size:10px}
+  .main{padding-block:12px 110px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .wrap{gap:18px}
+  .mhead{display:flex;align-items:center;gap:10px;justify-content:space-between}
+  .mhead .lft{display:flex;align-items:center;gap:8px}
+  .mhead .brand{display:flex;align-items:center;gap:10px;direction:ltr}
+  .ph h1{font-size:24px}
+  .ph-actions{width:100%}
+  .ph-actions .btn{flex:1}
+  .kpi .k-v{font-size:26px}
+  .row{grid-template-columns:minmax(0,1fr) auto}
+  .row .hide-m{display:none}
+  .fgrid{grid-template-columns:minmax(0,1fr)}
+  .stepper{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .board{grid-template-columns:repeat(var(--cols,4),minmax(min(300px,84%),1fr))}
+  .search{max-width:none;flex-basis:100%}
+  .filters .sel{flex:1 1 140px}
+  .filters .seg{overflow-x:auto}
+  .inp,.sel,textarea.inp{font-size:16px}
+  .d-head{padding:12px 16px}
+  .d-body{padding:16px 16px 40px}
+  #toasts{bottom:calc(76px + env(safe-area-inset-bottom,0px));left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));max-width:none}
+}
+@media (max-width:400px){
+  .seg.status{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .kpis{gap:10px}.kpi{padding:14px}
+  .kpi .k-v{font-size:24px}
+  .card{padding:16px}
+  .mhead .wm{display:none}
+  .pin-dots{gap:12px}
+  .pad button{height:52px}
+  .nav a{font-size:10px}
+  .pipe-row{grid-template-columns:minmax(80px,100px) 1fr 26px;gap:8px}
+}
+@media (orientation:landscape) and (max-height:520px){
+  .login{grid-template-columns:1fr 1fr}
+  .login-brand{border-bottom:0;border-inline-end:1px solid var(--line)}
+  .pad button{height:42px}
+  .lp-inner{gap:14px}
+}
+@media (min-width:1700px){.wrap{max-width:1560px}body{font-size:15px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div id="app"><div class="skel">HIGH MEDIA…</div></div>
+<div id="drawer-root"></div>
+<div id="toasts" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- Storage ---------- */
+const store = {
+  get(k) { try { return JSON.parse(localStorage.getItem("hm." + k)); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem("hm." + k, JSON.stringify(v)); } catch (e) {} },
+  del(k) { try { localStorage.removeItem("hm." + k); } catch (e) {} }
+};
+
+/* ---------- Language ---------- */
+let LANG = store.get("lang") || ((navigator.language || "").toLowerCase().startsWith("ar") ? "ar" : "en");
+const I18N = {
+en: {
+  tagline: "Social media · Content · Websites", teamPortal: "Team portal",
+  whoSigning: "Who's signing in?", pickName: "Pick your name, then enter your 4-digit PIN. First time here? You'll create one.",
+  notX: "Not {name}?", checking: "Checking your account…", welcomeBack: "Welcome back, {name}", createPin: "Create your PIN", enterAgain: "Enter it once more",
+  enterPin: "Enter your 4-digit PIN.", choosePin: "Choose 4 digits you'll use to open your board, {name}.", confirmPin: "Type the same 4 digits to confirm.",
+  pinWrong: "That PIN doesn't match. Try again.", pinMismatch: "The two PINs don't match. Choose your PIN again.",
+  forgot: "Forgot your PIN?", onlyOwnerReset: "Only the portal's owner can reset a PIN.", resetPinFor: "Reset {name}'s PIN", pinResetDone: "{name}'s PIN was reset. They can choose a new one now.",
+  signInContinue: "Sign in to continue", needsAccount: "<b>The portal needs your claude.ai account.</b><br>Open this page while signed in to claude.ai, and make sure it has been shared with you as a Contributor or Editor.",
+  digitsEntered: "{n} of 4 digits entered", deleteDigit: "Delete digit",
+  nav_overview: "Overview", nav_tasks: "Tasks", nav_leads: "Leads & clients", nav_portfolio: "Portfolio", nav_activity: "Activity",
+  signedIn: "Signed in", signOut: "Sign out", switchLang: "العربية", close: "Close",
+  bannerNotConnected: "The portal isn't connected. Open it while signed in to claude.ai to load and save your data.",
+  bannerReadOnly: "You can view the portal but not change it. Ask Faisal to share it with your account as a <b>Contributor</b>.",
+  bannerSlow: "Can't reach the portal's data yet. Check your connection; it will load as soon as it can.",
+  newTask: "New task", newLead: "New lead",
+  morning: "Good morning", afternoon: "Good afternoon", evening: "Good evening", greet: "{g}, {name}",
+  kYourOpen: "Your open tasks", kOverdue: "{n} overdue", kNewFrom: "{n} new from {name}", kNothingOverdue: "Nothing overdue",
+  kTeamDue: "Team tasks due in 7 days", kAlreadyOverdue: "{n} already overdue", kOpenTotal: "{n} open in total",
+  kActiveLeads: "Active leads", kInClosing: "{n} in closing", kClients: "Clients", kProjects: "{n} portfolio projects",
+  queue: "Your queue", queueSub: "Assigned to you, soonest due first", loadingTasks: "Loading your tasks…",
+  queueClear: "Your queue is clear", queueClearSub: "New tasks assigned to you show up here the moment they're added.", seeAll: "See all {n} tasks",
+  pipeline: "Pipeline", pipelineSub: "Every lead by stage", openLeads: "Open leads",
+  noLeads: "No leads yet", noLeadsSub: "Add the businesses you're talking to and track them from first contact to client.",
+  latest: "Latest activity", latestSub: "Everything either of you does, time-stamped", fullLog: "Full activity log",
+  feedEmpty: "Every task, lead change and note is logged here with its date and time.",
+  chartTitle: "Who completed what", chartSub: "Completed {noun} per week, last 8 weeks", nounTasks: "tasks", nounSteps: "steps",
+  segTasks: "Tasks", segSteps: "Checklist steps", noneDone: "No completed {noun} in the last 8 weeks", noneDoneSub: "When either of you marks one done, it's counted here under your name.",
+  thisMonth: "This month", viewTable: "View as table", weekStarting: "Week starting", weekOf: "Week of {d}", chartAria: "Completed {noun} per week by Faisal and Abdulrahman",
+  cat_website: "Website", cat_reels: "Reels", cat_posts: "Posts", cat_page: "Page setup", cat_admin: "Client admin", task: "Task",
+  st_todo: "To do", st_doing: "In progress", st_review: "Review", st_done: "Done",
+  sg_potential: "Potential lead", sg_discussion: "In discussion", sg_closing: "Closing", sg_client: "Client", sg_lost: "Lost",
+  sv_website: "Website", sv_store: "Online store", sv_social: "Social media (Reels & posts)", sv_both: "Website + social media",
+  sgc_doctor: "Doctors & clinics", sgc_store: "Online stores", sgc_restaurant: "Restaurants & cafés", sgc_beauty: "Beauty & salons", sgc_realestate: "Real estate", sgc_company: "Companies & services", sgc_other: "Other",
+  clientCat: "Client category", chooseCat: "Choose a category", allClientCats: "All categories", allServices: "All services", uncategorized: "Not categorized", needCat: "Choose a client category.", noMatch: "No leads match these filters.",
+  src_instagram: "Instagram", src_facebook: "Facebook", src_referral: "Referral", src_whatsapp: "WhatsApp", src_google: "Google", src_walkin: "Walk-in", src_other: "Other",
+  pt_website: "Website", pt_store: "Online store", pt_social: "Social media", pt_branding: "Branding",
+  pr_low: "Low", pr_normal: "Normal", pr_high: "High", highPriority: "High priority", isNew: "New",
+  stepsN: "{d}/{n} steps", shared: "Shared",
+  dueToday: "Due today", dueTomorrow: "Due tomorrow", dueIn: "Due in {n}d · {date}", overdueBy: "Overdue {n}d · {date}", noDue: "No due date",
+  justNow: "just now", mAgo: "{n}m ago", hAgo: "{n}h ago", yesterday: "yesterday", dAgo: "{n}d ago", today: "Today", yesterdayCap: "Yesterday",
+  workflow: "Workflow", mine: "Mine", partners: "{name}'s", everyone: "Everyone", allCats: "All categories", allClients: "All clients", noClient: "No client", leadTag: "(lead)",
+  searchTasks: "Search tasks", emptyTodo: "Nothing waiting. Add a task to get started.", emptyDone: "Completed tasks land here with who finished them and when.", emptyCol: "Drag a card here or change its status.",
+  showOlder: "Show {n} older", noTasks: "No tasks yet", noTasksSub: "Create the first one. Pick a category (Website, Reels, Posts, Page setup) and it comes with our standard checklist, which you can edit.",
+  sales: "Sales", tabPipeline: "Pipeline", tabClients: "Clients", tabLost: "Lost", searchLeads: "Search name, business or phone", noLeadsHere: "No leads here.",
+  clientSince: "Client since", openTasksN: "{n} open tasks", projectsN: "{n} projects", notesN: "{n} notes", lastNote: ", last {rel}",
+  noClients: "No clients yet", noClientsSub: "Move a lead to the Client stage when they sign and they'll show up here.",
+  lostOn: "Lost on", reason: "Reason", notRecorded: "Not recorded", noLost: "No lost leads", noLostSub: "When a deal falls through, mark it lost with a reason. It's kept here for reference.",
+  movedToday: "Moved here today", daysInStage: "{n}d in this stage", lead: "Lead",
+  ourWork: "Our work", all: "All", addProject: "Add project", emptyCat: "Nothing in this category yet", emptyAll: "Your portfolio is empty",
+  emptyPortSub: "When a client's website or social media work goes live, add it here with the link so it's ready to show the next lead.",
+  visitSite: "Visit website", socialPage: "Social page", delivered: "Delivered {d}", addedOn: "Added {d}", edit: "Edit", client: "Client", project: "Project", website: "website",
+  everyStep: "Every step, time-stamped", activityLog: "Activity log", allAct: "All activity", fTasks: "Tasks & checklists", fLeads: "Leads", fNotes: "Client notes", fPortfolio: "Portfolio",
+  latest300: "Showing the latest 300 entries.", noAct: "Nothing logged yet", noActSub: "Each task, checklist step, lead stage change and note is recorded here with who did it and when.",
+  addedBy: "Added by {name} · {dt}", completedBy: "Completed by <b>{name}</b>", reopen: "Reopen", assignedTo: "Assigned to", dueDate: "Due date", priority: "Priority",
+  category: "Category", details: "Details", detailsPh: "Brief, links, what the client asked for…", checklist: "Checklist", ofDone: "{d} of {n} done",
+  noSteps: "No steps yet. Add your own, or start from our {cat} workflow.", useChecklist: "Use {cat} checklist", addStepPh: "Add a step", add: "Add",
+  markComplete: "Mark task complete", allStepsDone: " · all steps done", history: "History", doneBy: "Done by {name}", addedByShort: "Added by {name}",
+  del: "Delete", yesDelete: "Yes, delete", keepIt: "Keep it", delTaskQ: "Delete this task and its history?", me: "(me)", both: "Both of us",
+  taskTitle: "Task title", statusL: "Status", checkOff: "Check off {s}", uncheck: "Uncheck {s}", removeStep: "Remove step", markDoneAria: "Mark “{t}” complete", markDone: "Mark complete",
+  business: "Business", bizPh: "e.g. Noor Dental Clinic", contact: "Contact name", phone: "Phone", copyNumber: "Copy number", whatsapp: "WhatsApp",
+  addNumberHint: "Add a number to copy it or open WhatsApp.", service: "Service", source: "Source", notSet: "Not set", budget: "Budget or quote",
+  budgetPh: "e.g. 4,500 SAR website + 1,200/month social", stage: "Stage", inStageSince: "In this stage since {dt}", lostOnFull: "Lost on {dt}",
+  noReason: "No reason recorded.", reopenDiscussion: "Reopen as “In discussion”", whyLost: "Why did it fall through?", lostPh: "e.g. Budget too low, went with another agency",
+  markLost: "Mark as lost", cancel: "Cancel", clientSinceFull: "Client since <b>{d}</b> · {n} portfolio projects", addToPortfolio: "Add to portfolio",
+  process: "Our process with them", processHint: "Plan the steps for this lead, e.g. first call, send examples, send quote, follow up.",
+  addLeadStepPh: "Add a step, e.g. Send website examples", newStepAria: "New process step", toggleStep: "Toggle step",
+  notes: "Notes", savedN: "{n} saved", notePh: "What happened? Call summary, client feedback, next steps…", newNoteAria: "New note", saveNote: "Save note",
+  loadingNotes: "Loading notes…", noNotes: "No notes yet. Each note is saved on its own with the date, time and who wrote it.",
+  deleteNote: "Delete note", keep: "Keep", stageHistory: "Stage history", movedTo: "moved it to <b>{stage}</b>", delLeadQ: "Delete this lead? Its notes can't be recovered.",
+  what: "What needs doing?", whatPh: "e.g. 3 Reels for Noor Dental, November batch", assignTo: "Assign to",
+  useTemplate: "Start with our standard checklist for this category. You can edit the steps after.", addTask: "Add task",
+  appearsOn: "It appears on {name}'s board right away, stamped with your name and the time.", addLead: "Add lead",
+  editProject: "Edit project", otherClient: "Other (type the name below)", clientNameIfNot: "Client name (if not in the list)", projTitle: "Project title",
+  projTitlePh: "e.g. Online store with Arabic & English checkout", type: "Type", deliveredOn: "Delivered on", websiteLink: "Website link",
+  socialLink: "Instagram or Facebook page", whatWeDid: "What we did", deliverables: "Deliverables (comma separated)", deliverablesPh: "Website, 12 posts, 4 Reels, Page setup",
+  saveChanges: "Save changes", removeQ: "Remove from portfolio?",
+  tTaskAdded: "Task added.", tNowOnBoard: " It's now on {name}'s board.", tDone: "<b>Done.</b> “{t}” is logged as completed by you.", tLeadAdded: "Lead added.",
+  tNowClient: "<b>{name}</b> is now a client. Add their work to the portfolio when it ships.", tNoteSaved: "Note saved.", tNoteDeleted: "Note deleted.",
+  tTaskDeleted: "Task deleted.", tLeadDeleted: "Lead deleted.", tProjSaved: "Project saved.", tProjAdded: "Added to the portfolio.", tProjRemoved: "Project removed.",
+  tCopied: "Number copied.", tCopyManual: "Select the number and copy it.", tPartnerAdded: "<b>{name}</b> added a task: “{t}”{forYou}.", forYou: " for you",
+  tPartnerDone: "<b>{name}</b> completed “{t}”.", needNameOrBiz: "Add a contact name or business.",
+  eReadOnly: "Your account can only view this portal. Ask Faisal to share it with you as a <b>Contributor</b>.",
+  eQuota: "The portal's storage is full. Delete some old activity or notes, then try again.", eRate: "Too many saves at once. Wait a moment and try again.",
+  eSave: "Couldn't save. Check your connection and try again.", eNotConnected: "The portal isn't connected yet. Open it while signed in to claude.ai.",
+  fld_segment: "the client category", fld_phone: "the phone number", fld_name: "the contact name", fld_business: "the business name",
+  act_task_added: "added task “{title}” for {who}", act_task_done: "completed task “{title}”", act_task_reopened: "reopened task “{title}”",
+  act_task_moved: "moved “{title}” to {st}", act_step_done: "checked off “{step}” in “{title}”", act_task_deleted: "deleted task “{title}”",
+  act_task_assigned: "assigned “{title}” to {who}", act_lead_added: "added lead “{name}” as {stage}", act_lead_lost: "marked “{name}” as lost{reason}",
+  act_lead_client: "converted “{name}” into a client", act_lead_moved: "moved “{name}” to {stage}", act_lead_step_added: "added process step “{step}” for “{name}”",
+  act_lead_step_done: "completed “{step}” for “{name}”", act_lead_updated: "updated {field} for “{name}”", act_lead_deleted: "deleted lead “{name}”",
+  act_note_added: "added a note on “{name}”", act_proj_added: "added “{title}” for {client} to the portfolio", act_proj_updated: "updated portfolio project “{title}”",
+  act_proj_removed: "removed “{title}” from the portfolio", aClient: "a client",
+  log_created: "created the task and assigned it to {who}", log_done: "marked the task complete", log_reopened: "reopened the task", log_moved: "moved it to {st}",
+  log_step_checked: "checked off “{step}”", log_step_unchecked: "unchecked “{step}”", log_step_added: "added step “{step}”", log_step_removed: "removed step “{step}”",
+  log_template: "added the {cat} workflow checklist", log_renamed: "renamed it to “{v}”", log_assigned: "assigned it to {who}", log_due_set: "set the due date to {d}",
+  log_due_removed: "removed the due date", log_priority: "set priority to {pr}", log_category: "changed category to {cat}", log_client_linked: "linked it to {name}",
+  log_client_unlinked: "unlinked the client", log_details: "updated the details"
+},
+ar: {
+  tagline: "سوشيال ميديا · محتوى · مواقع", teamPortal: "بوابة الفريق",
+  whoSigning: "من يسجّل الدخول؟", pickName: "اختر اسمك ثم أدخل رمزك المكوّن من 4 أرقام. أول مرة؟ ستنشئ رمزك الآن.",
+  notX: "لست {name}؟", checking: "جارٍ التحقق من حسابك…", welcomeBack: "أهلًا بعودتك يا {name}", createPin: "أنشئ رمزك السري", enterAgain: "أدخله مرة أخرى",
+  enterPin: "أدخل رمزك المكوّن من 4 أرقام.", choosePin: "اختر 4 أرقام تفتح بها لوحتك يا {name}.", confirmPin: "اكتب الأرقام الأربعة نفسها للتأكيد.",
+  pinWrong: "الرمز غير صحيح. حاول مرة أخرى.", pinMismatch: "الرمزان غير متطابقين. اختر رمزك من جديد.",
+  forgot: "نسيت الرمز؟", onlyOwnerReset: "مالك البوابة فقط يمكنه إعادة تعيين الرمز.", resetPinFor: "إعادة تعيين رمز {name}", pinResetDone: "تمت إعادة تعيين رمز {name}. يمكنه اختيار رمز جديد الآن.",
+  signInContinue: "سجّل الدخول للمتابعة", needsAccount: "<b>البوابة تحتاج حسابك في claude.ai.</b><br>افتح هذه الصفحة وأنت مسجّل الدخول في claude.ai، وتأكد أنها مشاركة معك بصلاحية مساهم أو محرر.",
+  digitsEntered: "تم إدخال {n} من 4 أرقام", deleteDigit: "حذف رقم",
+  nav_overview: "نظرة عامة", nav_tasks: "المهام", nav_leads: "العملاء", nav_portfolio: "أعمالنا", nav_activity: "السجل",
+  signedIn: "مسجّل الدخول", signOut: "تسجيل الخروج", switchLang: "English", close: "إغلاق",
+  bannerNotConnected: "البوابة غير متصلة. افتحها وأنت مسجّل الدخول في claude.ai لتحميل بياناتك وحفظها.",
+  bannerReadOnly: "يمكنك مشاهدة البوابة دون تعديلها. اطلب من فيصل مشاركتها مع حسابك بصلاحية <b>مساهم</b>.",
+  bannerSlow: "تعذّر الوصول إلى بيانات البوابة حتى الآن. تحقق من اتصالك، وستُحمَّل فور توفرها.",
+  newTask: "مهمة جديدة", newLead: "عميل محتمل جديد",
+  morning: "صباح الخير", afternoon: "مساء الخير", evening: "مساء الخير", greet: "{g} يا {name}",
+  kYourOpen: "مهامك المفتوحة", kOverdue: "{n} متأخرة", kNewFrom: "{n} جديدة من {name}", kNothingOverdue: "لا توجد مهام متأخرة",
+  kTeamDue: "مهام الفريق خلال 7 أيام", kAlreadyOverdue: "{n} متأخرة بالفعل", kOpenTotal: "{n} مفتوحة إجمالًا",
+  kActiveLeads: "العملاء المحتملون النشطون", kInClosing: "{n} في مرحلة الإغلاق", kClients: "العملاء", kProjects: "{n} مشاريع في المعرض",
+  queue: "قائمتك", queueSub: "المهام المسندة إليك، الأقرب موعدًا أولًا", loadingTasks: "جارٍ تحميل مهامك…",
+  queueClear: "قائمتك فارغة", queueClearSub: "أي مهمة تُسند إليك تظهر هنا فور إضافتها.", seeAll: "عرض كل المهام ({n})",
+  pipeline: "مسار المبيعات", pipelineSub: "كل العملاء المحتملين حسب المرحلة", openLeads: "فتح العملاء",
+  noLeads: "لا يوجد عملاء محتملون بعد", noLeadsSub: "أضف الأنشطة التجارية التي تتواصل معها وتابعها من أول تواصل حتى تصبح عميلًا.",
+  latest: "آخر النشاطات", latestSub: "كل ما يقوم به أي منكما، بالتاريخ والوقت", fullLog: "سجل النشاط الكامل",
+  feedEmpty: "كل مهمة وتغيير في مرحلة العميل وملاحظة تُسجَّل هنا بتاريخها ووقتها.",
+  chartTitle: "من أنجز ماذا", chartSub: "{noun} المنجزة أسبوعيًا، آخر 8 أسابيع", nounTasks: "المهام", nounSteps: "الخطوات",
+  segTasks: "المهام", segSteps: "خطوات القائمة", noneDone: "لا توجد {noun} منجزة في آخر 8 أسابيع", noneDoneSub: "عندما ينجز أي منكما مهمة، تُحسب هنا باسمه.",
+  thisMonth: "هذا الشهر", viewTable: "عرض كجدول", weekStarting: "بداية الأسبوع", weekOf: "أسبوع {d}", chartAria: "{noun} المنجزة أسبوعيًا لفيصل وعبدالرحمن",
+  cat_website: "موقع إلكتروني", cat_reels: "ريلز", cat_posts: "منشورات", cat_page: "تجهيز الصفحة", cat_admin: "إدارة العميل", task: "مهمة",
+  st_todo: "للتنفيذ", st_doing: "قيد التنفيذ", st_review: "مراجعة", st_done: "منجزة",
+  sg_potential: "عميل محتمل", sg_discussion: "قيد النقاش", sg_closing: "مرحلة الإغلاق", sg_client: "عميل", sg_lost: "مفقود",
+  sv_website: "موقع إلكتروني", sv_store: "متجر إلكتروني", sv_social: "سوشيال ميديا (ريلز ومنشورات)", sv_both: "موقع + سوشيال ميديا",
+  sgc_doctor: "أطباء وعيادات", sgc_store: "متاجر إلكترونية", sgc_restaurant: "مطاعم ومقاهي", sgc_beauty: "تجميل وصالونات", sgc_realestate: "عقارات", sgc_company: "شركات وخدمات", sgc_other: "أخرى",
+  clientCat: "فئة العميل", chooseCat: "اختر الفئة", allClientCats: "كل الفئات", allServices: "كل الخدمات", uncategorized: "بدون فئة", needCat: "اختر فئة العميل.", noMatch: "لا يوجد عملاء يطابقون هذا الفلتر.",
+  src_instagram: "إنستغرام", src_facebook: "فيسبوك", src_referral: "توصية", src_whatsapp: "واتساب", src_google: "جوجل", src_walkin: "زيارة مباشرة", src_other: "أخرى",
+  pt_website: "موقع إلكتروني", pt_store: "متجر إلكتروني", pt_social: "سوشيال ميديا", pt_branding: "هوية بصرية",
+  pr_low: "منخفضة", pr_normal: "عادية", pr_high: "عالية", highPriority: "أولوية عالية", isNew: "جديد",
+  stepsN: "{d}/{n} خطوات", shared: "مشتركة",
+  dueToday: "مستحقة اليوم", dueTomorrow: "مستحقة غدًا", dueIn: "خلال {n} يوم · {date}", overdueBy: "متأخرة {n} يوم · {date}", noDue: "بدون موعد",
+  justNow: "الآن", mAgo: "قبل {n} د", hAgo: "قبل {n} س", yesterday: "أمس", dAgo: "قبل {n} يوم", today: "اليوم", yesterdayCap: "أمس",
+  workflow: "سير العمل", mine: "مهامي", partners: "مهام {name}", everyone: "الجميع", allCats: "كل الفئات", allClients: "كل العملاء", noClient: "بدون عميل", leadTag: "(محتمل)",
+  searchTasks: "ابحث في المهام", emptyTodo: "لا شيء بالانتظار. أضف مهمة للبدء.", emptyDone: "المهام المنجزة تظهر هنا مع اسم من أنجزها ومتى.", emptyCol: "اسحب بطاقة إلى هنا أو غيّر حالتها.",
+  showOlder: "عرض {n} أقدم", noTasks: "لا توجد مهام بعد", noTasksSub: "أنشئ أول مهمة. اختر فئة (موقع، ريلز، منشورات، تجهيز الصفحة) وستأتي مع قائمة خطواتنا المعتادة، ويمكنك تعديلها.",
+  sales: "المبيعات", tabPipeline: "المسار", tabClients: "العملاء", tabLost: "المفقودة", searchLeads: "ابحث بالاسم أو النشاط أو الرقم", noLeadsHere: "لا يوجد عملاء هنا.",
+  clientSince: "عميل منذ", openTasksN: "{n} مهام مفتوحة", projectsN: "{n} مشاريع", notesN: "{n} ملاحظات", lastNote: "، آخرها {rel}",
+  noClients: "لا يوجد عملاء بعد", noClientsSub: "انقل العميل المحتمل إلى مرحلة «عميل» عند التعاقد وسيظهر هنا.",
+  lostOn: "فُقد في", reason: "السبب", notRecorded: "غير مسجّل", noLost: "لا توجد صفقات مفقودة", noLostSub: "إذا لم تتم الصفقة، حدّدها كمفقودة مع السبب. ستبقى هنا للرجوع إليها.",
+  movedToday: "انتقل إلى هنا اليوم", daysInStage: "{n} يوم في هذه المرحلة", lead: "عميل محتمل",
+  ourWork: "أعمالنا", all: "الكل", addProject: "إضافة مشروع", emptyCat: "لا توجد أعمال في هذه الفئة بعد", emptyAll: "معرض الأعمال فارغ",
+  emptyPortSub: "عند إطلاق موقع عميل أو أعمال السوشيال ميديا الخاصة به، أضفها هنا مع الرابط لتكون جاهزة لعرضها على العميل التالي.",
+  visitSite: "زيارة الموقع", socialPage: "صفحة السوشيال", delivered: "سُلّم في {d}", addedOn: "أُضيف في {d}", edit: "تعديل", client: "العميل", project: "مشروع", website: "الموقع",
+  everyStep: "كل خطوة بتاريخها ووقتها", activityLog: "سجل النشاط", allAct: "كل النشاطات", fTasks: "المهام والقوائم", fLeads: "العملاء المحتملون", fNotes: "ملاحظات العملاء", fPortfolio: "معرض الأعمال",
+  latest300: "يُعرض آخر 300 نشاط.", noAct: "لا يوجد نشاط بعد", noActSub: "كل مهمة وخطوة وتغيير مرحلة وملاحظة تُسجَّل هنا مع اسم من قام بها ومتى.",
+  addedBy: "أضافها {name} · {dt}", completedBy: "أنجزها <b>{name}</b>", reopen: "إعادة فتح", assignedTo: "مسندة إلى", dueDate: "تاريخ الاستحقاق", priority: "الأولوية",
+  category: "الفئة", details: "التفاصيل", detailsPh: "الملخص، الروابط، طلبات العميل…", checklist: "قائمة الخطوات", ofDone: "{d} من {n} منجزة",
+  noSteps: "لا توجد خطوات بعد. أضف خطواتك أو ابدأ بقائمة {cat} المعتادة.", useChecklist: "استخدم قائمة {cat}", addStepPh: "أضف خطوة", add: "إضافة",
+  markComplete: "تحديد المهمة كمنجزة", allStepsDone: " · كل الخطوات منجزة", history: "السجل", doneBy: "أنجزها {name}", addedByShort: "أضافها {name}",
+  del: "حذف", yesDelete: "نعم، احذف", keepIt: "إبقاء", delTaskQ: "حذف هذه المهمة وسجلها؟", me: "(أنا)", both: "كلانا",
+  taskTitle: "عنوان المهمة", statusL: "الحالة", checkOff: "إنجاز {s}", uncheck: "إلغاء إنجاز {s}", removeStep: "حذف الخطوة", markDoneAria: "تحديد «{t}» كمنجزة", markDone: "تحديد كمنجزة",
+  business: "النشاط التجاري", bizPh: "مثال: عيادة نور للأسنان", contact: "اسم جهة الاتصال", phone: "رقم الجوال", copyNumber: "نسخ الرقم", whatsapp: "واتساب",
+  addNumberHint: "أضف رقمًا لنسخه أو فتح واتساب.", service: "الخدمة", source: "المصدر", notSet: "غير محدد", budget: "الميزانية أو عرض السعر",
+  budgetPh: "مثال: 4,500 ريال للموقع + 1,200 شهريًا للسوشيال", stage: "المرحلة", inStageSince: "في هذه المرحلة منذ {dt}", lostOnFull: "فُقد في {dt}",
+  noReason: "لم يُسجَّل سبب.", reopenDiscussion: "إعادة فتحه كـ«قيد النقاش»", whyLost: "لماذا لم تتم الصفقة؟", lostPh: "مثال: الميزانية منخفضة، اختار وكالة أخرى",
+  markLost: "تحديد كمفقود", cancel: "إلغاء", clientSinceFull: "عميل منذ <b>{d}</b> · {n} مشاريع في المعرض", addToPortfolio: "إضافة إلى المعرض",
+  process: "خطواتنا معه", processHint: "خطط خطوات هذا العميل، مثل: أول مكالمة، إرسال نماذج، إرسال عرض السعر، المتابعة.",
+  addLeadStepPh: "أضف خطوة، مثال: إرسال نماذج مواقع", newStepAria: "خطوة جديدة", toggleStep: "تبديل الخطوة",
+  notes: "الملاحظات", savedN: "{n} محفوظة", notePh: "ماذا حدث؟ ملخص المكالمة، ملاحظات العميل، الخطوات التالية…", newNoteAria: "ملاحظة جديدة", saveNote: "حفظ الملاحظة",
+  loadingNotes: "جارٍ تحميل الملاحظات…", noNotes: "لا توجد ملاحظات بعد. كل ملاحظة تُحفظ منفصلة بالتاريخ والوقت واسم كاتبها.",
+  deleteNote: "حذف الملاحظة", keep: "إبقاء", stageHistory: "سجل المراحل", movedTo: "نقله إلى <b>{stage}</b>", delLeadQ: "حذف هذا العميل؟ لا يمكن استرجاع ملاحظاته.",
+  what: "ما المطلوب؟", whatPh: "مثال: 3 ريلز لعيادة نور، دفعة نوفمبر", assignTo: "إسناد إلى",
+  useTemplate: "ابدأ بقائمة الخطوات المعتادة لهذه الفئة. يمكنك تعديل الخطوات لاحقًا.", addTask: "إضافة المهمة",
+  appearsOn: "ستظهر في لوحة {name} فورًا، باسمك ووقت الإضافة.", addLead: "إضافة العميل",
+  editProject: "تعديل المشروع", otherClient: "آخر (اكتب الاسم بالأسفل)", clientNameIfNot: "اسم العميل (إن لم يكن في القائمة)", projTitle: "عنوان المشروع",
+  projTitlePh: "مثال: متجر إلكتروني بدفع عربي وإنجليزي", type: "النوع", deliveredOn: "تاريخ التسليم", websiteLink: "رابط الموقع",
+  socialLink: "صفحة إنستغرام أو فيسبوك", whatWeDid: "ما قمنا به", deliverables: "المخرجات (افصل بينها بفاصلة)", deliverablesPh: "موقع، 12 منشورًا، 4 ريلز، تجهيز الصفحة",
+  saveChanges: "حفظ التغييرات", removeQ: "إزالة من المعرض؟",
+  tTaskAdded: "تمت إضافة المهمة.", tNowOnBoard: " ظهرت الآن في لوحة {name}.", tDone: "<b>تم.</b> سُجّلت «{t}» كمنجزة باسمك.", tLeadAdded: "تمت إضافة العميل.",
+  tNowClient: "<b>{name}</b> أصبح عميلًا. أضف أعماله إلى المعرض عند تسليمها.", tNoteSaved: "تم حفظ الملاحظة.", tNoteDeleted: "تم حذف الملاحظة.",
+  tTaskDeleted: "تم حذف المهمة.", tLeadDeleted: "تم حذف العميل.", tProjSaved: "تم حفظ المشروع.", tProjAdded: "أُضيف إلى المعرض.", tProjRemoved: "أُزيل المشروع.",
+  tCopied: "تم نسخ الرقم.", tCopyManual: "حدّد الرقم وانسخه.", tPartnerAdded: "<b>{name}</b> أضاف مهمة: «{t}»{forYou}.", forYou: " لك",
+  tPartnerDone: "<b>{name}</b> أنجز «{t}».", needNameOrBiz: "أضف اسم جهة الاتصال أو النشاط التجاري.",
+  eReadOnly: "حسابك يمكنه المشاهدة فقط. اطلب من فيصل مشاركة البوابة معك بصلاحية <b>مساهم</b>.",
+  eQuota: "مساحة التخزين ممتلئة. احذف بعض النشاطات أو الملاحظات القديمة ثم حاول مرة أخرى.", eRate: "عمليات حفظ كثيرة في وقت واحد. انتظر لحظة ثم حاول مرة أخرى.",
+  eSave: "تعذّر الحفظ. تحقق من اتصالك وحاول مرة أخرى.", eNotConnected: "البوابة غير متصلة بعد. افتحها وأنت مسجّل الدخول في claude.ai.",
+  fld_segment: "فئة العميل", fld_phone: "رقم الجوال", fld_name: "اسم جهة الاتصال", fld_business: "اسم النشاط",
+  act_task_added: "أضاف المهمة «{title}» لـ{who}", act_task_done: "أنجز المهمة «{title}»", act_task_reopened: "أعاد فتح المهمة «{title}»",
+  act_task_moved: "نقل «{title}» إلى {st}", act_step_done: "أنجز الخطوة «{step}» في «{title}»", act_task_deleted: "حذف المهمة «{title}»",
+  act_task_assigned: "أسند «{title}» إلى {who}", act_lead_added: "أضاف «{name}» كـ{stage}", act_lead_lost: "حدّد «{name}» كمفقود{reason}",
+  act_lead_client: "حوّل «{name}» إلى عميل", act_lead_moved: "نقل «{name}» إلى {stage}", act_lead_step_added: "أضاف الخطوة «{step}» لـ«{name}»",
+  act_lead_step_done: "أنجز «{step}» لـ«{name}»", act_lead_updated: "حدّث {field} لـ«{name}»", act_lead_deleted: "حذف «{name}»",
+  act_note_added: "أضاف ملاحظة على «{name}»", act_proj_added: "أضاف «{title}» لـ{client} إلى المعرض", act_proj_updated: "حدّث المشروع «{title}»",
+  act_proj_removed: "أزال «{title}» من المعرض", aClient: "عميل",
+  log_created: "أنشأ المهمة وأسندها إلى {who}", log_done: "حدّد المهمة كمنجزة", log_reopened: "أعاد فتح المهمة", log_moved: "نقلها إلى {st}",
+  log_step_checked: "أنجز «{step}»", log_step_unchecked: "ألغى إنجاز «{step}»", log_step_added: "أضاف الخطوة «{step}»", log_step_removed: "حذف الخطوة «{step}»",
+  log_template: "أضاف قائمة خطوات {cat}", log_renamed: "غيّر العنوان إلى «{v}»", log_assigned: "أسندها إلى {who}", log_due_set: "حدّد الاستحقاق في {d}",
+  log_due_removed: "أزال تاريخ الاستحقاق", log_priority: "غيّر الأولوية إلى {pr}", log_category: "غيّر الفئة إلى {cat}", log_client_linked: "ربطها بـ{name}",
+  log_client_unlinked: "ألغى ربط العميل", log_details: "حدّث التفاصيل"
+}};
+function t(k, p) {
+  let s = I18N[LANG][k]; if (s == null) s = I18N.en[k]; if (s == null) s = k;
+  return p ? s.replace(/\{(\w+)\}/g, (m, x) => (p[x] != null ? p[x] : "")) : s;
+}
+function applyLang() {
+  const r = document.documentElement; r.lang = LANG; r.dir = LANG === "ar" ? "rtl" : "ltr";
+}
+applyLang();
+
+/* ---------- Constants ---------- */
+const MEMBERS = {
+  faisal: { name: { en: "Faisal", ar: "فيصل" }, initial: { en: "F", ar: "ف" }, role: { en: "Co-founder · Plans the work", ar: "شريك مؤسس · يخطط للعمل" }, color: "var(--c-faisal)" },
+  abdulrahman: { name: { en: "Abdulrahman", ar: "عبدالرحمن" }, initial: { en: "A", ar: "ع" }, role: { en: "Co-founder · Design & content", ar: "شريك مؤسس · التصميم والمحتوى" }, color: "var(--c-abd)" }
+};
+const MIDS = ["faisal", "abdulrahman"];
+const partnerOf = id => id === "faisal" ? "abdulrahman" : "faisal";
+const CAT_KEYS = ["website","reels","posts","page","admin"];
+const STATUSES = [["todo","var(--muted)"],["doing","var(--info)"],["review","var(--warn)"],["done","var(--good)"]];
+const STAGES = [["potential","var(--info)"],["discussion","var(--violet)"],["closing","var(--warn)"],["client","var(--good)"],["lost","var(--bad)"]];
+const SERVICE_KEYS = ["website","store","social","both"];
+const SEGMENT_KEYS = ["doctor","store","restaurant","beauty","realestate","company","other"];
+const SEG_COLORS = { doctor: "var(--teal)", store: "var(--violet)", restaurant: "var(--coral)", beauty: "var(--pink)", realestate: "var(--info)", company: "var(--warn)", other: "var(--muted)" };
+const segL = k => (k ? t("sgc_" + k) : t("uncategorized"));
+const segChip = k => (k ? `<span class="chip sgc-${k}">${segL(k)}</span>` : "");
+const segOptions = (sel, withEmpty) => (withEmpty ? `<option value="">${t("chooseCat")}</option>` : "") + SEGMENT_KEYS.map(k => `<option value="${k}" ${sel === k ? "selected" : ""}>${segL(k)}</option>`).join("");
+const SOURCE_KEYS = ["instagram","facebook","referral","whatsapp","google","walkin","other"];
+const PTYPE_KEYS = ["website","store","social","branding"];
+const catL = k => t("cat_" + k) || k;
+const stL = k => t("st_" + k);
+const sgL = k => t("sg_" + k);
+const svL = k => t("sv_" + k);
+const srcL = k => { if (!k) return ""; const key = String(k).toLowerCase().replace(/[^a-z]/g, ""); return I18N.en["src_" + key] ? t("src_" + key) : k; };
+const ptL = k => t("pt_" + k);
+const prL = k => t("pr_" + (k || "normal"));
+const TEMPLATES = {
+  en: {
+    website: ["Collect brief, logo & content from the client","Sitemap & page list","Homepage design","Inner pages design","Build & connect the domain","Mobile & speed check","Client review & revisions","Launch & handover"],
+    reels: ["Concept & script","Shoot or collect footage","Edit, music & captions","Cover frame","Client approval","Publish & pin to profile"],
+    posts: ["Plan the content calendar for this batch","Write captions (Arabic / English)","Design the posts","Client approval","Schedule in Meta Business Suite"],
+    page: ["Audit the current Instagram & Facebook pages","Bio, highlights & profile photo","Contact buttons & link in bio","Plan the first 9 posts of the grid","Connect Meta Business Suite"],
+    admin: ["Prepare the quote","Send the agreement","Collect the deposit"]
+  },
+  ar: {
+    website: ["جمع المتطلبات والشعار والمحتوى من العميل","خريطة الموقع وقائمة الصفحات","تصميم الصفحة الرئيسية","تصميم الصفحات الداخلية","البرمجة وربط النطاق","فحص الجوال والسرعة","مراجعة العميل والتعديلات","الإطلاق والتسليم"],
+    reels: ["الفكرة والسكربت","التصوير أو جمع اللقطات","المونتاج والموسيقى والنصوص","صورة الغلاف","موافقة العميل","النشر والتثبيت في الملف"],
+    posts: ["خطة المحتوى لهذه الدفعة","كتابة النصوص (عربي / إنجليزي)","تصميم المنشورات","موافقة العميل","الجدولة في Meta Business Suite"],
+    page: ["مراجعة صفحات إنستغرام وفيسبوك الحالية","البايو والهايلايت وصورة الملف","أزرار التواصل ورابط البايو","تخطيط أول 9 منشورات في الشبكة","ربط Meta Business Suite"],
+    admin: ["تجهيز عرض السعر","إرسال الاتفاقية","استلام الدفعة المقدمة"]
+  }
+};
+const VIEWS = ["overview","tasks","leads","portfolio","activity"];
+const DAY = 864e5;
+const MONTHS = { en: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], ar: ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"] };
+const MONTHS_L = { en: ["January","February","March","April","May","June","July","August","September","October","November","December"], ar: MONTHS.ar };
+const WEEKDAYS = { en: ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"], ar: ["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"] };
+
+/* ---------- State ---------- */
+const S = {
+  db: null, user: null, dbState: "loading", isOwner: false, readOnly: false,
+  me: null, loginAt: Date.now(), seenAt: 0,
+  tasks: [], leads: [], portfolio: [], activity: [], members: {}, loaded: {}, slow: false,
+  view: "overview",
+  login: { member: null, pin: "", first: "", error: "", busy: false, shake: false, forgot: false },
+  tf: { who: "mine", cat: "all", client: "all", q: "" },
+  lf: { tab: "pipeline", q: "", seg: "all", svc: "all" }, pf: { type: "all", seg: "all" }, af: { who: "all", kind: "all" },
+  drawer: null, notes: [], notesFor: null, notesUnsub: null, notesLoaded: false, drafts: {}, confirm: null,
+  chartMode: "tasks", showAllDone: false
+};
+
+/* ---------- Helpers ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+const pad = n => String(n).padStart(2, "0");
+const now = () => Date.now();
+const comma = () => (LANG === "ar" ? "،" : ",");
+function fmtDT(ms) { if (!ms) return ""; const d = new Date(ms); return `${d.getDate()} ${MONTHS[LANG][d.getMonth()]} ${d.getFullYear()}${comma()} ${pad(d.getHours())}:${pad(d.getMinutes())}`; }
+function fmtD(ms) { if (!ms) return ""; const d = new Date(ms); return `${d.getDate()} ${MONTHS[LANG][d.getMonth()]} ${d.getFullYear()}`; }
+function fmtDM(ms) { const d = new Date(ms); return `${d.getDate()} ${MONTHS[LANG][d.getMonth()]}`; }
+function fmtT(ms) { const d = new Date(ms); return `${pad(d.getHours())}:${pad(d.getMinutes())}`; }
+const dateMs = s => new Date(s + "T12:00:00").getTime();
+function rel(ms) {
+  if (!ms) return ""; const s = (now() - ms) / 1000;
+  if (s < 60) return t("justNow"); if (s < 3600) return t("mAgo", { n: Math.floor(s / 60) });
+  if (s < 86400) return t("hAgo", { n: Math.floor(s / 3600) }); if (s < 172800) return t("yesterday");
+  if (s < 7 * 86400) return t("dAgo", { n: Math.floor(s / 86400) }); return fmtD(ms);
+}
+function dayKey(ms) { const d = new Date(ms); return d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate(); }
+function dayLabel(ms) {
+  if (dayKey(ms) === dayKey(now())) return t("today"); if (dayKey(ms) === dayKey(now() - DAY)) return t("yesterdayCap");
+  const d = new Date(ms); return `${WEEKDAYS[LANG][d.getDay()]} ${d.getDate()} ${MONTHS[LANG][d.getMonth()]} ${d.getFullYear()}`;
+}
+function dueInfo(due, done) {
+  if (!due) return null;
+  const end = new Date(due + "T23:59:59").getTime(); if (isNaN(end)) return null;
+  const label = fmtDM(dateMs(due));
+  if (done) return { cls: "", text: label };
+  const days = Math.floor((end - now()) / DAY);
+  if (end < now()) { const late = Math.max(1, Math.ceil((now() - end) / DAY)); return { cls: "over", text: t("overdueBy", { n: late, date: label }), over: true }; }
+  if (days === 0) return { cls: "soon", text: t("dueToday"), soon: true };
+  if (days === 1) return { cls: "soon", text: t("dueTomorrow"), soon: true };
+  if (days < 7) return { cls: "soon", text: t("dueIn", { n: days, date: label }), soon: true };
+  return { cls: "", text: label };
+}
+const mName = id => (MEMBERS[id] ? MEMBERS[id].name[LANG] : "?");
+function av(id, cls = "") {
+  if (id === "both") return `<span class="avs">${av("faisal", cls)}${av("abdulrahman", cls)}</span>`;
+  const m = MEMBERS[id]; if (!m) return `<span class="av ${cls}" style="background:var(--muted)">?</span>`;
+  return `<span class="av ${cls}" style="background:${m.color}" title="${esc(m.name[LANG])}">${m.initial[LANG]}</span>`;
+}
+const assigneeLabel = a => (a === "both" ? t("both") : mName(a));
+function safeUrl(u) {
+  if (!u) return ""; u = String(u).trim(); if (!u) return "";
+  if (!/^https?:\/\//i.test(u)) u = "https://" + u;
+  try { const x = new URL(u); return (x.protocol === "http:" || x.protocol === "https:") ? x.href : ""; } catch (e) { return ""; }
+}
+function hostOf(u) { try { return new URL(u).host.replace(/^www\./, ""); } catch (e) { return u; } }
+function waLink(phone) {
+  if (!phone) return ""; const p = String(phone).trim(); const d = p.replace(/\D/g, "");
+  if (p.startsWith("+")) return "https://wa.me/" + d;
+  if (d.startsWith("00")) return "https://wa.me/" + d.slice(2);
+  return "";
+}
+const uid = () => Math.random().toString(36).slice(2, 10) + now().toString(36).slice(-4);
+const draft = (key, fallback) => (key in S.drafts ? S.drafts[key] : (fallback == null ? "" : fallback));
+
+/* Activity & history entries are stored as codes + params so they read in either language */
+function enumize(p) {
+  const o = {};
+  Object.keys(p || {}).forEach(k => {
+    let v = p[k];
+    if (k === "st") v = stL(v); else if (k === "stage") v = sgL(v); else if (k === "cat") v = catL(v);
+    else if (k === "who") v = assigneeLabel(v); else if (k === "pr") v = prL(v);
+    else if (k === "d") v = v ? fmtD(dateMs(v)) : ""; else if (k === "field") v = t("fld_" + v);
+    else if (k === "reason") v = v ? (LANG === "ar" ? "، السبب: " : ": ") + v : "";
+    else if (k === "client") v = v || t("aClient");
+    o[k] = esc(v);
+  });
+  return o;
+}
+const actText = a => (a.code ? t("act_" + a.code, enumize(a.p)) : esc(a.text || ""));
+const logText = e => (e.code ? t("log_" + e.code, enumize(e.p)) : esc(e.text || ""));
+
+const ICONS = {
+  home: '<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+  tasks: '<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8.5 12.2l2.6 2.6 4.6-5.3"/>',
+  leads: '<path d="M4 5h16l-6 7.5V19l-4-2v-4.5z"/>',
+  portfolio: '<rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3 13h18"/>',
+  activity: '<path d="M3 12h4l3-7 4 14 3-7h4"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  x: '<path d="M6 6l12 12M18 6L6 18"/>',
+  logout: '<path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4M10 8l-4 4 4 4M6 12h10"/>',
+  search: '<circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/>',
+  check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  clock: '<circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 2"/>',
+  ext: '<path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>',
+  copy: '<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/>',
+  back: '<path d="M15 5l-7 7 7 7"/>',
+  arrow: '<path d="M9 5l7 7-7 7"/>',
+  trash: '<path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/>',
+  note: '<path d="M5 4h10l4 4v12H5z"/><path d="M9 12h6M9 16h4"/>',
+  globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>'
+};
+const FLIP = { arrow: 1, back: 1, logout: 1 };
+const ic = (n, cls = "") => `<svg class="ic ${FLIP[n] ? "flip " : ""}${cls}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n] || ""}</svg>`;
+const langBtn = (withText = true) => `<button class="langbtn" data-action="lang" aria-label="${LANG === "ar" ? "Switch to English" : "التبديل إلى العربية"}">${ic("globe")}${withText ? `<span class="lt ${LANG === "ar" ? "en" : "ar"}">${t("switchLang")}</span>` : ""}</button>`;
+
+function logoSVG(w) {
+  const gid = "g" + Math.random().toString(36).slice(2, 7);
+  return `<svg class="logo" width="${w}" viewBox="-8 -8 296 361" aria-label="HIGH MEDIA" role="img">
+    <defs>
+      <linearGradient id="${gid}" x1="80" y1="280" x2="200" y2="140" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8B4BF0"/><stop offset="1" stop-color="#F05A35"/></linearGradient>
+      <filter id="${gid}b" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="9"/></filter>
+    </defs>
+    <polygon points="80,205 200,137 200,217 80,285" fill="url(#${gid})" opacity=".55" filter="url(#${gid}b)"/>
+    <polygon points="80,205 200,137 200,217 80,285" fill="url(#${gid})"/>
+    <rect class="pill" x="0" y="165" width="80" height="180" rx="40"/>
+    <rect class="pill" x="200" y="25" width="80" height="320" rx="40"/>
+    <circle cx="40" cy="100" r="40" fill="#F05A35"/>
+    <path d="M56 38 A64 64 0 0 1 101 82" fill="none" stroke="#F05A35" stroke-width="14" stroke-linecap="round"/>
+    <path d="M67 8 A96 96 0 0 1 132 72" fill="none" stroke="var(--coral-deep)" stroke-width="14" stroke-linecap="round"/>
+  </svg>`;
+}
+
+/* ---------- Toasts ---------- */
+function toast(html, kind = "") {
+  const el = document.createElement("div"); el.className = "toast " + kind; el.innerHTML = html;
+  $("#toasts").appendChild(el); setTimeout(() => el.remove(), kind === "bad" ? 7000 : 4500);
+}
+
+/* ---------- Data writes ---------- */
+function writeErr(e) {
+  const code = e && e.code;
+  if (code === "invalid_argument") { S.readOnly = true; toast(t("eReadOnly"), "bad"); schedule(); }
+  else if (code === "quota_exceeded") toast(t("eQuota"), "bad");
+  else if (code === "resource_exhausted") toast(t("eRate"), "bad");
+  else toast(t("eSave"), "bad");
+}
+async function guard(fn) {
+  if (!S.db) { toast(t("eNotConnected"), "bad"); return false; }
+  if (S.readOnly) { toast(t("eReadOnly"), "bad"); return false; }
+  try { await fn(); return true; } catch (e) { writeErr(e); return false; }
+}
+function logAct(kind, code, p, ref) {
+  return S.db.collection("activity").add({ at: now(), by: S.me, kind, code, p: p || {}, ref: ref || null }).catch(() => {});
+}
+const findTask = id => S.tasks.find(x => x.id === id);
+const findLead = id => S.leads.find(x => x.id === id);
+const findProj = id => S.portfolio.find(x => x.id === id);
+const leadName = l => (l ? (l.business || l.name || "—") : "");
+
+async function createTask(f) {
+  const at = now();
+  const tpl = f.useTemplate ? (TEMPLATES[LANG][f.category] || []) : [];
+  const checklist = tpl.map(text => ({ id: uid(), text, done: false, addedBy: S.me, addedAt: at }));
+  const doc = {
+    title: f.title, description: f.description || "", category: f.category, assignee: f.assignee, priority: f.priority,
+    due: f.due || "", clientId: f.clientId || "", status: "todo", checklist,
+    createdBy: S.me, createdAt: at, updatedAt: at, completedBy: null, completedAt: null,
+    log: [{ at, by: S.me, code: "created", p: { who: f.assignee } }]
+  };
+  let ref;
+  const ok = await guard(async () => { ref = await S.db.collection("tasks").add(doc); });
+  if (ok) { logAct("task", "task_added", { title: f.title, who: f.assignee }, ref.id); toast(t("tTaskAdded") + (f.assignee === S.me ? "" : esc(t("tNowOnBoard", { name: assigneeLabel(f.assignee) }))), "good"); }
+  return ok ? ref.id : null;
+}
+async function patchTask(id, patch, code, p) {
+  const tk = findTask(id); if (!tk) return false;
+  const at = now(); const body = Object.assign({}, patch, { updatedAt: at });
+  if (code) body.log = (tk.log || []).concat([{ at, by: S.me, code, p: p || {} }]).slice(-80);
+  return guard(() => S.db.doc("tasks/" + id).update(body));
+}
+async function setStatus(id, st) {
+  const tk = findTask(id); if (!tk || tk.status === st) return;
+  const at = now(); const patch = { status: st };
+  if (st === "done") { patch.completedBy = S.me; patch.completedAt = at; } else { patch.completedBy = null; patch.completedAt = null; }
+  const wasDone = tk.status === "done";
+  const ok = await patchTask(id, patch, st === "done" ? "done" : wasDone ? "reopened" : "moved", { st });
+  if (ok) {
+    if (st === "done") logAct("task", "task_done", { title: tk.title }, id);
+    else if (wasDone) logAct("task", "task_reopened", { title: tk.title }, id);
+    else logAct("task", "task_moved", { title: tk.title, st }, id);
+    if (st === "done") toast(t("tDone", { t: esc(tk.title) }), "good");
+  }
+}
+async function toggleStep(id, sid) {
+  const tk = findTask(id); if (!tk) return; const at = now(); let item;
+  const checklist = (tk.checklist || []).map(c => { if (c.id !== sid) return c; item = Object.assign({}, c, { done: !c.done, doneBy: !c.done ? S.me : null, doneAt: !c.done ? at : null }); return item; });
+  if (!item) return;
+  const patch = { checklist };
+  if (item.done && tk.status === "todo") patch.status = "doing";
+  const ok = await patchTask(id, patch, item.done ? "step_checked" : "step_unchecked", { step: item.text });
+  if (ok && item.done) logAct("step", "step_done", { step: item.text, title: tk.title }, id);
+}
+async function addStep(id, text) {
+  const tk = findTask(id); if (!tk || !text.trim()) return false;
+  const checklist = (tk.checklist || []).concat([{ id: uid(), text: text.trim(), done: false, addedBy: S.me, addedAt: now() }]);
+  return patchTask(id, { checklist }, "step_added", { step: text.trim() });
+}
+async function removeStep(id, sid) {
+  const tk = findTask(id); if (!tk) return; const s = (tk.checklist || []).find(c => c.id === sid);
+  return patchTask(id, { checklist: (tk.checklist || []).filter(c => c.id !== sid) }, "step_removed", { step: s ? s.text : "" });
+}
+async function applyTemplate(id) {
+  const tk = findTask(id); if (!tk) return; const at = now();
+  const items = (TEMPLATES[LANG][tk.category] || []).map(text => ({ id: uid(), text, done: false, addedBy: S.me, addedAt: at }));
+  return patchTask(id, { checklist: (tk.checklist || []).concat(items) }, "template", { cat: tk.category });
+}
+async function deleteTask(id) {
+  const tk = findTask(id); if (!tk) return;
+  const ok = await guard(() => S.db.doc("tasks/" + id).delete());
+  if (ok) { logAct("task", "task_deleted", { title: tk.title }, null); closeDrawer(); toast(t("tTaskDeleted")); }
+}
+
+async function createLead(f) {
+  const at = now(); const stage = f.stage || "potential";
+  const doc = {
+    name: f.name, business: f.business || "", phone: f.phone || "", segment: f.segment || "", service: f.service || "website", source: f.source || "",
+    budget: f.budget || "", stage, stageAt: at, createdAt: at, createdBy: S.me, updatedAt: at,
+    stageHistory: [{ stage, at, by: S.me }], steps: [], lostReason: "", noteCount: 0, lastNoteAt: null,
+    clientSince: stage === "client" ? at : null
+  };
+  let ref; const ok = await guard(async () => { ref = await S.db.collection("leads").add(doc); });
+  if (ok) { logAct("lead", "lead_added", { name: leadName(doc), stage }, ref.id); toast(t("tLeadAdded"), "good"); }
+  return ok ? ref.id : null;
+}
+function patchLead(id, patch) { return guard(() => S.db.doc("leads/" + id).update(Object.assign({}, patch, { updatedAt: now() }))); }
+async function setStage(id, st, reason) {
+  const l = findLead(id); if (!l || l.stage === st) return;
+  const at = now(); const patch = { stage: st, stageAt: at, stageHistory: (l.stageHistory || []).concat([{ stage: st, at, by: S.me, reason: reason || null }]) };
+  patch.lostReason = st === "lost" ? (reason || "") : "";
+  if (st === "client" && !l.clientSince) patch.clientSince = at;
+  const ok = await patchLead(id, patch);
+  if (ok) {
+    if (st === "lost") logAct("lead", "lead_lost", { name: leadName(l), reason: reason || "" }, id);
+    else if (st === "client") logAct("lead", "lead_client", { name: leadName(l) }, id);
+    else logAct("lead", "lead_moved", { name: leadName(l), stage: st }, id);
+    if (st === "client") toast(t("tNowClient", { name: esc(leadName(l)) }), "good");
+  }
+  S.confirm = null; schedule();
+}
+async function addLeadStep(id, text) {
+  const l = findLead(id); if (!l || !text.trim()) return false;
+  const ok = await patchLead(id, { steps: (l.steps || []).concat([{ id: uid(), text: text.trim(), done: false, addedBy: S.me, addedAt: now() }]) });
+  if (ok) logAct("lead", "lead_step_added", { step: text.trim(), name: leadName(l) }, id);
+  return ok;
+}
+async function toggleLeadStep(id, sid) {
+  const l = findLead(id); if (!l) return; const at = now(); let item;
+  const steps = (l.steps || []).map(s => { if (s.id !== sid) return s; item = Object.assign({}, s, { done: !s.done, doneBy: !s.done ? S.me : null, doneAt: !s.done ? at : null }); return item; });
+  const ok = await patchLead(id, { steps });
+  if (ok && item && item.done) logAct("lead", "lead_step_done", { step: item.text, name: leadName(l) }, id);
+}
+async function removeLeadStep(id, sid) { const l = findLead(id); if (!l) return; return patchLead(id, { steps: (l.steps || []).filter(s => s.id !== sid) }); }
+async function addNote(id, text) {
+  const l = findLead(id); if (!l || !text.trim()) return false; const at = now();
+  const ok = await guard(async () => {
+    await S.db.collection("leads/" + id + "/notes").add({ text: text.trim(), by: S.me, at });
+    await S.db.doc("leads/" + id).update({ noteCount: (l.noteCount || 0) + 1, lastNoteAt: at, updatedAt: at });
+  });
+  if (ok) logAct("note", "note_added", { name: leadName(l) }, id);
+  return ok;
+}
+async function deleteNote(lid, nid) {
+  const l = findLead(lid);
+  const ok = await guard(async () => { await S.db.doc("leads/" + lid + "/notes/" + nid).delete(); if (l) await S.db.doc("leads/" + lid).update({ noteCount: Math.max(0, (l.noteCount || 1) - 1) }); });
+  if (ok) toast(t("tNoteDeleted"));
+  S.confirm = null; schedule();
+}
+async function deleteLead(id) {
+  const l = findLead(id); if (!l) return;
+  const ok = await guard(() => S.db.doc("leads/" + id).delete());
+  if (ok) { logAct("lead", "lead_deleted", { name: leadName(l) }, null); closeDrawer(); toast(t("tLeadDeleted")); }
+}
+async function saveProject(id, f) {
+  const at = now(); const lead = findLead(f.clientId);
+  const doc = {
+    clientId: f.clientId || "", clientName: lead ? leadName(lead) : (f.clientName || ""), segment: f.segment || (lead && lead.segment) || "", title: f.title, type: f.type,
+    url: safeUrl(f.url), instagram: safeUrl(f.instagram), deliveredAt: f.deliveredAt || "", summary: f.summary || "",
+    deliverables: (f.deliverables || "").split(/[,،]/).map(s => s.trim()).filter(Boolean), updatedAt: at
+  };
+  if (id) {
+    const ok = await guard(() => S.db.doc("portfolio/" + id).update(doc));
+    if (ok) { logAct("portfolio", "proj_updated", { title: doc.title }, id); toast(t("tProjSaved"), "good"); }
+    return ok ? id : null;
+  }
+  doc.createdAt = at; doc.createdBy = S.me; let ref;
+  const ok = await guard(async () => { ref = await S.db.collection("portfolio").add(doc); });
+  if (ok) { logAct("portfolio", "proj_added", { title: doc.title, client: doc.clientName }, ref.id); toast(t("tProjAdded"), "good"); }
+  return ok ? ref.id : null;
+}
+async function deleteProject(id) {
+  const p = findProj(id);
+  const ok = await guard(() => S.db.doc("portfolio/" + id).delete());
+  if (ok) { logAct("portfolio", "proj_removed", { title: p ? p.title : "" }, null); closeDrawer(); toast(t("tProjRemoved")); }
+}
+
+/* ---------- PIN login ---------- */
+async function hashPin(id, pin) {
+  const data = new TextEncoder().encode("highmedia:" + id + ":" + pin);
+  try { const b = await crypto.subtle.digest("SHA-256", data); return Array.from(new Uint8Array(b)).map(x => x.toString(16).padStart(2, "0")).join(""); }
+  catch (e) { let h = 5381; for (const c of data) h = ((h << 5) + h + c) | 0; return "d" + (h >>> 0).toString(16); }
+}
+function pinMode() {
+  const m = S.members[S.login.member];
+  if (!S.loaded.members) return "loading";
+  if (m && m.pinHash) return "enter";
+  return S.login.first ? "confirm" : "create";
+}
+function pinDigit(d) {
+  const L = S.login; if (L.busy || L.pin.length >= 4 || pinMode() === "loading") return;
+  L.pin += d; L.error = ""; L.shake = false; render();
+  if (L.pin.length === 4) { L.busy = true; setTimeout(pinComplete, 140); }
+}
+async function pinComplete() {
+  const L = S.login; const id = L.member; const mode = pinMode();
+  try {
+    if (mode === "enter") {
+      const h = await hashPin(id, L.pin);
+      if (h === S.members[id].pinHash) return signIn(id);
+      L.error = "pinWrong"; L.shake = true;
+    } else if (mode === "create") { L.first = L.pin; }
+    else if (mode === "confirm") {
+      if (L.pin !== L.first) { L.error = "pinMismatch"; L.first = ""; L.shake = true; }
+      else {
+        const h = await hashPin(id, L.pin);
+        const ok = await guard(() => S.db.doc("members/" + id).set({ pinHash: h, pinSetAt: now() }));
+        if (ok) return signIn(id);
+        L.first = "";
+      }
+    }
+  } finally { L.pin = ""; L.busy = false; render(); }
+}
+function signIn(id) {
+  S.me = id; S.loginAt = now(); S.seenAt = store.get("seen." + id) || 0;
+  store.set("session", { id, at: now() });
+  S.login = { member: null, pin: "", first: "", error: "", busy: false, shake: false, forgot: false };
+  if (!VIEWS.includes(location.hash.slice(1))) { S.view = "overview"; try { history.replaceState(null, "", "#overview"); } catch (e) { location.hash = "overview"; } }
+  render();
+}
+function signOut() {
+  if (S.me) store.set("seen." + S.me, now());
+  store.del("session"); S.me = null; closeDrawer(true); $("#app").innerHTML = ""; render();
+}
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden" && S.me) store.set("seen." + S.me, now()); });
+
+/* ---------- Rendering: login ---------- */
+function renderLogin() {
+  const L = S.login; let panel;
+  const top = `<div class="lp-top"><p class="eyebrow">${t("teamPortal")}</p>${langBtn()}</div>`;
+  if (S.dbState === "absent") {
+    panel = `${top}<h1>${t("signInContinue")}</h1><div class="notice">${t("needsAccount")}</div>`;
+  } else if (!L.member) {
+    panel = `${top}<h1>${t("whoSigning")}</h1><p class="lp-sub">${t("pickName")}</p>
+      <div style="display:flex;flex-direction:column;gap:10px">
+      ${MIDS.map(id => `<button class="who" data-action="pick" data-id="${id}">${av(id, "lg")}<span><b>${esc(mName(id))}</b><small>${esc(MEMBERS[id].role[LANG])}</small></span><span class="go">${ic("arrow")}</span></button>`).join("")}
+      </div>`;
+  } else {
+    const mode = pinMode(); const nm = esc(mName(L.member));
+    const head = mode === "loading" ? t("checking") : mode === "enter" ? t("welcomeBack", { name: nm }) : mode === "create" ? t("createPin") : t("enterAgain");
+    const sub = mode === "enter" ? t("enterPin") : mode === "create" ? t("choosePin", { name: nm }) : mode === "confirm" ? t("confirmPin") : "";
+    const dots = [0,1,2,3].map(i => `<i class="${i < L.pin.length ? "on" : ""}"></i>`).join("");
+    const keys = ["1","2","3","4","5","6","7","8","9","","0","del"].map(k => k === "" ? `<button disabled aria-hidden="true" tabindex="-1"></button>` : k === "del" ? `<button data-action="pin-del" aria-label="${t("deleteDigit")}">⌫</button>` : `<button data-action="pin" data-d="${k}">${k}</button>`).join("");
+    panel = `<div class="lp-top"><button class="btn ghost sm" data-action="pick-back">${ic("back")} ${t("notX", { name: nm })}</button>${langBtn()}</div>
+      <div class="pin-head">${av(L.member, "xl")}<h1>${head}</h1><p class="lp-sub">${sub}</p></div>
+      <div class="pin-dots ${L.shake ? "shake" : ""}" aria-label="${t("digitsEntered", { n: L.pin.length })}">${dots}</div>
+      <div class="err" role="alert">${L.error ? t(L.error) : ""}</div>
+      <div class="pad">${keys}</div>
+      ${mode === "enter" ? `<div style="text-align:center">${L.forgot ? `<p class="lp-sub" style="font-size:13px">${t("onlyOwnerReset")}${S.isOwner ? ` <button class="linkbtn" data-action="reset-pin">${t("resetPinFor", { name: nm })}</button>` : ""}</p>` : `<button class="linkbtn" data-action="forgot">${t("forgot")}</button>`}</div>` : ""}`;
+  }
+  $("#app").innerHTML = `<div class="login">
+    <section class="login-brand">
+      <div class="lb-row"><span class="eyebrow">HIGH MEDIA</span><span class="eyebrow">${t("teamPortal")}</span></div>
+      <div class="lockup">${logoSVG(132)}<div class="wm"><b>HIGH</b><span>MEDIA</span></div></div>
+      <div class="lb-foot"><span>${t("tagline")}</span><span class="dots"><i></i><i></i><i></i></span></div>
+    </section>
+    <section class="login-panel"><div class="lp-inner">${panel}</div></section>
+  </div>`;
+}
+
+/* ---------- Derived data ---------- */
+const isMine = x => x.assignee === S.me || x.assignee === "both";
+const openTasks = () => S.tasks.filter(x => x.status !== "done");
+const activeLeads = () => S.leads.filter(l => ["potential","discussion","closing"].includes(l.stage));
+const clients = () => S.leads.filter(l => l.stage === "client");
+const isNew = x => x.createdBy !== S.me && x.createdAt > S.seenAt && S.seenAt > 0;
+function sortTasks(list) {
+  const pr = { high: 0, normal: 1, low: 2 };
+  return list.slice().sort((a, b) => {
+    const ad = a.due || "9999", bd = b.due || "9999"; if (ad !== bd) return ad < bd ? -1 : 1;
+    const pa = pr[a.priority] ?? 1, pb = pr[b.priority] ?? 1; if (pa !== pb) return pa - pb;
+    return (b.createdAt || 0) - (a.createdAt || 0);
+  });
+}
+
+/* ---------- Rendering: shell ---------- */
+function renderShell() {
+  if ($("#app .shell")) return;
+  $("#app").innerHTML = `<div class="shell">
+    <aside class="side">
+      <div class="side-brand">${logoSVG(34)}<div class="wm sm"><b>HIGH</b><span>MEDIA</span></div></div>
+      <nav class="nav" id="nav"></nav>
+      <div class="side-lang" id="sidelang"></div>
+      <div class="side-foot" id="sidefoot"></div>
+    </aside>
+    <main class="main" id="main"></main>
+  </div>`;
+}
+function renderNav() {
+  const myOpen = openTasks().filter(isMine).length;
+  const items = [["overview","home",null],["tasks","tasks",myOpen],["leads","leads",activeLeads().length],["portfolio","portfolio",null],["activity","activity",null]];
+  $("#nav").innerHTML = items.map(([v, i, n]) => `<a href="#${v}" class="${S.view === v ? "on" : ""}" ${S.view === v ? 'aria-current="page"' : ""}>${ic(i)}<span>${t("nav_" + v)}</span>${n ? `<em>${n}</em>` : ""}</a>`).join("");
+  $("#sidelang").innerHTML = langBtn();
+  $("#sidefoot").innerHTML = `${av(S.me)}<div><b>${esc(mName(S.me))}</b><small>${t("signedIn")}</small></div><button class="iconbtn" data-action="logout" title="${t("signOut")}" aria-label="${t("signOut")}">${ic("logout")}</button>`;
+}
+function mobileHead() {
+  return `<div class="mhead"><div class="brand">${logoSVG(26)}<div class="wm sm"><b>HIGH</b><span>MEDIA</span></div></div><div class="lft">${langBtn()}${av(S.me)}<button class="iconbtn" data-action="logout" aria-label="${t("signOut")}">${ic("logout")}</button></div></div>`;
+}
+function banners() {
+  let h = "";
+  if (S.dbState === "absent") h += `<div class="banner">${t("bannerNotConnected")}</div>`;
+  if (S.readOnly) h += `<div class="banner">${t("bannerReadOnly")}</div>`;
+  if (S.slow && !S.loaded.tasks) h += `<div class="banner">${t("bannerSlow")}</div>`;
+  return h;
+}
+const ph = (eyebrow, title, actions) => `<header class="ph"><div><p class="eyebrow">${eyebrow}</p><h1>${title}</h1></div>${actions ? `<div class="ph-actions">${actions}</div>` : ""}</header>`;
+const btnNewTask = () => `<button class="btn primary" data-action="new-task">${ic("plus")} ${t("newTask")}</button>`;
+const btnNewLead = (primary) => `<button class="btn ${primary ? "primary" : ""}" data-action="new-lead">${ic("plus")} ${t("newLead")}</button>`;
+
+/* ---------- Overview ---------- */
+function greeting() { const h = new Date().getHours(); return t(h < 12 ? "morning" : h < 17 ? "afternoon" : "evening"); }
+function renderOverview() {
+  const d = new Date();
+  const mine = sortTasks(openTasks().filter(isMine));
+  const overdue = mine.filter(x => { const i = dueInfo(x.due); return i && i.over; }).length;
+  const week = openTasks().filter(x => { if (!x.due) return false; const e = new Date(x.due + "T23:59:59").getTime(); return e >= now() && e - now() < 7 * DAY; }).length;
+  const teamOverdue = openTasks().filter(x => { const i = dueInfo(x.due); return i && i.over; }).length;
+  const al = activeLeads(); const closing = al.filter(l => l.stage === "closing").length;
+  const cl = clients(); const fromPartner = mine.filter(isNew).length;
+  const kpis = `<div class="kpis">
+    <a class="kpi" href="#tasks"><span class="k-l">${t("kYourOpen")}</span><span class="k-v">${mine.length}</span><span class="k-s ${overdue ? "bad" : ""}">${overdue ? t("kOverdue", { n: overdue }) : fromPartner ? t("kNewFrom", { n: fromPartner, name: esc(mName(partnerOf(S.me))) }) : t("kNothingOverdue")}</span></a>
+    <a class="kpi" href="#tasks"><span class="k-l">${t("kTeamDue")}</span><span class="k-v">${week}</span><span class="k-s ${teamOverdue ? "bad" : ""}">${teamOverdue ? t("kAlreadyOverdue", { n: teamOverdue }) : t("kOpenTotal", { n: openTasks().length })}</span></a>
+    <a class="kpi" href="#leads"><span class="k-l">${t("kActiveLeads")}</span><span class="k-v">${al.length}</span><span class="k-s">${t("kInClosing", { n: closing })}</span></a>
+    <a class="kpi" href="#portfolio"><span class="k-l">${t("kClients")}</span><span class="k-v">${cl.length}</span><span class="k-s">${t("kProjects", { n: S.portfolio.length })}</span></a>
+  </div>`;
+  const queue = !S.loaded.tasks && S.db ? `<p class="lp-sub">${t("loadingTasks")}</p>` : mine.length ? `<div class="list">${mine.slice(0, 8).map(queueItem).join("")}</div>${mine.length > 8 ? `<a class="btn sm ghost" href="#tasks" style="margin-top:6px">${t("seeAll", { n: mine.length })} ${ic("arrow")}</a>` : ""}`
+    : `<div class="empty"><b>${t("queueClear")}</b><span>${t("queueClearSub")}</span>${btnNewTask()}</div>`;
+  const pipeMax = Math.max(1, ...STAGES.map(s => S.leads.filter(l => l.stage === s[0]).length));
+  const pipe = S.leads.length ? `<div class="pipe">${STAGES.map(([k, c]) => { const n = S.leads.filter(x => x.stage === k).length; return `<a class="pipe-row" href="#leads" data-action="lead-tab" data-tab="${k === "client" ? "clients" : k === "lost" ? "lost" : "pipeline"}"><span>${sgL(k)}</span><span class="track"><span style="width:${(n / pipeMax) * 100}%;background:${c}"></span></span><b>${n}</b></a>`; }).join("")}</div>`
+    : `<div class="empty"><b>${t("noLeads")}</b><span>${t("noLeadsSub")}</span>${btnNewLead()}</div>`;
+  const acts = S.activity.slice(0, 9);
+  const feed = acts.length ? `<div class="feed">${acts.map(feedItem).join("")}</div><a class="btn sm ghost" href="#activity" style="margin-top:6px">${t("fullLog")} ${ic("arrow")}</a>` : `<div class="empty"><span>${t("feedEmpty")}</span></div>`;
+  return `<div class="wrap">${mobileHead()}${ph(`${WEEKDAYS[LANG][d.getDay()]} · ${d.getDate()} ${MONTHS_L[LANG][d.getMonth()]} ${d.getFullYear()}`, t("greet", { g: greeting(), name: esc(mName(S.me)) }), btnNewTask() + btnNewLead())}
+    ${banners()}${kpis}
+    <div class="g2">
+      <section class="card"><div class="card-h"><div><h2>${t("queue")}</h2><p>${t("queueSub")}</p></div></div>${queue}</section>
+      <section class="card">${chartHTML()}</section>
+    </div>
+    <div class="g2 even">
+      <section class="card"><div class="card-h"><div><h2>${t("pipeline")}</h2><p>${t("pipelineSub")}</p></div><a class="btn sm" href="#leads">${t("openLeads")}</a></div>${pipe}</section>
+      <section class="card"><div class="card-h"><div><h2>${t("latest")}</h2><p>${t("latestSub")}</p></div></div>${feed}</section>
+    </div></div>`;
+}
+function queueItem(x) {
+  const di = dueInfo(x.due); const cl = x.clientId ? findLead(x.clientId) : null; const n = (x.checklist || []).length, dn = (x.checklist || []).filter(c => c.done).length;
+  return `<div class="qi"><button class="ck" data-action="quick-done" data-id="${x.id}" aria-label="${esc(t("markDoneAria", { t: x.title }))}" title="${t("markDone")}">${ic("check")}</button>
+    <div class="qi-main" data-action="open-task" data-id="${x.id}" tabindex="0" role="button"><b dir="auto">${esc(x.title)}</b>
+    <div class="qi-meta"><span class="chip ${x.category}">${catL(x.category)}</span>${isNew(x) ? `<span class="chip new">${t("isNew")}</span>` : ""}${x.priority === "high" ? `<span class="chip hi">${t("highPriority")}</span>` : ""}${cl ? `<span dir="auto">${esc(leadName(cl))}</span>` : ""}${n ? `<span class="num">${t("stepsN", { d: dn, n })}</span>` : ""}${di ? `<span class="due ${di.cls}">${ic("clock")}${di.text}</span>` : ""}${x.assignee === "both" ? `<span>${t("shared")}</span>` : ""}</div></div></div>`;
+}
+function feedItem(a) {
+  return `<div class="fi">${av(a.by, "sm")}<p><b>${esc(mName(a.by))}</b> <span dir="auto">${actText(a)}</span></p><span class="mono" title="${esc(fmtDT(a.at))}">${dayKey(a.at) === dayKey(now()) ? fmtT(a.at) : fmtDM(a.at)}</span></div>`;
+}
+
+/* ---------- Chart ---------- */
+function weekStarts(n) {
+  const s = new Date(); s.setHours(0, 0, 0, 0); s.setDate(s.getDate() - s.getDay());
+  const out = []; for (let i = n - 1; i >= 0; i--) { const d = new Date(s); d.setDate(s.getDate() - 7 * i); out.push(d.getTime()); }
+  return out;
+}
+function completionEvents(mode) {
+  const ev = [];
+  if (mode === "tasks") S.tasks.forEach(x => { if (x.status === "done" && x.completedBy && x.completedAt) ev.push({ by: x.completedBy, at: x.completedAt }); });
+  else S.tasks.forEach(x => (x.checklist || []).forEach(c => { if (c.done && c.doneBy && c.doneAt) ev.push({ by: c.doneBy, at: c.doneAt }); }));
+  return ev;
+}
+function niceTop(max) { if (max <= 4) return { top: 4, step: 1 }; for (const s of [2, 5, 10, 20, 25, 50, 100, 200]) if (Math.ceil(max / s) <= 4) return { top: Math.ceil(max / s) * s, step: s }; return { top: max, step: max }; }
+function barPath(x, y, w, h) { const r = Math.min(4, w / 2, h); return `M${x},${y + h}V${y + r}Q${x},${y} ${x + r},${y}H${x + w - r}Q${x + w},${y} ${x + w},${y + r}V${y + h}Z`; }
+let chartRows = [];
+function chartHTML() {
+  const mode = S.chartMode; const starts = weekStarts(8); const end = starts[starts.length - 1] + 7 * DAY;
+  const rows = starts.map(s => ({ s, faisal: 0, abdulrahman: 0 }));
+  const evs = completionEvents(mode);
+  evs.forEach(e => { if (e.at < starts[0] || e.at >= end) return; let i = starts.length - 1; while (i > 0 && e.at < starts[i]) i--; if (rows[i][e.by] != null) rows[i][e.by]++; });
+  chartRows = rows;
+  const tot = { faisal: rows.reduce((a, r) => a + r.faisal, 0), abdulrahman: rows.reduce((a, r) => a + r.abdulrahman, 0) };
+  const all = tot.faisal + tot.abdulrahman;
+  const W = 600, H = 210, ml = 26, mr = 6, mt = 10, mb = 26, pw = W - ml - mr, phh = H - mt - mb;
+  const { top, step } = niceTop(Math.max(...rows.map(r => Math.max(r.faisal, r.abdulrahman))));
+  const y = v => mt + phh - (v / top) * phh; const gw = pw / rows.length; const bw = Math.min(18, gw * .3);
+  let g = "";
+  for (let v = 0; v <= top; v += step) g += `<line class="${v === 0 ? "base" : "gl"}" x1="${ml}" x2="${W - mr}" y1="${y(v)}" y2="${y(v)}"/><text x="${ml - 8}" y="${y(v) + 4}" text-anchor="end">${v}</text>`;
+  rows.forEach((r, i) => {
+    const cx = ml + gw * i + gw / 2;
+    g += `<rect class="hit" data-i="${i}" x="${ml + gw * i + 2}" y="${mt}" width="${gw - 4}" height="${phh}" rx="6"/>`;
+    [["faisal", cx - bw - 1], ["abdulrahman", cx + 1]].forEach(([k, x]) => { if (r[k] > 0) g += `<path d="${barPath(x, y(r[k]), bw, y(0) - y(r[k]))}" fill="${k === "faisal" ? "var(--c-faisal)" : "var(--c-abd)"}" pointer-events="none"/>`; });
+    g += `<text x="${cx}" y="${H - 8}" text-anchor="middle">${esc(fmtDM(r.s))}</text>`;
+  });
+  const n0 = new Date();
+  const thisMonth = evs.filter(e => { const d = new Date(e.at); return d.getMonth() === n0.getMonth() && d.getFullYear() === n0.getFullYear(); });
+  const mf = thisMonth.filter(e => e.by === "faisal").length, ma = thisMonth.filter(e => e.by === "abdulrahman").length;
+  const noun = t(mode === "tasks" ? "nounTasks" : "nounSteps");
+  return `<div class="card-h"><div><h2>${t("chartTitle")}</h2><p>${t("chartSub", { noun })}</p></div>
+    <div class="seg" role="group"><button class="${mode === "tasks" ? "on" : ""}" data-action="chart-mode" data-m="tasks">${t("segTasks")}</button><button class="${mode === "steps" ? "on" : ""}" data-action="chart-mode" data-m="steps">${t("segSteps")}</button></div></div>
+    <div class="legend"><span><i style="background:var(--c-faisal)"></i>${mName("faisal")} <b>${tot.faisal}</b></span><span><i style="background:var(--c-abd)"></i>${mName("abdulrahman")} <b>${tot.abdulrahman}</b></span></div>
+    ${all === 0 ? `<div class="empty" style="padding:30px 10px"><b>${t("noneDone", { noun })}</b><span>${t("noneDoneSub")}</span></div>` :
+    `<div class="chart" id="chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(t("chartAria", { noun }))}">${g}</svg><div class="tip" id="tip" hidden></div></div>`}
+    <div style="margin-top:12px"><div class="legend" style="margin:0;justify-content:space-between"><span>${t("thisMonth")}: ${mName("faisal")} <b>${mf}</b></span><span>${mName("abdulrahman")} <b>${ma}</b></span></div>
+    <div class="split" style="direction:ltr">${mf + ma ? `<span style="width:${mf / (mf + ma) * 100}%;background:var(--c-faisal)"></span><span style="flex:1;background:var(--c-abd)"></span>` : ""}</div></div>
+    <details class="tbl"><summary>${t("viewTable")}</summary><div class="tablewrap"><table><thead><tr><th>${t("weekStarting")}</th><th class="n">${mName("faisal")}</th><th class="n">${mName("abdulrahman")}</th></tr></thead><tbody>${rows.slice().reverse().map(r => `<tr><td>${fmtD(r.s)}</td><td class="n">${r.faisal}</td><td class="n">${r.abdulrahman}</td></tr>`).join("")}</tbody></table></div></details>`;
+}
+function chartHover(e) {
+  const hit = e.target.closest && e.target.closest(".hit"); const tip = $("#tip"); if (!tip) return;
+  if (!hit) { tip.hidden = true; return; }
+  const r = chartRows[+hit.dataset.i]; if (!r) return;
+  tip.innerHTML = `<b>${esc(t("weekOf", { d: fmtDM(r.s) }))}</b><div><i style="background:var(--c-faisal)"></i>${mName("faisal")} · ${r.faisal}</div><div><i style="background:var(--c-abd)"></i>${mName("abdulrahman")} · ${r.abdulrahman}</div>`;
+  tip.hidden = false;
+  const box = $("#chart").getBoundingClientRect(); const hb = hit.getBoundingClientRect();
+  let left = hb.left - box.left + hb.width / 2 - tip.offsetWidth / 2; left = Math.max(0, Math.min(left, box.width - tip.offsetWidth));
+  tip.style.left = left + "px"; tip.style.top = "-6px";
+}
+
+/* ---------- Tasks ---------- */
+function clientOptions(sel, withAll) {
+  const ls = S.leads.filter(l => l.stage !== "lost").slice().sort((a, b) => leadName(a).localeCompare(leadName(b)));
+  return (withAll ? `<option value="all" ${sel === "all" ? "selected" : ""}>${t("allClients")}</option>` : `<option value="">${t("noClient")}</option>`) +
+    ls.map(l => `<option value="${l.id}" ${sel === l.id ? "selected" : ""}>${esc(leadName(l))}${l.stage !== "client" ? " " + t("leadTag") : ""}</option>`).join("");
+}
+function renderTasks() {
+  const f = S.tf; const partner = partnerOf(S.me); const q = f.q.trim().toLowerCase();
+  const list = S.tasks.filter(x => {
+    if (f.who === "mine" && !isMine(x)) return false;
+    if (f.who === "partner" && !(x.assignee === partner || x.assignee === "both")) return false;
+    if (f.cat !== "all" && x.category !== f.cat) return false;
+    if (f.client !== "all" && x.clientId !== f.client) return false;
+    if (q && !((x.title || "") + " " + (x.description || "") + " " + leadName(findLead(x.clientId))).toLowerCase().includes(q)) return false;
+    return true;
+  });
+  const filters = `<div class="filters">
+    <div class="seg" role="group"><button class="${f.who === "mine" ? "on" : ""}" data-action="tf-who" data-v="mine">${t("mine")}</button><button class="${f.who === "partner" ? "on" : ""}" data-action="tf-who" data-v="partner">${esc(t("partners", { name: mName(partner) }))}</button><button class="${f.who === "all" ? "on" : ""}" data-action="tf-who" data-v="all">${t("everyone")}</button></div>
+    <select class="sel" id="tf-cat" data-filter="cat" aria-label="${t("category")}"><option value="all">${t("allCats")}</option>${CAT_KEYS.map(k => `<option value="${k}" ${f.cat === k ? "selected" : ""}>${catL(k)}</option>`).join("")}</select>
+    <select class="sel" id="tf-client" data-filter="client" aria-label="${t("client")}">${clientOptions(f.client, true)}</select>
+    <label class="search">${ic("search")}<input class="inp" id="tf-q" data-filter="q" placeholder="${t("searchTasks")}" value="${esc(f.q)}" aria-label="${t("searchTasks")}"></label>
+  </div>`;
+  const cols = STATUSES.map(([k, color]) => {
+    let items = list.filter(x => (x.status || "todo") === k);
+    items = k === "done" ? items.sort((a, b) => (b.completedAt || 0) - (a.completedAt || 0)) : sortTasks(items);
+    const total = items.length; if (k === "done" && !S.showAllDone) items = items.slice(0, 12);
+    return `<section class="col" data-drop="${k}" aria-label="${stL(k)}"><div class="col-h"><span class="sw" style="background:${color}"></span><b>${stL(k)}</b><em>${total}</em></div>
+      ${items.length ? items.map(taskCard).join("") : `<div class="col-empty">${t(k === "todo" ? "emptyTodo" : k === "done" ? "emptyDone" : "emptyCol")}</div>`}
+      ${k === "done" && total > 12 && !S.showAllDone ? `<button class="btn sm ghost more" data-action="show-done">${t("showOlder", { n: total - 12 })}</button>` : ""}</section>`;
+  }).join("");
+  const empty = !S.tasks.length && S.loaded.tasks;
+  return `<div class="wrap">${mobileHead()}${ph(t("workflow"), t("nav_tasks"), btnNewTask())}${banners()}${filters}
+    ${empty ? `<section class="card"><div class="empty"><b>${t("noTasks")}</b><span>${t("noTasksSub")}</span>${btnNewTask()}</div></section>` : `<div class="board" style="--cols:4">${cols}</div>`}</div>`;
+}
+function taskCard(x) {
+  const n = (x.checklist || []).length, dn = (x.checklist || []).filter(c => c.done).length; const di = dueInfo(x.due, x.status === "done"); const cl = x.clientId ? findLead(x.clientId) : null;
+  return `<article class="tcard" draggable="true" data-drag="${x.id}" data-action="open-task" data-id="${x.id}" tabindex="0" role="button" aria-label="${esc(x.title)}">
+    <div class="tc-top"><span class="chip ${x.category}">${catL(x.category)}</span>${x.priority === "high" ? `<span class="chip hi">${prL("high")}</span>` : ""}${isNew(x) ? `<span class="chip new">${t("isNew")}</span>` : ""}</div>
+    <h4 dir="auto">${esc(x.title)}</h4>
+    ${cl ? `<div class="tc-client" dir="auto">${esc(leadName(cl))}</div>` : ""}
+    ${n ? `<div class="prog"><span class="bar"><span style="width:${dn / n * 100}%"></span></span><span class="num">${dn}/${n}</span></div>` : ""}
+    <div class="tc-foot">${av(x.assignee, "sm")}${di ? `<span class="due ${di.cls}">${ic("clock")}${di.text}</span>` : `<span class="due">${t("noDue")}</span>`}</div>
+    ${x.status === "done" && x.completedBy ? `<div class="stamp">${ic("check")}<span>${esc(mName(x.completedBy))} · ${fmtDT(x.completedAt)}</span></div>` : ""}
+  </article>`;
+}
+
+/* ---------- Leads ---------- */
+function renderLeads() {
+  const f = S.lf; const q = f.q.trim().toLowerCase();
+  const fm = l => (f.seg === "all" || (l.segment || "") === (f.seg === "none" ? "" : f.seg)) && (f.svc === "all" || l.service === f.svc);
+  const match = l => fm(l) && (!q || [l.name, l.business, l.phone].join(" ").toLowerCase().includes(q));
+  const act = activeLeads().filter(match), cl = clients().filter(match), lost = S.leads.filter(l => l.stage === "lost").filter(match);
+  const inTab = l => f.tab === "pipeline" ? ["potential","discussion","closing"].includes(l.stage) : f.tab === "clients" ? l.stage === "client" : l.stage === "lost";
+  const svcOk = l => f.svc === "all" || l.service === f.svc;
+  const segCount = k => S.leads.filter(l => inTab(l) && svcOk(l) && (k === "all" || (l.segment || "") === (k === "none" ? "" : k))).length;
+  const hasNone = S.leads.some(l => !l.segment);
+  const segChips = `<div class="fchips" role="group" aria-label="${t("clientCat")}">${["all"].concat(SEGMENT_KEYS, hasNone ? ["none"] : []).map(k => { const n = segCount(k); if (k !== "all" && !n && f.seg !== k) return ""; return `<button class="fchip ${f.seg === k ? "on" : ""}" data-action="lf-seg" data-v="${k}">${k !== "all" && k !== "none" ? `<span class="dot" style="background:${SEG_COLORS[k]}"></span>` : ""}${k === "all" ? t("allClientCats") : k === "none" ? t("uncategorized") : segL(k)}<em>${n}</em></button>`; }).join("")}</div>`;
+  const filtered = f.seg !== "all" || f.svc !== "all" || q;
+  const tabs = `<div class="tabs" role="tablist">${[["pipeline","tabPipeline",activeLeads().filter(fm).length],["clients","tabClients",clients().filter(fm).length],["lost","tabLost",S.leads.filter(l => l.stage === "lost").filter(fm).length]].map(([k, l, n]) => `<button role="tab" aria-selected="${f.tab === k}" class="${f.tab === k ? "on" : ""}" data-action="lead-tab" data-tab="${k}">${t(l)}<em>${n}</em></button>`).join("")}</div>`;
+  const search = `${S.leads.length ? segChips : ""}<div class="filters"><select class="sel" id="lf-svc" data-lfilter="svc" aria-label="${t("service")}"><option value="all">${t("allServices")}</option>${SERVICE_KEYS.map(k => `<option value="${k}" ${f.svc === k ? "selected" : ""}>${svL(k)}</option>`).join("")}</select><label class="search">${ic("search")}<input class="inp" id="lf-q" data-lfilter="q" placeholder="${t("searchLeads")}" value="${esc(f.q)}" aria-label="${t("searchLeads")}"></label></div>`;
+  let body;
+  if (!S.leads.length && S.loaded.leads) body = `<section class="card"><div class="empty"><b>${t("noLeads")}</b><span>${t("noLeadsSub")}</span>${btnNewLead(true)}</div></section>`;
+  else if (f.tab === "pipeline") {
+    body = `<div class="board" style="--cols:3">${STAGES.slice(0, 3).map(([k, color]) => {
+      const items = act.filter(l => l.stage === k).sort((a, b) => (b.stageAt || 0) - (a.stageAt || 0));
+      return `<section class="col" data-ldrop="${k}"><div class="col-h"><span class="sw" style="background:${color}"></span><b>${sgL(k)}</b><em>${items.length}</em></div>${items.length ? items.map(leadCard).join("") : `<div class="col-empty">${t(filtered ? "noMatch" : "noLeadsHere")}</div>`}</section>`;
+    }).join("")}</div>`;
+  } else if (f.tab === "clients") {
+    body = cl.length ? `<div class="rows">${cl.sort((a, b) => (b.clientSince || 0) - (a.clientSince || 0)).map(l => {
+      const pc = S.portfolio.filter(p => p.clientId === l.id).length; const tc = openTasks().filter(x => x.clientId === l.id).length;
+      return `<div class="row" data-action="open-lead" data-id="${l.id}" tabindex="0" role="button"><div><b dir="auto">${esc(leadName(l))}</b><small><span dir="auto">${esc(l.name)}</span>${l.phone ? ` · <span class="ltr">${esc(l.phone)}</span>` : ""}</small></div>
+        <div class="hide-m"><small>${t("clientSince")}</small><b class="num" style="font-weight:500">${fmtD(l.clientSince || l.stageAt)}</b></div>
+        <div class="hide-m"><small>${t("openTasksN", { n: tc })} · ${t("projectsN", { n: pc })}</small><b style="font-weight:500">${t("notesN", { n: l.noteCount || 0 })}${l.lastNoteAt ? t("lastNote", { rel: rel(l.lastNoteAt) }) : ""}</b></div>
+        <span class="chips">${segChip(l.segment)}<span class="chip st-client">${svL(l.service) || sgL("client")}</span></span></div>`; }).join("")}</div>`
+      : `<section class="card"><div class="empty"><b>${t(filtered ? "noMatch" : "noClients")}</b>${filtered ? "" : `<span>${t("noClientsSub")}</span>`}</div></section>`;
+  } else {
+    body = lost.length ? `<div class="rows">${lost.sort((a, b) => (b.stageAt || 0) - (a.stageAt || 0)).map(l => `<div class="row" data-action="open-lead" data-id="${l.id}" tabindex="0" role="button"><div><b dir="auto">${esc(leadName(l))}</b><small dir="auto">${esc(l.name)}</small></div>
+        <div class="hide-m"><small>${t("lostOn")}</small><b class="num" style="font-weight:500">${fmtD(l.stageAt)}</b></div>
+        <div class="hide-m"><small>${t("reason")}</small><b style="font-weight:500" dir="auto">${esc(l.lostReason || t("notRecorded"))}</b></div><span class="chips">${segChip(l.segment)}<span class="chip st-lost">${sgL("lost")}</span></span></div>`).join("")}</div>`
+      : `<section class="card"><div class="empty"><b>${t(filtered ? "noMatch" : "noLost")}</b>${filtered ? "" : `<span>${t("noLostSub")}</span>`}</div></section>`;
+  }
+  return `<div class="wrap">${mobileHead()}${ph(t("sales"), t("nav_leads"), btnNewLead(true))}${banners()}${tabs}${search}${body}</div>`;
+}
+function leadCard(l) {
+  const n = (l.steps || []).length, dn = (l.steps || []).filter(s => s.done).length; const days = Math.floor((now() - (l.stageAt || l.createdAt)) / DAY);
+  return `<article class="tcard lcard" draggable="true" data-ldrag="${l.id}" data-action="open-lead" data-id="${l.id}" tabindex="0" role="button">
+    <div class="tc-top">${segChip(l.segment)}<span class="chip">${svL(l.service) || t("lead")}</span>${l.source ? `<span class="chip">${esc(srcL(l.source))}</span>` : ""}</div>
+    <h4 dir="auto">${esc(leadName(l))}</h4>
+    <div class="tc-client"><span dir="auto">${esc(l.business ? l.name : "")}</span>${l.phone ? `<span class="mono ltr">${esc(l.phone)}</span>` : ""}</div>
+    ${n ? `<div class="prog"><span class="bar"><span style="width:${dn / n * 100}%"></span></span><span class="num">${t("stepsN", { d: dn, n })}</span></div>` : ""}
+    <div class="tc-foot"><span class="due">${ic("clock")}${days < 1 ? t("movedToday") : t("daysInStage", { n: days })}</span><span class="due">${ic("note")}${l.noteCount || 0}</span></div>
+  </article>`;
+}
+
+/* ---------- Portfolio ---------- */
+function renderPortfolio() {
+  const f = S.pf; const pseg = p => p.segment || (findLead(p.clientId) || {}).segment || "";
+  const list = S.portfolio.filter(p => (f.type === "all" || p.type === f.type) && (f.seg === "all" || pseg(p) === f.seg)).sort((a, b) => (b.deliveredAt || "").localeCompare(a.deliveredAt || "") || (b.createdAt || 0) - (a.createdAt || 0));
+  const chips = `<div class="seg" role="group"><button class="${f.type === "all" ? "on" : ""}" data-action="pf-type" data-v="all">${t("all")}</button>${PTYPE_KEYS.map(k => `<button class="${f.type === k ? "on" : ""}" data-action="pf-type" data-v="${k}">${ptL(k)}</button>`).join("")}</div>`;
+  const addBtn = `<button class="btn primary" data-action="new-project">${ic("plus")} ${t("addProject")}</button>`;
+  const body = list.length ? `<div class="pgrid">${list.map(projCard).join("")}</div>` : `<section class="card"><div class="empty"><b>${t(S.portfolio.length ? "emptyCat" : "emptyAll")}</b><span>${t("emptyPortSub")}</span>${addBtn}</div></section>`;
+  return `<div class="wrap">${mobileHead()}${ph(t("ourWork"), t("nav_portfolio"), addBtn)}${banners()}<div class="filters">${chips}<select class="sel" id="pf-seg" data-pfilter="seg" aria-label="${t("clientCat")}"><option value="all">${t("allClientCats")}</option>${segOptions(f.seg, false)}</select></div>${body}</div>`;
+}
+function projCard(p) {
+  const social = p.type === "social";
+  const cover = social ? `<div class="igrid">${"<i></i>".repeat(9)}</div>` :
+    `<div class="browser"><div class="bar"><i></i><i></i><i></i><span>${esc(p.url ? hostOf(p.url) : t("website"))}</span></div><div class="pg"><b dir="auto">${esc(p.clientName || p.title)}</b><i class="acc"></i><i style="width:85%"></i><i style="width:60%"></i></div></div>`;
+  return `<article class="proj"><div class="cover"><span class="tag chip ${social ? "reels" : "website"}">${ptL(p.type) || t("project")}</span>${cover}</div>
+    <div class="proj-b"><div><p class="client" dir="auto">${esc(p.clientName || t("client"))}</p>${(p.segment || (findLead(p.clientId) || {}).segment) ? `<div class="chips" style="margin-top:6px">${segChip(p.segment || findLead(p.clientId).segment)}</div>` : ""}<h3 dir="auto">${esc(p.title)}</h3></div>
+    ${p.summary ? `<p class="sum" dir="auto">${esc(p.summary)}</p>` : ""}
+    ${(p.deliverables || []).length ? `<div class="chips">${p.deliverables.map(d => `<span class="chip" dir="auto">${esc(d)}</span>`).join("")}</div>` : ""}
+    <div class="proj-f">${p.url ? `<a class="extl" href="${esc(p.url)}" target="_blank" rel="noopener">${ic("ext")}${t("visitSite")}</a>` : ""}${p.instagram ? `<a class="extl" href="${esc(p.instagram)}" target="_blank" rel="noopener">${ic("ext")}${t("socialPage")}</a>` : ""}
+    <span class="due">${p.deliveredAt ? t("delivered", { d: fmtD(dateMs(p.deliveredAt)) }) : t("addedOn", { d: fmtD(p.createdAt) })}</span>
+    <button class="btn sm" data-action="edit-project" data-id="${p.id}">${t("edit")}</button></div></div></article>`;
+}
+
+/* ---------- Activity ---------- */
+function renderActivity() {
+  const f = S.af;
+  const list = S.activity.filter(a => (f.who === "all" || a.by === f.who) && (f.kind === "all" || a.kind === f.kind || (f.kind === "task" && a.kind === "step")));
+  let lastDay = null, body = "";
+  list.forEach(a => { const k = dayKey(a.at); if (k !== lastDay) { body += `<div class="day-h">${dayLabel(a.at)}</div>`; lastDay = k; } body += `<div class="fi">${av(a.by, "sm")}<p><b>${esc(mName(a.by))}</b> <span dir="auto">${actText(a)}</span></p><span class="mono" title="${esc(fmtDT(a.at))}">${fmtT(a.at)}</span></div>`; });
+  const filters = `<div class="filters"><div class="seg" role="group"><button class="${f.who === "all" ? "on" : ""}" data-action="af-who" data-v="all">${t("everyone")}</button>${MIDS.map(id => `<button class="${f.who === id ? "on" : ""}" data-action="af-who" data-v="${id}">${mName(id)}</button>`).join("")}</div>
+    <select class="sel" id="af-kind" data-afilter="kind" aria-label="${t("type")}"><option value="all">${t("allAct")}</option><option value="task" ${f.kind === "task" ? "selected" : ""}>${t("fTasks")}</option><option value="lead" ${f.kind === "lead" ? "selected" : ""}>${t("fLeads")}</option><option value="note" ${f.kind === "note" ? "selected" : ""}>${t("fNotes")}</option><option value="portfolio" ${f.kind === "portfolio" ? "selected" : ""}>${t("fPortfolio")}</option></select></div>`;
+  return `<div class="wrap">${mobileHead()}${ph(t("everyStep"), t("activityLog"), "")}${banners()}${filters}
+    <section class="card">${list.length ? `<div class="feed">${body}</div>${S.activity.length >= 300 ? `<p class="mono" style="color:var(--muted);margin-top:10px">${t("latest300")}</p>` : ""}` : `<div class="empty"><b>${t("noAct")}</b><span>${t("noActSub")}</span></div>`}</section></div>`;
+}
+
+/* ---------- Drawer ---------- */
+const FORM_DRAWERS = ["new-task","new-lead","project"];
+function openDrawer(type, id, extra) {
+  if (S.notesUnsub && !(type === "lead" && id === S.notesFor)) { S.notesUnsub(); S.notesUnsub = null; S.notes = []; S.notesFor = null; }
+  S.drawer = { type, id, extra: extra || {} }; S.confirm = null;
+  if (type === "lead" && S.db && S.notesFor !== id) {
+    S.notesFor = id; S.notes = []; S.notesLoaded = false;
+    S.notesUnsub = S.db.collection("leads/" + id + "/notes").orderBy("at", "desc").onSnapshot(snap => { S.notes = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); S.notesLoaded = true; schedule(); }, () => { S.notesLoaded = true; schedule(); });
+  }
+  renderDrawer(true);
+}
+function closeDrawer(silent) {
+  if (S.notesUnsub) { S.notesUnsub(); S.notesUnsub = null; } S.notesFor = null; S.notes = [];
+  S.drawer = null; S.confirm = null; $("#drawer-root").innerHTML = ""; document.body.style.overflow = ""; if (!silent) schedule();
+}
+function renderDrawer(fresh) {
+  const root = $("#drawer-root"); const D = S.drawer;
+  if (!D || !S.me) { root.innerHTML = ""; document.body.style.overflow = ""; return; }
+  let head = "", body = "";
+  if (D.type === "task") { const x = findTask(D.id); if (!x) { if (D.seen) closeDrawer(); return; } D.seen = true; [head, body] = taskDrawer(x); }
+  else if (D.type === "lead") { const l = findLead(D.id); if (!l) { if (D.seen) closeDrawer(); return; } D.seen = true; [head, body] = leadDrawer(l); }
+  else if (D.type === "new-task") [head, body] = newTaskForm();
+  else if (D.type === "new-lead") [head, body] = newLeadForm();
+  else if (D.type === "project") [head, body] = projectForm(D.id ? findProj(D.id) : null);
+  const prevBody = $(".d-body", root); const sc = prevBody ? prevBody.scrollTop : 0;
+  root.innerHTML = `<div class="scrim" data-action="close"></div><aside class="drawer" role="dialog" aria-modal="true"><div class="d-head">${head}<button class="iconbtn" data-action="close" aria-label="${t("close")}">${ic("x")}</button></div><div class="d-body">${body}</div></aside>`;
+  document.body.style.overflow = "hidden";
+  const nb = $(".d-body", root); if (nb && !fresh) nb.scrollTop = sc;
+  if (fresh && window.matchMedia("(min-width: 861px)").matches) { const first = $("[data-autofocus]", root); if (first) first.focus(); }
+  root.querySelectorAll("textarea.title-in").forEach(autoGrow);
+}
+function autoGrow(el) { el.style.height = "auto"; el.style.height = el.scrollHeight + "px"; }
+const memberOptions = (sel, withBoth) => MIDS.map(id => `<option value="${id}" ${sel === id ? "selected" : ""}>${mName(id)}${id === S.me ? " " + t("me") : ""}</option>`).join("") + (withBoth ? `<option value="both" ${sel === "both" ? "selected" : ""}>${t("both")}</option>` : "");
+const catOptions = sel => CAT_KEYS.map(k => `<option value="${k}" ${sel === k ? "selected" : ""}>${catL(k)}</option>`).join("");
+const prOptions = sel => ["low","normal","high"].map(k => `<option value="${k}" ${(sel || "normal") === k ? "selected" : ""}>${prL(k)}</option>`).join("");
+function confirmBlock(key, label, action, id) {
+  if (S.confirm === key) return `<div class="confirm"><span>${label}</span><button class="btn sm danger solid" data-action="${action}" data-id="${id}">${t("yesDelete")}</button><button class="btn sm" data-action="cancel-confirm">${t("keepIt")}</button></div>`;
+  return `<button class="btn sm danger" data-action="ask-confirm" data-key="${key}">${ic("trash")} ${t("del")}</button>`;
+}
+function stepRow(kind, ownerId, c) {
+  return `<div class="step ${c.done ? "done" : ""}"><button class="ck ${c.done ? "on" : ""}" data-action="${kind === "task" ? "toggle-step" : "toggle-lstep"}" data-id="${ownerId}" data-sid="${c.id}" aria-label="${esc(t(c.done ? "uncheck" : "checkOff", { s: c.text }))}">${ic("check")}</button>
+    <div class="txt"><span dir="auto">${esc(c.text)}</span><div class="by">${c.done ? `${av(c.doneBy, "sm")}<span>${esc(t("doneBy", { name: mName(c.doneBy) }))}</span><span class="mono">${fmtDT(c.doneAt)}</span>` : `<span>${esc(t("addedByShort", { name: mName(c.addedBy) }))} · <span class="mono">${fmtDT(c.addedAt)}</span></span>`}</div></div>
+    <button class="x" data-action="${kind === "task" ? "remove-step" : "remove-lstep"}" data-id="${ownerId}" data-sid="${c.id}" aria-label="${t("removeStep")}">${ic("x")}</button></div>`;
+}
+
+function taskDrawer(x) {
+  const head = `<span class="chip ${x.category}">${catL(x.category)}</span><span class="meta">${esc(t("addedBy", { name: mName(x.createdBy), dt: fmtDT(x.createdAt) }))}</span><span style="flex:1"></span>`;
+  const cl = x.checklist || []; const dn = cl.filter(c => c.done).length; const done = x.status === "done";
+  const steps = cl.length ? `<div class="steps">${cl.map(c => stepRow("task", x.id, c)).join("")}</div>`
+    : `<div class="notice" style="font-size:13px;display:flex;flex-wrap:wrap;gap:10px;align-items:center"><span>${t("noSteps", { cat: catL(x.category) })}</span><button class="btn sm" data-action="apply-template" data-id="${x.id}">${t("useChecklist", { cat: catL(x.category) })}</button></div>`;
+  const log = (x.log || []).slice().reverse();
+  const body = `
+    <textarea class="title-in" id="tt-${x.id}" data-field="title" data-task="${x.id}" rows="1" dir="auto" aria-label="${t("taskTitle")}">${esc(draft("tt-" + x.id, x.title))}</textarea>
+    <div class="seg status" role="group" aria-label="${t("statusL")}">${STATUSES.map(([k]) => `<button class="${(x.status || "todo") === k ? "on" : ""}" data-action="set-status" data-id="${x.id}" data-st="${k}">${stL(k)}</button>`).join("")}</div>
+    ${done ? `<div class="callout"><span>${ic("check")} ${t("completedBy", { name: esc(mName(x.completedBy)) })} · <span class="mono">${fmtDT(x.completedAt)}</span></span><button class="btn sm" data-action="set-status" data-id="${x.id}" data-st="doing">${t("reopen")}</button></div>` : ""}
+    <div class="fgrid">
+      <div class="fld"><label for="ta-${x.id}">${t("assignedTo")}</label><select class="sel" id="ta-${x.id}" data-field="assignee" data-task="${x.id}">${memberOptions(x.assignee, true)}</select></div>
+      <div class="fld"><label for="td-${x.id}">${t("dueDate")}</label><input class="inp" type="date" id="td-${x.id}" data-field="due" data-task="${x.id}" value="${esc(x.due || "")}"></div>
+      <div class="fld"><label for="tp-${x.id}">${t("priority")}</label><select class="sel" id="tp-${x.id}" data-field="priority" data-task="${x.id}">${prOptions(x.priority)}</select></div>
+      <div class="fld"><label for="tc-${x.id}">${t("category")}</label><select class="sel" id="tc-${x.id}" data-field="category" data-task="${x.id}">${catOptions(x.category)}</select></div>
+      <div class="fld full"><label for="tcl-${x.id}">${t("client")}</label><select class="sel" id="tcl-${x.id}" data-field="clientId" data-task="${x.id}">${clientOptions(x.clientId || "", false)}</select></div>
+      <div class="fld full"><label for="tds-${x.id}">${t("details")}</label><textarea class="inp" id="tds-${x.id}" data-field="description" data-task="${x.id}" dir="auto" placeholder="${t("detailsPh")}">${esc(draft("tds-" + x.id, x.description || ""))}</textarea></div>
+    </div>
+    <div class="sec"><div class="sec-h"><h3>${t("checklist")}</h3><small class="num">${t("ofDone", { d: dn, n: cl.length })}</small></div>${steps}
+      <form class="addrow" data-form="add-step" data-id="${x.id}"><input class="inp" id="as-${x.id}" data-draft placeholder="${t("addStepPh")}" value="${esc(draft("as-" + x.id))}" dir="auto" aria-label="${t("addStepPh")}"><button class="btn" type="submit">${ic("plus")} ${t("add")}</button></form></div>
+    ${!done ? `<button class="btn good" data-action="set-status" data-id="${x.id}" data-st="done" style="align-self:flex-start;min-height:44px;white-space:normal">${ic("check")} ${t("markComplete")}${cl.length && dn === cl.length ? t("allStepsDone") : ""}</button>` : ""}
+    <div class="sec"><div class="sec-h"><h3>${t("history")}</h3></div><div class="tl">${log.map(e => `<div class="tl-i"><b>${esc(mName(e.by))}</b> <span dir="auto">${logText(e)}</span><span class="mono">${fmtDT(e.at)}</span></div>`).join("")}</div></div>
+    <div class="d-actions">${confirmBlock("del-task-" + x.id, t("delTaskQ"), "delete-task", x.id)}</div>`;
+  return [head, body];
+}
+
+function leadDrawer(l) {
+  const head = `<span class="chip st-${l.stage}">${sgL(l.stage)}</span>${segChip(l.segment)}<span class="meta">${esc(t("addedBy", { name: mName(l.createdBy), dt: fmtDT(l.createdAt) }))}</span><span style="flex:1"></span>`;
+  const reached = {}; (l.stageHistory || []).forEach(h => { reached[h.stage] = h.at; });
+  const order = ["potential","discussion","closing","client"]; const ci = order.indexOf(l.stage);
+  const stepper = `<div class="stepper">${order.map((k, i) => `<button class="${l.stage === k ? "cur " + k : (ci > i ? "past" : "")}" data-action="set-stage" data-id="${l.id}" data-st="${k}" ${l.stage === k ? 'aria-current="step"' : ""}><b>${sgL(k)}</b><small>${reached[k] ? fmtDM(reached[k]) : "—"}</small></button>`).join("")}</div>`;
+  const lostUI = l.stage === "lost"
+    ? `<div class="lostbox"><b>${t("lostOnFull", { dt: fmtDT(l.stageAt) })}</b><span dir="auto">${esc(l.lostReason || t("noReason"))}</span><div><button class="btn sm" data-action="set-stage" data-id="${l.id}" data-st="discussion">${t("reopenDiscussion")}</button></div></div>`
+    : S.confirm === "lost-" + l.id
+      ? `<form class="lostbox" data-form="lost" data-id="${l.id}"><label class="lbl" for="lr-${l.id}">${t("whyLost")}</label><input class="inp" id="lr-${l.id}" data-draft value="${esc(draft("lr-" + l.id))}" placeholder="${t("lostPh")}" dir="auto"><div class="d-actions"><button class="btn sm danger solid" type="submit">${t("markLost")}</button><button class="btn sm" type="button" data-action="cancel-confirm">${t("cancel")}</button></div></form>`
+      : `<button class="btn sm danger" data-action="ask-confirm" data-key="lost-${l.id}" style="align-self:flex-start">${t("markLost")}</button>`;
+  const pc = S.portfolio.filter(p => p.clientId === l.id);
+  const clientCallout = l.stage === "client" ? `<div class="callout"><span>${t("clientSinceFull", { d: fmtD(l.clientSince || l.stageAt), n: pc.length })}</span><button class="btn sm" data-action="new-project" data-client="${l.id}">${ic("plus")} ${t("addToPortfolio")}</button></div>` : "";
+  const wa = waLink(l.phone); const steps = l.steps || [];
+  const notes = S.notesFor === l.id ? S.notes : [];
+  const notesHTML = !S.notesLoaded && S.notesFor === l.id ? `<p class="lp-sub">${t("loadingNotes")}</p>` : notes.length ? notes.map(n => `<div class="note"><div class="note-h">${av(n.by, "sm")}<b>${esc(mName(n.by))}</b><span class="mono">${fmtDT(n.at)}</span>
+      ${n.by === S.me ? (S.confirm === "note-" + n.id ? `<span class="confirm end"><button class="btn sm danger solid" data-action="delete-note" data-id="${l.id}" data-nid="${n.id}">${t("deleteNote")}</button><button class="btn sm" data-action="cancel-confirm">${t("keep")}</button></span>` : `<button class="btn sm ghost end" data-action="ask-confirm" data-key="note-${n.id}" aria-label="${t("deleteNote")}">${ic("trash")}</button>`) : ""}</div><p dir="auto">${esc(n.text)}</p></div>`).join("") : `<p class="lp-sub" style="font-size:13px">${t("noNotes")}</p>`;
+  const hist = (l.stageHistory || []).slice().reverse();
+  const body = `
+    <div class="fgrid">
+      <div class="fld"><label for="lb-${l.id}">${t("business")}</label><input class="inp" id="lb-${l.id}" data-field="business" data-lead="${l.id}" value="${esc(draft("lb-" + l.id, l.business))}" dir="auto" placeholder="${t("bizPh")}"></div>
+      <div class="fld"><label for="ln-${l.id}">${t("contact")}</label><input class="inp" id="ln-${l.id}" data-field="name" data-lead="${l.id}" value="${esc(draft("ln-" + l.id, l.name))}" dir="auto"></div>
+      <div class="fld"><label for="lp-${l.id}">${t("phone")}</label><input class="inp ltr" id="lp-${l.id}" data-field="phone" data-lead="${l.id}" value="${esc(draft("lp-" + l.id, l.phone))}" inputmode="tel" dir="ltr" placeholder="+966 5x xxx xxxx"></div>
+      <div class="fld"><label aria-hidden="true">&nbsp;</label><div class="phone">${l.phone ? `<button class="btn sm" data-action="copy" data-text="${esc(l.phone)}">${ic("copy")} ${t("copyNumber")}</button>${wa ? `<a class="btn sm" href="${wa}" target="_blank" rel="noopener">${ic("ext")} ${t("whatsapp")}</a>` : ""}` : `<span class="lp-sub" style="font-size:12.5px">${t("addNumberHint")}</span>`}</div></div>
+      <div class="fld full"><label for="lsg-${l.id}">${t("clientCat")}</label><select class="sel" id="lsg-${l.id}" data-field="segment" data-lead="${l.id}">${l.segment ? "" : `<option value="">${t("uncategorized")}</option>`}${segOptions(l.segment, false)}</select></div>
+      <div class="fld"><label for="ls-${l.id}">${t("service")}</label><select class="sel" id="ls-${l.id}" data-field="service" data-lead="${l.id}">${SERVICE_KEYS.map(k => `<option value="${k}" ${l.service === k ? "selected" : ""}>${svL(k)}</option>`).join("")}</select></div>
+      <div class="fld"><label for="lsr-${l.id}">${t("source")}</label><select class="sel" id="lsr-${l.id}" data-field="source" data-lead="${l.id}"><option value="">${t("notSet")}</option>${SOURCE_KEYS.map(k => `<option value="${k}" ${String(l.source || "").toLowerCase().replace(/[^a-z]/g, "") === k ? "selected" : ""}>${srcL(k)}</option>`).join("")}</select></div>
+      <div class="fld full"><label for="lbg-${l.id}">${t("budget")}</label><input class="inp" id="lbg-${l.id}" data-field="budget" data-lead="${l.id}" value="${esc(draft("lbg-" + l.id, l.budget))}" placeholder="${t("budgetPh")}" dir="auto"></div>
+    </div>
+    <div class="sec"><div class="sec-h"><h3>${t("stage")}</h3><small>${l.stage !== "lost" ? t("inStageSince", { dt: fmtDT(l.stageAt) }) : ""}</small></div>${l.stage !== "lost" ? stepper : ""}${clientCallout}${lostUI}</div>
+    <div class="sec"><div class="sec-h"><h3>${t("process")}</h3><small class="num">${t("ofDone", { d: steps.filter(s => s.done).length, n: steps.length })}</small></div>
+      ${steps.length ? `<div class="steps">${steps.map(s => stepRow("lead", l.id, s)).join("")}</div>` : `<p class="lp-sub" style="font-size:13px">${t("processHint")}</p>`}
+      <form class="addrow" data-form="add-lstep" data-id="${l.id}"><input class="inp" id="als-${l.id}" data-draft value="${esc(draft("als-" + l.id))}" placeholder="${t("addLeadStepPh")}" dir="auto" aria-label="${t("newStepAria")}"><button class="btn" type="submit">${ic("plus")} ${t("add")}</button></form></div>
+    <div class="sec"><div class="sec-h"><h3>${t("notes")}</h3><small class="num">${t("savedN", { n: l.noteCount || 0 })}</small></div>
+      <form class="sec" data-form="add-note" data-id="${l.id}" style="gap:8px"><textarea class="inp" id="nt-${l.id}" data-draft dir="auto" placeholder="${t("notePh")}" aria-label="${t("newNoteAria")}">${esc(draft("nt-" + l.id))}</textarea><button class="btn primary" type="submit" style="align-self:flex-start">${t("saveNote")}</button></form>
+      ${notesHTML}</div>
+    <div class="sec"><div class="sec-h"><h3>${t("stageHistory")}</h3></div><div class="tl">${hist.map(h => `<div class="tl-i"><b>${esc(mName(h.by))}</b> ${t("movedTo", { stage: sgL(h.stage) })}${h.reason ? ` <span dir="auto">(${esc(h.reason)})</span>` : ""}<span class="mono">${fmtDT(h.at)}</span></div>`).join("")}</div></div>
+    <div class="d-actions">${confirmBlock("del-lead-" + l.id, t("delLeadQ"), "delete-lead", l.id)}</div>`;
+  return [head, body];
+}
+
+function newTaskForm() {
+  const partner = partnerOf(S.me);
+  const head = `<h2>${t("newTask")}</h2>`;
+  const body = `<form class="sec" data-form="new-task" style="gap:16px">
+    <div class="fld"><label for="nt-title">${t("what")}</label><input class="inp" id="nt-title" name="title" required data-autofocus dir="auto" placeholder="${t("whatPh")}"></div>
+    <div class="fgrid">
+      <div class="fld"><label for="nt-cat">${t("category")}</label><select class="sel" id="nt-cat" name="category">${catOptions(S.tf.cat !== "all" ? S.tf.cat : "website")}</select></div>
+      <div class="fld"><label for="nt-as">${t("assignTo")}</label><select class="sel" id="nt-as" name="assignee">${memberOptions(S.me === "faisal" ? partner : "both", true)}</select></div>
+      <div class="fld"><label for="nt-due">${t("dueDate")}</label><input class="inp" type="date" id="nt-due" name="due"></div>
+      <div class="fld"><label for="nt-pr">${t("priority")}</label><select class="sel" id="nt-pr" name="priority">${prOptions("normal")}</select></div>
+      <div class="fld full"><label for="nt-cl">${t("client")}</label><select class="sel" id="nt-cl" name="clientId">${clientOptions(S.tf.client !== "all" ? S.tf.client : "", false)}</select></div>
+      <div class="fld full"><label for="nt-desc">${t("details")}</label><textarea class="inp" id="nt-desc" name="description" dir="auto" placeholder="${t("detailsPh")}"></textarea></div>
+    </div>
+    <label class="check-l"><input type="checkbox" id="nt-tpl" name="useTemplate" checked><span>${t("useTemplate")}</span></label>
+    <div class="d-actions"><button class="btn primary" type="submit">${ic("plus")} ${t("addTask")}</button><button class="btn ghost" type="button" data-action="close">${t("cancel")}</button></div>
+    <p class="lp-sub" style="font-size:12.5px">${esc(t("appearsOn", { name: mName(partner) }))}</p>
+  </form>`;
+  return [head, body];
+}
+function newLeadForm() {
+  const head = `<h2>${t("newLead")}</h2>`;
+  const body = `<form class="sec" data-form="new-lead" style="gap:16px"><div class="fgrid">
+    <div class="fld"><label for="nl-biz">${t("business")}</label><input class="inp" id="nl-biz" name="business" data-autofocus dir="auto" placeholder="${t("bizPh")}"></div>
+    <div class="fld"><label for="nl-name">${t("contact")}</label><input class="inp" id="nl-name" name="name" dir="auto"></div>
+    <div class="fld"><label for="nl-phone">${t("phone")}</label><input class="inp" id="nl-phone" name="phone" inputmode="tel" dir="ltr" placeholder="+966 5x xxx xxxx"></div>
+    <div class="fld full"><label for="nl-seg">${t("clientCat")}</label><select class="sel" id="nl-seg" name="segment" required>${segOptions(S.lf.seg !== "all" && S.lf.seg !== "none" ? S.lf.seg : "", true)}</select></div>
+    <div class="fld"><label for="nl-svc">${t("service")}</label><select class="sel" id="nl-svc" name="service">${SERVICE_KEYS.map(k => `<option value="${k}">${svL(k)}</option>`).join("")}</select></div>
+    <div class="fld"><label for="nl-src">${t("source")}</label><select class="sel" id="nl-src" name="source"><option value="">${t("notSet")}</option>${SOURCE_KEYS.map(k => `<option value="${k}">${srcL(k)}</option>`).join("")}</select></div>
+    <div class="fld"><label for="nl-stage">${t("stage")}</label><select class="sel" id="nl-stage" name="stage">${STAGES.slice(0, 4).map(([k]) => `<option value="${k}">${sgL(k)}</option>`).join("")}</select></div>
+    <div class="fld full"><label for="nl-bud">${t("budget")}</label><input class="inp" id="nl-bud" name="budget" dir="auto" placeholder="${t("budgetPh")}"></div></div>
+    <div class="d-actions"><button class="btn primary" type="submit">${ic("plus")} ${t("addLead")}</button><button class="btn ghost" type="button" data-action="close">${t("cancel")}</button></div></form>`;
+  return [head, body];
+}
+function projectForm(p) {
+  const pre = S.drawer.extra.client || (p && p.clientId) || "";
+  const head = `<h2>${p ? t("editProject") : t("addToPortfolio")}</h2>${p ? `<span class="meta">${esc(t("addedBy", { name: mName(p.createdBy), dt: fmtDT(p.createdAt) }))}</span>` : ""}`;
+  const cl = clients();
+  const body = `<form class="sec" data-form="project" data-id="${p ? p.id : ""}" style="gap:16px"><div class="fgrid">
+    <div class="fld full"><label for="pj-client">${t("client")}</label><select class="sel" id="pj-client" name="clientId"><option value="">${t("otherClient")}</option>${cl.map(l => `<option value="${l.id}" ${pre === l.id ? "selected" : ""}>${esc(leadName(l))}</option>`).join("")}</select></div>
+    <div class="fld full"><label for="pj-cn">${t("clientNameIfNot")}</label><input class="inp" id="pj-cn" name="clientName" value="${esc(p && !p.clientId ? p.clientName : "")}" dir="auto"></div>
+    <div class="fld full"><label for="pj-title">${t("projTitle")}</label><input class="inp" id="pj-title" name="title" required data-autofocus value="${esc(p ? p.title : "")}" dir="auto" placeholder="${t("projTitlePh")}"></div>
+    <div class="fld full"><label for="pj-seg">${t("clientCat")}</label><select class="sel" id="pj-seg" name="segment"><option value="">${t("chooseCat")}</option>${SEGMENT_KEYS.map(k => `<option value="${k}" ${((p && p.segment) || (findLead(pre) || {}).segment) === k ? "selected" : ""}>${segL(k)}</option>`).join("")}</select></div>
+    <div class="fld"><label for="pj-type">${t("type")}</label><select class="sel" id="pj-type" name="type">${PTYPE_KEYS.map(k => `<option value="${k}" ${p && p.type === k ? "selected" : ""}>${ptL(k)}</option>`).join("")}</select></div>
+    <div class="fld"><label for="pj-del">${t("deliveredOn")}</label><input class="inp" type="date" id="pj-del" name="deliveredAt" value="${esc(p ? p.deliveredAt : "")}"></div>
+    <div class="fld full"><label for="pj-url">${t("websiteLink")}</label><input class="inp" id="pj-url" name="url" inputmode="url" dir="ltr" value="${esc(p ? p.url : "")}" placeholder="https://clientsite.com"></div>
+    <div class="fld full"><label for="pj-ig">${t("socialLink")}</label><input class="inp" id="pj-ig" name="instagram" inputmode="url" dir="ltr" value="${esc(p ? p.instagram : "")}" placeholder="https://instagram.com/client"></div>
+    <div class="fld full"><label for="pj-sum">${t("whatWeDid")}</label><textarea class="inp" id="pj-sum" name="summary" dir="auto">${esc(p ? p.summary : "")}</textarea></div>
+    <div class="fld full"><label for="pj-dl">${t("deliverables")}</label><input class="inp" id="pj-dl" name="deliverables" value="${esc(p ? (p.deliverables || []).join(LANG === "ar" ? "، " : ", ") : "")}" dir="auto" placeholder="${t("deliverablesPh")}"></div></div>
+    <div class="d-actions"><button class="btn primary" type="submit">${p ? t("saveChanges") : ic("plus") + " " + t("addProject")}</button><button class="btn ghost" type="button" data-action="close">${t("cancel")}</button><span class="grow"></span>${p ? confirmBlock("del-proj-" + p.id, t("removeQ"), "delete-project", p.id) : ""}</div></form>`;
+  return [head, body];
+}
+
+/* ---------- Render orchestration ---------- */
+let raf = 0;
+function schedule() { cancelAnimationFrame(raf); raf = requestAnimationFrame(render); }
+function render() {
+  const a = document.activeElement; const aid = a && a.id; let s0 = null, s1 = null;
+  try { s0 = a.selectionStart; s1 = a.selectionEnd; } catch (e) {}
+  const inDrawer = a && a.closest && a.closest("#drawer-root");
+  if (!S.me) { $("#drawer-root").innerHTML = ""; document.body.style.overflow = ""; renderLogin(); return; }
+  renderShell(); renderNav();
+  const main = $("#main"); const board = $(".board", main); const bl = board ? board.scrollLeft : 0;
+  const v = S.view;
+  main.innerHTML = v === "tasks" ? renderTasks() : v === "leads" ? renderLeads() : v === "portfolio" ? renderPortfolio() : v === "activity" ? renderActivity() : renderOverview();
+  const nb = $(".board", main); if (nb && bl) nb.scrollLeft = bl;
+  if (S.drawer && !FORM_DRAWERS.includes(S.drawer.type)) renderDrawer(!$("#drawer-root .drawer"));
+  else if (S.drawer && !$("#drawer-root .drawer")) renderDrawer(true);
+  if (aid && (!inDrawer || (S.drawer && !FORM_DRAWERS.includes(S.drawer.type)))) {
+    const n = document.getElementById(aid);
+    if (n && n !== a) { n.focus({ preventScroll: true }); try { if (s0 != null) n.setSelectionRange(s0, s1); } catch (e) {} }
+  }
+}
+function setLang(l) {
+  LANG = l; store.set("lang", l); applyLang();
+  if (S.drawer && FORM_DRAWERS.includes(S.drawer.type)) { const d = S.drawer; $("#drawer-root").innerHTML = ""; S.drawer = d; }
+  render();
+}
+function route() {
+  const h = location.hash.slice(1);
+  if (MIDS.includes(h)) { if (!S.me) { S.login.member = h; S.login.pin = ""; S.login.first = ""; S.login.error = ""; } }
+  else if (VIEWS.includes(h)) { if (S.view !== h) { S.view = h; window.scrollTo(0, 0); } }
+  render();
+}
+window.addEventListener("hashchange", route);
+
+/* ---------- Events ---------- */
+document.addEventListener("click", async e => {
+  const el = e.target.closest("[data-action]"); if (!el) return;
+  const a = el.dataset.action, id = el.dataset.id;
+  switch (a) {
+    case "lang": setLang(LANG === "ar" ? "en" : "ar"); break;
+    case "pick": S.login.member = id; S.login.pin = ""; S.login.first = ""; S.login.error = ""; S.login.forgot = false; render(); break;
+    case "pick-back": S.login.member = null; S.login.pin = ""; S.login.first = ""; S.login.error = ""; if (MIDS.includes(location.hash.slice(1))) { try { history.replaceState(null, "", location.pathname + location.search); } catch (err) {} } render(); break;
+    case "pin": pinDigit(el.dataset.d); break;
+    case "pin-del": S.login.pin = S.login.pin.slice(0, -1); render(); break;
+    case "forgot": S.login.forgot = true; render(); break;
+    case "reset-pin": { const m = S.login.member; if (await guard(() => S.db.doc("members/" + m).set({ pinHash: null, resetAt: now() }))) { toast(esc(t("pinResetDone", { name: mName(m) })), "good"); S.login.forgot = false; render(); } break; }
+    case "logout": signOut(); break;
+    case "new-task": openDrawer("new-task"); break;
+    case "new-lead": openDrawer("new-lead"); break;
+    case "new-project": openDrawer("project", null, { client: el.dataset.client || "" }); break;
+    case "edit-project": openDrawer("project", id); break;
+    case "open-task": openDrawer("task", id); break;
+    case "open-lead": openDrawer("lead", id); break;
+    case "close": closeDrawer(); break;
+    case "quick-done": el.classList.add("on"); await setStatus(id, "done"); break;
+    case "set-status": await setStatus(id, el.dataset.st); break;
+    case "toggle-step": await toggleStep(id, el.dataset.sid); break;
+    case "remove-step": await removeStep(id, el.dataset.sid); break;
+    case "apply-template": await applyTemplate(id); break;
+    case "set-stage": await setStage(id, el.dataset.st); break;
+    case "toggle-lstep": await toggleLeadStep(id, el.dataset.sid); break;
+    case "remove-lstep": await removeLeadStep(id, el.dataset.sid); break;
+    case "ask-confirm": S.confirm = el.dataset.key; renderDrawer(false); { const f = $("#drawer-root form[data-form='lost'] input"); if (f) f.focus(); } break;
+    case "cancel-confirm": S.confirm = null; renderDrawer(false); break;
+    case "delete-task": await deleteTask(id); break;
+    case "delete-lead": await deleteLead(id); break;
+    case "delete-note": await deleteNote(id, el.dataset.nid); break;
+    case "delete-project": await deleteProject(id); break;
+    case "tf-who": S.tf.who = el.dataset.v; render(); break;
+    case "pf-type": S.pf.type = el.dataset.v; render(); break;
+    case "lf-seg": S.lf.seg = el.dataset.v; render(); break;
+    case "af-who": S.af.who = el.dataset.v; render(); break;
+    case "lead-tab": S.lf.tab = el.dataset.tab; if (S.view !== "leads") { location.hash = "leads"; e.preventDefault(); } else render(); break;
+    case "chart-mode": S.chartMode = el.dataset.m; render(); break;
+    case "show-done": S.showAllDone = true; render(); break;
+    case "copy": {
+      const txt = el.dataset.text;
+      try { await navigator.clipboard.writeText(txt); toast(t("tCopied")); }
+      catch (err) { const inp = el.closest(".fgrid").querySelector("input[data-field='phone']"); if (inp) { inp.focus(); inp.select(); } toast(t("tCopyManual")); }
+      break;
+    }
+  }
+});
+document.addEventListener("keydown", e => {
+  if (!S.me && S.login.member) {
+    if (/^\d$/.test(e.key)) { pinDigit(e.key); e.preventDefault(); }
+    else if (e.key === "Backspace") { S.login.pin = S.login.pin.slice(0, -1); render(); }
+    return;
+  }
+  if (e.key === "Escape" && S.drawer) { closeDrawer(); return; }
+  if ((e.key === "Enter" || e.key === " ") && e.target.matches('[role="button"][data-action]')) { e.preventDefault(); e.target.click(); }
+});
+document.addEventListener("input", e => {
+  const x = e.target;
+  if (x.id && (x.hasAttribute("data-draft") || x.dataset.field)) S.drafts[x.id] = x.value;
+  if (x.classList.contains("title-in")) autoGrow(x);
+  if (x.dataset.filter === "q") { S.tf.q = x.value; schedule(); }
+  if (x.dataset.lfilter === "q") { S.lf.q = x.value; schedule(); }
+});
+document.addEventListener("change", async e => {
+  const x = e.target;
+  if (x.dataset.filter && x.dataset.filter !== "q") { S.tf[x.dataset.filter] = x.value; render(); return; }
+  if (x.dataset.afilter) { S.af[x.dataset.afilter] = x.value; render(); return; }
+  if (x.dataset.lfilter && x.dataset.lfilter !== "q") { S.lf[x.dataset.lfilter] = x.value; render(); return; }
+  if (x.dataset.pfilter) { S.pf[x.dataset.pfilter] = x.value; render(); return; }
+  const field = x.dataset.field; if (!field) return;
+  const val = x.value;
+  if (x.dataset.task) {
+    const tk = findTask(x.dataset.task); if (!tk) return;
+    if (field === "title" && !val.trim()) { x.value = tk.title; delete S.drafts[x.id]; return; }
+    if ((tk[field] || "") === val) { delete S.drafts[x.id]; return; }
+    const map = { title: ["renamed", { v: val }], assignee: ["assigned", { who: val }], due: val ? ["due_set", { d: val }] : ["due_removed", {}], priority: ["priority", { pr: val }], category: ["category", { cat: val }], clientId: val ? ["client_linked", { name: leadName(findLead(val)) }] : ["client_unlinked", {}], description: ["details", {}] };
+    const [code, p] = map[field] || [null, null];
+    const ok = await patchTask(tk.id, { [field]: val }, code, p);
+    delete S.drafts[x.id];
+    if (ok && field === "assignee" && val !== S.me) logAct("task", "task_assigned", { title: tk.title, who: val }, tk.id);
+    schedule();
+  } else if (x.dataset.lead) {
+    const lead = findLead(x.dataset.lead); if (!lead) return;
+    if ((lead[field] || "") === val) { delete S.drafts[x.id]; return; }
+    const ok = await patchLead(lead.id, { [field]: val });
+    delete S.drafts[x.id];
+    if (ok && ["phone","business","name","segment"].includes(field)) logAct("lead", "lead_updated", { field, name: leadName(Object.assign({}, lead, { [field]: val })) }, lead.id);
+    schedule();
+  }
+});
+document.addEventListener("submit", async e => {
+  const f = e.target; const kind = f.dataset.form; if (!kind) return; e.preventDefault();
+  const fd = new FormData(f); const g = k => (fd.get(k) || "").toString().trim();
+  const btn = f.querySelector('button[type="submit"]'); if (btn) btn.disabled = true;
+  try {
+    if (kind === "new-task") {
+      if (!g("title")) return;
+      const id = await createTask({ title: g("title"), category: g("category"), assignee: g("assignee"), due: g("due"), priority: g("priority"), clientId: g("clientId"), description: g("description"), useTemplate: !!fd.get("useTemplate") });
+      if (id) { closeDrawer(); if (S.view !== "tasks") location.hash = "tasks"; }
+    } else if (kind === "new-lead") {
+      if (!g("name") && !g("business")) { toast(t("needNameOrBiz"), "bad"); return; }
+      if (!g("segment")) { toast(t("needCat"), "bad"); return; }
+      const id = await createLead({ name: g("name"), business: g("business"), phone: g("phone"), segment: g("segment"), service: g("service"), source: g("source"), stage: g("stage"), budget: g("budget") });
+      if (id) { S.lf.tab = g("stage") === "client" ? "clients" : "pipeline"; if (S.view !== "leads") location.hash = "leads"; openDrawer("lead", id); }
+    } else if (kind === "project") {
+      if (!g("title")) return;
+      const id = await saveProject(f.dataset.id || null, { clientId: g("clientId"), clientName: g("clientName"), title: g("title"), type: g("type"), segment: g("segment"), url: g("url"), instagram: g("instagram"), deliveredAt: g("deliveredAt"), summary: g("summary"), deliverables: g("deliverables") });
+      if (id) { closeDrawer(); if (S.view !== "portfolio") location.hash = "portfolio"; }
+    } else if (kind === "add-step") {
+      const inp = f.querySelector("input"); if (await addStep(f.dataset.id, inp.value)) { delete S.drafts[inp.id]; inp.value = ""; }
+    } else if (kind === "add-lstep") {
+      const inp = f.querySelector("input"); if (await addLeadStep(f.dataset.id, inp.value)) { delete S.drafts[inp.id]; inp.value = ""; }
+    } else if (kind === "add-note") {
+      const ta = f.querySelector("textarea"); if (!ta.value.trim()) return;
+      if (await addNote(f.dataset.id, ta.value)) { delete S.drafts[ta.id]; ta.value = ""; toast(t("tNoteSaved"), "good"); }
+    } else if (kind === "lost") {
+      const inp = f.querySelector("input"); await setStage(f.dataset.id, "lost", inp.value.trim()); delete S.drafts[inp.id];
+    }
+  } finally { if (btn && btn.isConnected) btn.disabled = false; schedule(); }
+});
+document.addEventListener("pointerover", chartHover);
+window.addEventListener("resize", () => { const ta = $("#drawer-root textarea.title-in"); if (ta) autoGrow(ta); });
+
+/* Drag and drop on boards (mouse; touch uses the status buttons) */
+let dragId = null, dragKind = null;
+document.addEventListener("dragstart", e => {
+  const c = e.target.closest && e.target.closest("[data-drag],[data-ldrag]"); if (!c) return;
+  dragId = c.dataset.drag || c.dataset.ldrag; dragKind = c.dataset.drag ? "task" : "lead"; c.classList.add("dragging");
+  try { e.dataTransfer.setData("text/plain", dragId); e.dataTransfer.effectAllowed = "move"; } catch (err) {}
+});
+document.addEventListener("dragend", () => { document.querySelectorAll(".dragging,.drop").forEach(n => n.classList.remove("dragging", "drop")); dragId = null; });
+document.addEventListener("dragover", e => {
+  const col = e.target.closest && e.target.closest(dragKind === "task" ? "[data-drop]" : "[data-ldrop]"); if (!col || !dragId) return;
+  e.preventDefault(); document.querySelectorAll(".drop").forEach(n => n !== col && n.classList.remove("drop")); col.classList.add("drop");
+});
+document.addEventListener("drop", async e => {
+  const col = e.target.closest && e.target.closest(dragKind === "task" ? "[data-drop]" : "[data-ldrop]"); if (!col || !dragId) return;
+  e.preventDefault(); const id = dragId; dragId = null;
+  if (dragKind === "task") await setStatus(id, col.dataset.drop); else await setStage(id, col.dataset.ldrop);
+});
+
+/* ---------- Boot ---------- */
+function subscribe() {
+  const db = S.db;
+  const timer = setTimeout(() => { if (!S.loaded.tasks) { S.slow = true; schedule(); } }, 10000);
+  const done = k => snap => { if (!snap.metadata.fromCache) { S.loaded[k] = true; if (k === "tasks") { clearTimeout(timer); S.slow = false; } } };
+  const fail = k => () => { S.loaded[k] = true; if (k === "tasks") clearTimeout(timer); schedule(); };
+  db.collection("members").onSnapshot(snap => { const m = {}; snap.docs.forEach(d => { m[d.id] = d.data(); }); S.members = m; done("members")(snap); schedule(); }, fail("members"));
+  db.collection("tasks").onSnapshot(snap => {
+    if (S.me && S.loaded.tasks) snap.docChanges().forEach(ch => {
+      const d = ch.doc.data();
+      if (ch.type === "added" && d.createdBy && d.createdBy !== S.me && d.createdAt > S.loginAt - 60000)
+        toast(t("tPartnerAdded", { name: esc(mName(d.createdBy)), t: esc(d.title), forYou: d.assignee === S.me || d.assignee === "both" ? t("forYou") : "" }), "coral");
+      if (ch.type === "modified" && d.status === "done" && d.completedBy && d.completedBy !== S.me && d.completedAt > now() - 30000)
+        toast(t("tPartnerDone", { name: esc(mName(d.completedBy)), t: esc(d.title) }), "good");
+    });
+    S.tasks = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); done("tasks")(snap); schedule();
+  }, fail("tasks"));
+  db.collection("leads").onSnapshot(snap => { S.leads = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); done("leads")(snap); schedule(); }, fail("leads"));
+  db.collection("portfolio").onSnapshot(snap => { S.portfolio = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); done("portfolio")(snap); schedule(); }, fail("portfolio"));
+  db.collection("activity").orderBy("at", "desc").limit(300).onSnapshot(snap => { S.activity = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); done("activity")(snap); schedule(); }, fail("activity"));
+}
+async function boot() {
+  const sess = store.get("session");
+  if (sess && MIDS.includes(sess.id) && now() - sess.at < 30 * DAY) { S.me = sess.id; S.seenAt = store.get("seen." + sess.id) || 0; }
+  const h = location.hash.slice(1);
+  if (VIEWS.includes(h)) S.view = h; else if (MIDS.includes(h) && !S.me) S.login.member = h;
+  render();
+  const c = window.claude;
+  if (!c || !c.use) { S.dbState = "absent"; render(); return; }
+  const [db, user] = await Promise.all([c.use("db").catch(() => null), c.use("user").catch(() => null)]);
+  S.user = user;
+  if (!db) { S.dbState = "absent"; render(); return; }
+  S.db = db; S.dbState = "ready";
+  if (user) {
+    try { S.isOwner = await user.isOwner(); } catch (e) {}
+    try { const w = await user.can("data.write"); if (w === false) S.readOnly = true; } catch (e) {}
+  }
+  subscribe(); render();
+}
+boot();
+})();
+</script>
+
+</body>
+</html>
