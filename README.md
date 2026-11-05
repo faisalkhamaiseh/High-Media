@@ -17,8 +17,8 @@ Team work-management portal for HIGH MEDIA (Faisal & Abdulrahman): websites, onl
 | File | What it is |
 |---|---|
 | `index.html` | The whole portal (one page, no build step) |
-| `config.js` | Your Firebase settings and the two sign-in emails |
-| `firestore.rules` | Database security: only your two emails can read or write |
+| `config.js` | Your Firebase project settings |
+| `firestore.rules` | Database security: only the two team accounts can read or write |
 
 ## Setup: make it work on any device (about 10 minutes)
 
@@ -45,7 +45,7 @@ Each name can be set up once; the first person to set it up keeps it. Set up bot
 1. Go to https://vercel.com/new and import this GitHub repository.
 2. Framework preset: **Other**. No build command, no output directory. Click *Deploy*.
 3. Every push to `main` redeploys automatically.
-4. Add the Vercel address to Firebase's authorized domains (step 8 above).
+4. Add the Vercel address to Firebase's authorized domains (setup step 6 above).
 
 Each person then opens the address on any phone, tablet or computer, picks their name and signs in with their password. Devices stay signed in.
 
