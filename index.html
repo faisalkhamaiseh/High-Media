@@ -1874,7 +1874,8 @@ function subscribe() {
     if (S.loaded.tasks) return; S.slow = true; schedule();
     if (S.mode === "firebase") db.collection("tasks").limit(1).get({ source: "server" }).then(() => {}).catch(e => { S.dataErr = (e && (e.code ? e.code + ": " : "") + (e.message || "")) || "error"; schedule(); });
   }, 10000);
-  const done = k => snap => { if (!snap.metadata.fromCache) { S.loaded[k] = true; if (k === "tasks") { clearTimeout(timer); S.slow = false; } } };
+  // Firebase does not re-send a snapshot when only its source changes (cache → server), so any snapshot counts as loaded there.
+  const done = k => snap => { if (!snap.metadata.fromCache || S.mode === "firebase") { S.loaded[k] = true; if (k === "tasks") { clearTimeout(timer); S.slow = false; } } };
   const fail = k => e => { S.loaded[k] = true; if (k === "tasks") clearTimeout(timer); if (e && k !== "members") S.dataErr = (e.code ? e.code + ": " : "") + (e.message || ""); schedule(); };
   const keep = u => { S.unsubs.push(u); };
   if (S.mode === "firebase") S.loaded.members = true;
