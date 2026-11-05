@@ -612,6 +612,13 @@ en: {
   act_lead_step_done: "completed “{step}” for “{name}”", act_lead_updated: "updated {field} for “{name}”", act_lead_deleted: "deleted lead “{name}”",
   act_note_added: "added a note on “{name}”", act_proj_added: "added “{title}” for {client} to the portfolio", act_proj_updated: "updated portfolio project “{title}”",
   act_proj_removed: "removed “{title}” from the portfolio", aClient: "a client",
+  act_task_renamed: "renamed task “{from}” to “{title}”", act_task_due: "set the due date of “{title}” to {d}", act_task_due_removed: "removed the due date of “{title}”",
+  act_task_priority: "set the priority of “{title}” to {pr}", act_task_category: "changed the category of “{title}” to {cat}",
+  act_task_client: "linked “{title}” to {name}", act_task_client_removed: "unlinked the client from “{title}”", act_task_details: "edited the details of “{title}”",
+  act_step_unchecked: "unchecked “{step}” in “{title}”", act_step_added: "added step “{step}” to “{title}”", act_step_removed: "removed step “{step}” from “{title}”",
+  act_template_added: "added the {cat} checklist to “{title}”", act_lead_step_unchecked: "unchecked “{step}” for “{name}”", act_lead_step_removed: "removed step “{step}” from “{name}”",
+  act_note_deleted: "deleted a note on “{name}”", act_account_created: "set up their account", act_pin_created: "set up their PIN",
+  fld_service: "the service", fld_source: "the source", fld_budget: "the budget",
   log_created: "created the task and assigned it to {who}", log_done: "marked the task complete", log_reopened: "reopened the task", log_moved: "moved it to {st}",
   log_step_checked: "checked off “{step}”", log_step_unchecked: "unchecked “{step}”", log_step_added: "added step “{step}”", log_step_removed: "removed step “{step}”",
   log_template: "added the {cat} workflow checklist", log_renamed: "renamed it to “{v}”", log_assigned: "assigned it to {who}", log_due_set: "set the due date to {d}",
@@ -721,6 +728,13 @@ ar: {
   act_lead_step_done: "أنجز «{step}» لـ«{name}»", act_lead_updated: "حدّث {field} لـ«{name}»", act_lead_deleted: "حذف «{name}»",
   act_note_added: "أضاف ملاحظة على «{name}»", act_proj_added: "أضاف «{title}» لـ{client} إلى المعرض", act_proj_updated: "حدّث المشروع «{title}»",
   act_proj_removed: "أزال «{title}» من المعرض", aClient: "عميل",
+  act_task_renamed: "غيّر عنوان المهمة «{from}» إلى «{title}»", act_task_due: "حدّد استحقاق «{title}» في {d}", act_task_due_removed: "أزال تاريخ استحقاق «{title}»",
+  act_task_priority: "غيّر أولوية «{title}» إلى {pr}", act_task_category: "غيّر فئة «{title}» إلى {cat}",
+  act_task_client: "ربط «{title}» بـ{name}", act_task_client_removed: "ألغى ربط العميل من «{title}»", act_task_details: "عدّل تفاصيل «{title}»",
+  act_step_unchecked: "ألغى إنجاز «{step}» في «{title}»", act_step_added: "أضاف الخطوة «{step}» إلى «{title}»", act_step_removed: "حذف الخطوة «{step}» من «{title}»",
+  act_template_added: "أضاف قائمة {cat} إلى «{title}»", act_lead_step_unchecked: "ألغى إنجاز «{step}» لـ«{name}»", act_lead_step_removed: "حذف الخطوة «{step}» من «{name}»",
+  act_note_deleted: "حذف ملاحظة من «{name}»", act_account_created: "أنشأ حسابه", act_pin_created: "أنشأ رمزه السري",
+  fld_service: "الخدمة", fld_source: "المصدر", fld_budget: "الميزانية",
   log_created: "أنشأ المهمة وأسندها إلى {who}", log_done: "حدّد المهمة كمنجزة", log_reopened: "أعاد فتح المهمة", log_moved: "نقلها إلى {st}",
   log_step_checked: "أنجز «{step}»", log_step_unchecked: "ألغى إنجاز «{step}»", log_step_added: "أضاف الخطوة «{step}»", log_step_removed: "حذف الخطوة «{step}»",
   log_template: "أضاف قائمة خطوات {cat}", log_renamed: "غيّر العنوان إلى «{v}»", log_assigned: "أسندها إلى {who}", log_due_set: "حدّد الاستحقاق في {d}",
@@ -981,21 +995,27 @@ async function toggleStep(id, sid) {
   const patch = { checklist };
   if (item.done && tk.status === "todo") patch.status = "doing";
   const ok = await patchTask(id, patch, item.done ? "step_checked" : "step_unchecked", { step: item.text });
-  if (ok && item.done) logAct("step", "step_done", { step: item.text, title: tk.title }, id);
+  if (ok) logAct("step", item.done ? "step_done" : "step_unchecked", { step: item.text, title: tk.title }, id);
 }
 async function addStep(id, text) {
   const tk = findTask(id); if (!tk || !text.trim()) return false;
   const checklist = (tk.checklist || []).concat([{ id: uid(), text: text.trim(), done: false, addedBy: S.me, addedAt: now() }]);
-  return patchTask(id, { checklist }, "step_added", { step: text.trim() });
+  const ok = await patchTask(id, { checklist }, "step_added", { step: text.trim() });
+  if (ok) logAct("step", "step_added", { step: text.trim(), title: tk.title }, id);
+  return ok;
 }
 async function removeStep(id, sid) {
   const tk = findTask(id); if (!tk) return; const s = (tk.checklist || []).find(c => c.id === sid);
-  return patchTask(id, { checklist: (tk.checklist || []).filter(c => c.id !== sid) }, "step_removed", { step: s ? s.text : "" });
+  const ok = await patchTask(id, { checklist: (tk.checklist || []).filter(c => c.id !== sid) }, "step_removed", { step: s ? s.text : "" });
+  if (ok) logAct("step", "step_removed", { step: s ? s.text : "", title: tk.title }, id);
+  return ok;
 }
 async function applyTemplate(id) {
   const tk = findTask(id); if (!tk) return; const at = now();
   const items = (TEMPLATES[LANG][tk.category] || []).map(text => ({ id: uid(), text, done: false, addedBy: S.me, addedAt: at }));
-  return patchTask(id, { checklist: (tk.checklist || []).concat(items) }, "template", { cat: tk.category });
+  const ok = await patchTask(id, { checklist: (tk.checklist || []).concat(items) }, "template", { cat: tk.category });
+  if (ok) logAct("step", "template_added", { cat: tk.category, title: tk.title }, id);
+  return ok;
 }
 async function deleteTask(id) {
   const tk = findTask(id); if (!tk) return;
@@ -1040,9 +1060,14 @@ async function toggleLeadStep(id, sid) {
   const l = findLead(id); if (!l) return; const at = now(); let item;
   const steps = (l.steps || []).map(s => { if (s.id !== sid) return s; item = Object.assign({}, s, { done: !s.done, doneBy: !s.done ? S.me : null, doneAt: !s.done ? at : null }); return item; });
   const ok = await patchLead(id, { steps });
-  if (ok && item && item.done) logAct("lead", "lead_step_done", { step: item.text, name: leadName(l) }, id);
+  if (ok && item) logAct("lead", item.done ? "lead_step_done" : "lead_step_unchecked", { step: item.text, name: leadName(l) }, id);
 }
-async function removeLeadStep(id, sid) { const l = findLead(id); if (!l) return; return patchLead(id, { steps: (l.steps || []).filter(s => s.id !== sid) }); }
+async function removeLeadStep(id, sid) {
+  const l = findLead(id); if (!l) return; const st = (l.steps || []).find(s => s.id === sid);
+  const ok = await patchLead(id, { steps: (l.steps || []).filter(s => s.id !== sid) });
+  if (ok) logAct("lead", "lead_step_removed", { step: st ? st.text : "", name: leadName(l) }, id);
+  return ok;
+}
 async function addNote(id, text) {
   const l = findLead(id); if (!l || !text.trim()) return false; const at = now();
   const ok = await guard(async () => {
@@ -1055,7 +1080,7 @@ async function addNote(id, text) {
 async function deleteNote(lid, nid) {
   const l = findLead(lid);
   const ok = await guard(async () => { await S.db.doc("leads/" + lid + "/notes/" + nid).delete(); if (l) await S.db.doc("leads/" + lid).update({ noteCount: Math.max(0, (l.noteCount || 1) - 1) }); });
-  if (ok) toast(t("tNoteDeleted"));
+  if (ok) { toast(t("tNoteDeleted")); logAct("note", "note_deleted", { name: leadName(l) }, lid); }
   S.confirm = null; schedule();
 }
 async function deleteLead(id) {
@@ -1116,7 +1141,7 @@ async function pinComplete() {
       else {
         const h = await hashPin(id, L.pin);
         const ok = await guard(() => S.db.doc("members/" + id).set({ pinHash: h, pinSetAt: now() }));
-        if (ok) return signIn(id);
+        if (ok) { signIn(id); logAct("account", "pin_created", {}, null); return; }
         L.first = "";
       }
     }
@@ -1476,7 +1501,7 @@ function renderActivity() {
   const f = S.af;
   const list = S.activity.filter(a => (f.who === "all" || a.by === f.who) && (f.kind === "all" || a.kind === f.kind || (f.kind === "task" && a.kind === "step")));
   let lastDay = null, body = "";
-  list.forEach(a => { const k = dayKey(a.at); if (k !== lastDay) { body += `<div class="day-h">${dayLabel(a.at)}</div>`; lastDay = k; } body += `<div class="fi">${av(a.by, "sm")}<p><b>${esc(mName(a.by))}</b> <span dir="auto">${actText(a)}</span></p><span class="mono" title="${esc(fmtDT(a.at))}">${fmtT(a.at)}</span></div>`; });
+  list.forEach(a => { const k = dayKey(a.at); if (k !== lastDay) { body += `<div class="day-h">${dayLabel(a.at)}</div>`; lastDay = k; } body += `<div class="fi">${av(a.by, "sm")}<p><b>${esc(mName(a.by))}</b> <span dir="auto">${actText(a)}</span></p><span class="mono" title="${esc(fmtDT(a.at))}">${fmtDM(a.at)} · ${fmtT(a.at)}</span></div>`; });
   const filters = `<div class="filters"><div class="seg" role="group"><button class="${f.who === "all" ? "on" : ""}" data-action="af-who" data-v="all">${t("everyone")}</button>${MIDS.map(id => `<button class="${f.who === id ? "on" : ""}" data-action="af-who" data-v="${id}">${mName(id)}</button>`).join("")}</div>
     <select class="sel" id="af-kind" data-afilter="kind" aria-label="${t("type")}"><option value="all">${t("allAct")}</option><option value="task" ${f.kind === "task" ? "selected" : ""}>${t("fTasks")}</option><option value="lead" ${f.kind === "lead" ? "selected" : ""}>${t("fLeads")}</option><option value="note" ${f.kind === "note" ? "selected" : ""}>${t("fNotes")}</option><option value="portfolio" ${f.kind === "portfolio" ? "selected" : ""}>${t("fPortfolio")}</option></select></div>`;
   return `<div class="wrap">${mobileHead()}${ph(t("everyStep"), t("activityLog"), "")}${banners()}${filters}
@@ -1760,14 +1785,21 @@ document.addEventListener("change", async e => {
     const [code, p] = map[field] || [null, null];
     const ok = await patchTask(tk.id, { [field]: val }, code, p);
     delete S.drafts[x.id];
-    if (ok && field === "assignee" && val !== S.me) logAct("task", "task_assigned", { title: tk.title, who: val }, tk.id);
+    if (ok) {
+      const nt = field === "title" ? val : tk.title;
+      const act = { title: ["task_renamed", { from: tk.title, title: val }], assignee: ["task_assigned", { title: nt, who: val }],
+        due: val ? ["task_due", { title: nt, d: val }] : ["task_due_removed", { title: nt }], priority: ["task_priority", { title: nt, pr: val }],
+        category: ["task_category", { title: nt, cat: val }], clientId: val ? ["task_client", { title: nt, name: leadName(findLead(val)) }] : ["task_client_removed", { title: nt }],
+        description: ["task_details", { title: nt }] }[field];
+      if (act) logAct("task", act[0], act[1], tk.id);
+    }
     schedule();
   } else if (x.dataset.lead) {
     const lead = findLead(x.dataset.lead); if (!lead) return;
     if ((lead[field] || "") === val) { delete S.drafts[x.id]; return; }
     const ok = await patchLead(lead.id, { [field]: val });
     delete S.drafts[x.id];
-    if (ok && ["phone","business","name","segment"].includes(field)) logAct("lead", "lead_updated", { field, name: leadName(Object.assign({}, lead, { [field]: val })) }, lead.id);
+    if (ok && ["phone","business","name","segment","service","source","budget"].includes(field)) logAct("lead", "lead_updated", { field, name: leadName(Object.assign({}, lead, { [field]: val })) }, lead.id);
     schedule();
   }
 });
@@ -1900,7 +1932,7 @@ async function fbCreate(username, pw, pw2) {
     try { await cred.user.delete(); } catch (x) { try { await S.auth.signOut(); } catch (y) {} }
     S.creating = false; L.busy = false; L.error = "eSeatTaken"; return render();
   }
-  S.creating = false; enterAs(seat); render();
+  S.creating = false; enterAs(seat); logAct("account", "account_created", {}, null); render();
 }
 async function bootFirebase(cfg) {
   S.mode = "firebase";
