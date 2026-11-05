@@ -1,0 +1,17 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Only the two HIGH MEDIA accounts can read or write anything.
+    // Replace the two emails with the ones you put in config.js.
+    function isTeam() {
+      return request.auth != null
+        && request.auth.token.email in [
+          'FAISAL_EMAIL_HERE',
+          'ABDULRAHMAN_EMAIL_HERE'
+        ];
+    }
+    match /{document=**} {
+      allow read, write: if isTeam();
+    }
+  }
+}
