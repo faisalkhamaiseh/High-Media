@@ -9,7 +9,10 @@ Team work-management portal for HIGH MEDIA (Faisal & Abdulrahman): websites, onl
 - Leads & clients pipeline: Potential lead → In discussion → Closing → Client, or Lost (with reason)
 - Client categories (Doctors & clinics, Online stores, Restaurants & cafés, Beauty & salons, Real estate, Companies & services, Other) with category and service filters
 - Time-stamped notes per client, and process steps per lead
-- Portfolio of delivered work with website and social links
+- Portfolio with a profile per client: log delivered Reels, posts, carousels, stories and website pages with sliders, record payments, see the content mix and projects
+- Task categories include Carousel and Stories, each with a standard checklist
+- Tools & finance: tool subscriptions that turn red when they expire (with renew), subscription history, client payments, revenue by client, monthly net profit and a 6-month revenue vs spending chart (amounts in JOD)
+- Weekly target on the overview (default 100 tasks, editable) with pace and each partner's share
 - Full activity log
 - Arabic / English with right-to-left layout; works on phones, tablets and desktops
 
