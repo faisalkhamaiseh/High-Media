@@ -426,6 +426,180 @@ textarea.inp{height:auto;min-height:84px;padding:9px 11px;resize:vertical;line-h
 .toast b{font-weight:700}
 .skel{color:var(--muted);padding:40px;text-align:center}
 
+/* ---------- Carousel / Stories task chips ---------- */
+.chip.carousel{background:var(--tint-info);color:var(--info)}
+.chip.stories{background:var(--tint-warn);color:var(--warn)}
+.nav em.bad,.nav a.on em.bad{background:var(--bad);color:#fff}
+
+/* ---------- Weekly target ---------- */
+.wk{display:grid;grid-template-columns:auto minmax(0,1fr);gap:22px;align-items:center}
+.ring{position:relative;width:132px;height:132px;flex:none}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+[dir="rtl"] .ring svg{transform:rotate(-90deg) scaleY(-1)}
+.ring .trk{fill:none;stroke:var(--surface-3);stroke-width:12}
+.ring .val{fill:none;stroke-width:12;stroke-linecap:round;transition:stroke-dashoffset .6s ease}
+.ring .lbl{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1}
+.ring .lbl b{font-family:var(--f-brand);font-stretch:112%;font-weight:800;font-size:28px;font-variant-numeric:tabular-nums}
+.ring .lbl small{font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.wk-info{display:flex;flex-direction:column;gap:10px;min-width:0}
+.wk-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
+.wk-top h2{font-size:15px;font-weight:700}
+.wk-top p{color:var(--muted);font-size:12.5px}
+.pace{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;padding:3px 9px;border-radius:999px}
+.pace.good{background:var(--tint-good);color:var(--good)}.pace.warn{background:var(--tint-warn);color:var(--warn)}
+.days7{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;align-items:end;height:58px}
+.days7 div{display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end}
+.days7 i{display:block;width:100%;max-width:26px;border-radius:5px 5px 2px 2px;background:var(--violet);min-height:3px;opacity:.9}
+.days7 i.zero{background:var(--surface-3)}
+.days7 .today i{box-shadow:0 0 0 2px var(--surface),0 0 0 3px var(--violet)}
+.days7 span{font-size:10.5px;color:var(--muted)}
+.wk-edit{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.wk-edit .inp{width:110px}
+
+/* ---------- Portfolio: client tiles & profile ---------- */
+.sec-title{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.sec-title h2{font-family:var(--f-display);font-stretch:112%;font-weight:800;font-size:19px}
+.sec-title p{color:var(--muted);font-size:12.5px}
+.sec-title > *{min-width:0;max-width:100%}
+.sec-title .filters{flex-wrap:nowrap}
+.sec-title .seg{overflow-x:auto;scrollbar-width:thin}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:16px}
+.ctile{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:14px;cursor:pointer;overflow:hidden;transition:border-color .15s,transform .15s;min-width:0}
+.ctile:hover{border-color:var(--line-2);transform:translateY(-2px)}
+.ctile::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,var(--violet),var(--coral))}
+.ct-head{display:flex;gap:12px;align-items:center;min-width:0}
+.cmono{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;color:#fff;font-family:var(--f-brand);font-stretch:110%;font-weight:800;font-size:17px;flex:none;background:linear-gradient(135deg,var(--violet),var(--coral));letter-spacing:.02em}
+.cmono.lg{width:64px;height:64px;font-size:23px;border-radius:18px}
+.ct-head b{display:block;font-size:15.5px;overflow-wrap:anywhere}
+.ct-head small{color:var(--muted);font-size:12.5px}
+.cnums{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.cnum{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 2px;border-radius:10px;background:var(--surface-2)}
+.cnum b{font-family:var(--f-brand);font-stretch:110%;font-weight:800;font-size:17px;font-variant-numeric:tabular-nums;line-height:1.1}
+.cnum span{font-size:10.5px;color:var(--muted);text-align:center;line-height:1.2}
+.cnum i{width:6px;height:6px;border-radius:50%}
+.ct-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+.ct-foot b{color:var(--fg);font-variant-numeric:tabular-nums}
+.cp-hero{display:flex;gap:16px;align-items:center;padding:18px;border-radius:18px;background:var(--surface-2);border:1px solid var(--line);flex-wrap:wrap}
+.cp-hero h2{font-family:var(--f-display);font-stretch:110%;font-weight:800;font-size:22px;overflow-wrap:anywhere}
+.cp-hero .meta2{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;align-items:center;font-size:12.5px;color:var(--muted)}
+.cstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.cstat{border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;background:var(--surface);position:relative;overflow:hidden}
+.cstat::after{content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:3px;background:var(--c,var(--violet))}
+.cstat b{font-family:var(--f-brand);font-stretch:112%;font-weight:800;font-size:24px;font-variant-numeric:tabular-nums;line-height:1.15}
+.cstat span{font-size:12px;color:var(--fg-2)}
+.cstat.money b{font-size:19px}
+.mix{display:flex;height:12px;border-radius:8px;overflow:hidden;gap:2px;background:var(--surface-3)}
+.mix span{display:block;height:100%}
+.mixleg{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--fg-2)}
+.mixleg span{display:inline-flex;align-items:center;gap:6px}
+.mixleg i{width:9px;height:9px;border-radius:3px;display:inline-block}
+.wform{border:1px solid var(--line);border-radius:16px;padding:16px;background:var(--surface-2);display:flex;flex-direction:column;gap:14px}
+.srow{display:grid;grid-template-columns:120px minmax(0,1fr) 48px;gap:12px;align-items:center}
+.srow label{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600}
+.srow label i{width:9px;height:9px;border-radius:50%;flex:none}
+.srow input[type="range"]{width:100%;accent-color:var(--c);height:28px;cursor:pointer}
+.srow output{justify-self:end;min-width:44px;text-align:center;font-family:var(--f-brand);font-stretch:110%;font-weight:800;font-size:16px;padding:4px 0;border-radius:9px;background:var(--surface);border:1px solid var(--line);font-variant-numeric:tabular-nums}
+.srow output.on{color:#fff;background:var(--c);border-color:transparent}
+.wentries{display:flex;flex-direction:column;gap:10px}
+.wentry{display:grid;grid-template-columns:58px minmax(0,1fr);gap:14px;border:1px solid var(--line);border-radius:16px;padding:14px;background:var(--surface)}
+.wdate{display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:12px;background:var(--surface-2);padding:8px 4px;height:max-content}
+.wdate b{font-family:var(--f-brand);font-stretch:110%;font-weight:800;font-size:22px;line-height:1}
+.wdate span{font-size:11px;color:var(--muted);margin-top:3px;text-align:center}
+.wbody{display:flex;flex-direction:column;gap:10px;min-width:0}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.cpill{display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 6px;border-radius:999px;background:color-mix(in srgb,var(--c) 14%,transparent);color:var(--fg)}
+[dir="rtl"] .cpill{padding:6px 6px 6px 12px}
+.cpill b{display:grid;place-items:center;min-width:28px;height:28px;padding:0 6px;border-radius:999px;background:var(--c);color:#fff;font-family:var(--f-brand);font-stretch:110%;font-weight:800;font-size:13.5px;font-variant-numeric:tabular-nums}
+.cpill span{font-size:13px;font-weight:600}
+.wmeta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.wmeta .end{margin-inline-start:auto}
+.prow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line);flex-wrap:wrap}
+.prow:first-child{border-top:0}
+.prow b.amt{font-family:var(--f-brand);font-stretch:110%;font-weight:800;font-variant-numeric:tabular-nums;color:var(--good)}
+.prow small{color:var(--muted);font-size:12px}
+.inline-form{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+.inline-form .full{grid-column:1/-1}
+
+/* ---------- Tools & finance (premium) ---------- */
+.fin-hero{--bg:#0B0D17;--surface:#121524;--surface-2:#181C2E;--surface-3:#20253B;--fg:#F4F2EE;--fg-2:#B4B2C8;--muted:#8A8BA6;--line:#272C45;--line-2:#343A58;--violet:#8B63F7;--coral:#F05A35;--good:#3DBE86;--bad:#FF5C7A;--tint-good:rgba(61,190,134,.15);--tint-bad:rgba(255,92,122,.15);
+  color:var(--fg);border-radius:22px;padding:26px;border:1px solid #272C45;position:relative;overflow:hidden;
+  background:radial-gradient(640px 320px at 88% -18%,rgba(139,99,247,.38),transparent 62%),radial-gradient(520px 260px at 6% 118%,rgba(240,90,53,.24),transparent 62%),linear-gradient(180deg,#10132A,#0B0D17)}
+.fin-hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1.2px);background-size:20px 20px;pointer-events:none}
+.fin-hero > *{position:relative}
+.fh-top{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:flex-start}
+.fh-net small{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+:root[lang="ar"] .fh-net small{letter-spacing:0}
+.fh-net b{display:block;font-family:var(--f-brand);font-stretch:118%;font-weight:900;font-size:clamp(34px,6vw,52px);line-height:1.05;margin-top:8px;font-variant-numeric:tabular-nums;unicode-bidi:plaintext;text-align:start}
+.fh-net b.neg{color:var(--bad)}
+.fh-net span{display:inline-flex;margin-top:8px;font-size:12.5px;color:var(--fg-2)}
+.fh-figs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px}
+.fh-fig{padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(6px)}
+.fh-fig small{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--fg-2)}
+.fh-fig small i{width:8px;height:8px;border-radius:2px;display:inline-block}
+.fh-fig b{display:block;font-family:var(--f-brand);font-stretch:112%;font-weight:800;font-size:21px;margin-top:6px;font-variant-numeric:tabular-nums}
+.fh-fig em{font-style:normal;font-size:11.5px;color:var(--muted)}
+.fh-chart{margin-top:20px}
+.fh-chart .chart text{fill:var(--muted)}
+.fh-chart .gl{stroke:rgba(255,255,255,.07)}
+.fh-chart .base{stroke:rgba(255,255,255,.18)}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(250px,100%),1fr));gap:14px}
+.tool{position:relative;border:1px solid var(--line);border-radius:18px;padding:16px;background:var(--surface);display:flex;flex-direction:column;gap:12px;min-width:0}
+.tool.expired{border-color:color-mix(in srgb,var(--bad) 60%,transparent);background:linear-gradient(180deg,var(--tint-bad),var(--surface) 70%)}
+.tool.soon{border-color:color-mix(in srgb,var(--warn) 55%,transparent)}
+.t-head{display:flex;gap:12px;align-items:center;min-width:0}
+.tmono{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:14px;flex:none;font-family:var(--f-brand);font-stretch:110%;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+.t-head b{display:block;font-size:14.5px;overflow-wrap:anywhere}
+.t-head small{color:var(--muted);font-size:12px}
+.spill{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.spill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.spill.active{background:var(--tint-good);color:var(--good)}
+.spill.soon{background:var(--tint-warn);color:var(--warn)}
+.spill.expired{background:var(--bad);color:#fff}
+.tbar{height:6px;border-radius:6px;background:var(--surface-3);overflow:hidden}
+.tbar span{display:block;height:100%;border-radius:6px;background:var(--good)}
+.tool.soon .tbar span{background:var(--warn)}
+.tool.expired .tbar span{background:var(--bad);width:100%!important}
+.t-row{display:flex;justify-content:space-between;gap:8px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+.t-row b{color:var(--fg);font-variant-numeric:tabular-nums}
+.t-act{display:flex;gap:8px;flex-wrap:wrap}
+.tpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(132px,100%),1fr));gap:8px}
+.tpick label{display:flex;align-items:center;gap:9px;padding:9px;border-radius:12px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-size:13px;font-weight:600;min-width:0}
+.tpick label span{overflow-wrap:anywhere}
+.tpick input{position:absolute;opacity:0;pointer-events:none}
+.tpick label:has(input:checked){border-color:var(--violet);background:var(--tint-violet)}
+.tpick .tmono{width:30px;height:30px;border-radius:9px;font-size:11px}
+.dur{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.dur label{text-align:center;padding:9px 4px;border-radius:10px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-weight:600;font-size:13px}
+.dur input{position:absolute;opacity:0;pointer-events:none}
+.dur label:has(input:checked){border-color:var(--violet);background:var(--tint-violet);color:var(--fg)}
+.until{font-size:13px;color:var(--fg-2);padding:10px 12px;border-radius:10px;background:var(--surface-2)}
+.until b{color:var(--fg)}
+.rev{display:flex;flex-direction:column;gap:12px}
+.rev-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;align-items:center}
+.rev-row .nm{font-size:13.5px;font-weight:600;overflow-wrap:anywhere}
+.rev-row .am{font-family:var(--f-brand);font-stretch:110%;font-weight:800;font-variant-numeric:tabular-nums;font-size:14px}
+.rev-row .bar{grid-column:1/-1;height:8px;border-radius:6px;background:var(--surface-3);overflow:hidden}
+.rev-row .bar span{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--violet),color-mix(in srgb,var(--violet) 60%,var(--coral)))}
+.rev-row small{grid-column:1/-1;font-size:11.5px;color:var(--muted);margin-top:-2px}
+.ftable td.amt{font-family:var(--f-brand);font-stretch:110%;font-weight:700;font-variant-numeric:tabular-nums;text-align:end}
+.ftable th.amt{text-align:end}
+.ftable td{vertical-align:middle}
+.ftable .tcell{display:flex;align-items:center;gap:9px}
+.ftable .tcell .tmono{width:26px;height:26px;border-radius:8px;font-size:10px}
+.g2.fin{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)}
+@media (max-width:1180px){.g2.fin{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:860px){
+  .wk{grid-template-columns:minmax(0,1fr);justify-items:center}
+  .wk-info{width:100%}
+  .fh-figs{grid-template-columns:minmax(0,1fr)}
+  .fin-hero{padding:20px;border-radius:18px}
+  .cstats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .srow{grid-template-columns:96px minmax(0,1fr) 44px;gap:8px}
+  .inline-form{grid-template-columns:minmax(0,1fr)}
+  .cnums{grid-template-columns:repeat(5,minmax(0,1fr))}
+}
+@media (max-width:400px){.dur{grid-template-columns:repeat(2,minmax(0,1fr))}.cnum span{font-size:9.5px}}
+
 /* ---------- Responsive ---------- */
 @media (max-width:1180px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.g2,.g2.even{grid-template-columns:minmax(0,1fr)}}
 /* Tablet: icon rail */
@@ -537,6 +711,34 @@ en: {
   eUserTaken: "That username is taken. Choose another.", eSeatTaken: "{name}'s account was already set up. Sign in instead.", eWrongLogin: "Wrong username or password.",
   forgotHelp: "A forgotten password is reset from the Firebase console. The steps are in the README.",
   loadErr: "Couldn't load the database. Check your connection and reload the page.", eNoPermission: "You don't have permission to change this. Check that your email is listed in the database rules.",
+  nav_tools: "Tools", toolsTitle: "Tools & finance", toolsEyebrow: "Subscriptions, revenue & spending",
+  cat_carousel: "Carousel", cat_stories: "Stories",
+  ct_reels: "Reels", ct_posts: "Posts", ct_carousels: "Carousels", ct_stories: "Stories", ct_pages: "Website pages",
+  wkTitle: "This week's target", wkSub: "{done} of {target} tasks completed this week", wkDaysLeft: "{n} days left this week", wkDayLeft1: "1 day left this week", wkLastDay: "Last day of the week",
+  wkOnPace: "On pace", wkBehind: "{n} behind pace", wkAhead: "{n} ahead of pace", wkReached: "Target reached", wkEdit: "Edit target", wkTargetLbl: "Weekly target (tasks)", save: "Save", cancelBtn: "Cancel",
+  wkNeedNum: "Enter a number between 1 and 1000.",
+  clientsH: "Clients", clientsHSub: "Open a client to log delivered content, payments and projects", projectsH: "Projects", noClientsPort: "No clients yet. When a lead becomes a client, their profile appears here.",
+  noDeliveries: "No deliveries logged yet", lastDelivery: "Last delivery {d}", paidTotal: "Paid", clientProfile: "Client profile", openLead: "Lead details",
+  logWork: "Log delivered work", logWorkSub: "Move the sliders to what you delivered, then save.", workDate: "Date", workNote: "Note (optional)", workNotePh: "e.g. November content, Ramadan campaign",
+  workLink: "Link (optional)", saveWork: "Save delivery", workEmpty: "Move at least one slider above 0.", workLog: "Delivery log", noWork: "Nothing logged yet. Use the sliders above to record the Reels, posts, carousels and stories you deliver.",
+  contentMix: "Content mix", totalDelivered: "Delivered in total", revenueTile: "Paid by this client", payments: "Payments", noPayments: "No payments recorded yet.",
+  addPayment: "Add payment", amountJod: "Amount (JOD)", payDate: "Date", payNote: "For what? (optional)", payNotePh: "e.g. November social media package", savePayment: "Save payment",
+  delWorkQ: "Delete this entry?", delPayQ: "Delete this payment?", workSaved: "Saved to {name}'s profile.", paySaved: "Payment recorded.",
+  finNet: "Net this month", finNetAll: "All time net: {v}", finRevenue: "Revenue this month", finSpend: "Tool spending this month", finActive: "Active subscriptions", finAllTime: "All time: {v}",
+  finExpiredN: "{n} expired", finSoonN: "{n} expiring soon", finAllGood: "All up to date", fin6: "Revenue vs spending, last 6 months", revLegend: "Revenue", spendLegend: "Spending",
+  toolsH: "Our tools", toolsHSub: "Each subscription is active for its period, then turns red when it expires", newSub: "New subscription", recordPayment: "Record client payment",
+  toolLbl: "Tool", customTool: "Other tool", toolName: "Tool name", toolNamePh: "e.g. Midjourney", startDate: "Start date", duration: "Duration",
+  m1: "1 month", m3: "3 months", m6: "6 months", m12: "1 year", amountPaid: "Amount paid (JOD)", subNote: "Note (optional)", saveSub: "Save subscription", activeUntil: "Active until <b>{d}</b>",
+  stActive: "Active", stSoon: "Expiring soon", stExpired: "Expired", daysLeft: "{n} days left", lastDayToday: "Last day today", expiredOn: "Expired {d}", untilD: "Until {d}",
+  lastPaid: "Last paid", spentTotal: "Spent in total", renew: "Renew", subHistory: "Subscription history", subHistorySub: "Every subscription you've paid for",
+  colTool: "Tool", colPeriod: "Period", colPaid: "Paid", colStatus: "Status", colBy: "Added by", colDate: "Date", colClient: "Client", colAmount: "Amount", colNote: "Note",
+  noSubs: "No subscriptions yet. Add the tools you pay for (Claude, Canva, CapCut…) to track renewals and costs.", revByClient: "Revenue by client", revByClientSub: "Everything each client has paid",
+  noRevenue: "No payments yet. Record what each client pays to see revenue and profit.", clientPayments: "Client payments", ofTotal: "{p}% of revenue",
+  delSubQ: "Delete this subscription from the history?", subSaved: "Subscription saved. Active until {d}.", needTool: "Choose a tool.", needAmount: "Enter an amount in JOD.", needClient: "Choose a client.",
+  chooseClient: "Choose a client", tool_hosting: "Hosting", tool_domain: "Domain", fFinance: "Tools & finance",
+  act_sub_added: "subscribed to {tool} ({amount}) until {d}", act_sub_renewed: "renewed {tool} ({amount}) until {d}", act_sub_deleted: "removed a {tool} subscription",
+  act_pay_added: "recorded a payment of {amount} from {name}", act_pay_deleted: "deleted a payment of {amount} from {name}",
+  act_work_added: "logged {counts} for {name}", act_work_deleted: "deleted a delivery entry for {name}", act_target_set: "set the weekly target to {n} tasks",
   nav_overview: "Overview", nav_tasks: "Tasks", nav_leads: "Leads & clients", nav_portfolio: "Portfolio", nav_activity: "Activity",
   signedIn: "Signed in", signOut: "Sign out", switchLang: "العربية", close: "Close",
   bannerNotConnected: "The portal isn't connected. Open it while signed in to claude.ai to load and save your data.",
@@ -657,6 +859,34 @@ ar: {
   eUserTaken: "اسم المستخدم مستخدم. اختر اسمًا آخر.", eSeatTaken: "حساب {name} أُنشئ مسبقًا. سجّل الدخول بدلًا من ذلك.", eWrongLogin: "اسم المستخدم أو كلمة المرور غير صحيحة.",
   forgotHelp: "كلمة المرور المنسية تُعاد من لوحة Firebase. الخطوات موجودة في ملف README.",
   loadErr: "تعذّر تحميل قاعدة البيانات. تحقق من اتصالك وأعد تحميل الصفحة.", eNoPermission: "لا تملك صلاحية لتعديل هذا. تأكد أن بريدك مضاف في قواعد قاعدة البيانات.",
+  nav_tools: "الأدوات", toolsTitle: "الأدوات والمالية", toolsEyebrow: "الاشتراكات والإيرادات والمصاريف",
+  cat_carousel: "كاروسيل", cat_stories: "ستوريز",
+  ct_reels: "ريلز", ct_posts: "منشورات", ct_carousels: "كاروسيل", ct_stories: "ستوريز", ct_pages: "صفحات موقع",
+  wkTitle: "هدف هذا الأسبوع", wkSub: "{done} من {target} مهمة منجزة هذا الأسبوع", wkDaysLeft: "باقي {n} أيام على نهاية الأسبوع", wkDayLeft1: "باقي يوم واحد على نهاية الأسبوع", wkLastDay: "آخر يوم في الأسبوع",
+  wkOnPace: "على المسار", wkBehind: "متأخرون {n} عن المعدل", wkAhead: "متقدمون {n} عن المعدل", wkReached: "تم تحقيق الهدف", wkEdit: "تعديل الهدف", wkTargetLbl: "الهدف الأسبوعي (مهام)", save: "حفظ", cancelBtn: "إلغاء",
+  wkNeedNum: "أدخل رقمًا بين 1 و 1000.",
+  clientsH: "العملاء", clientsHSub: "افتح العميل لتسجيل المحتوى المُسلَّم والدفعات والمشاريع", projectsH: "المشاريع", noClientsPort: "لا يوجد عملاء بعد. عندما يصبح العميل المحتمل عميلًا، يظهر ملفه هنا.",
+  noDeliveries: "لم يُسجَّل أي تسليم بعد", lastDelivery: "آخر تسليم {d}", paidTotal: "المدفوع", clientProfile: "ملف العميل", openLead: "تفاصيل العميل",
+  logWork: "تسجيل عمل مُسلَّم", logWorkSub: "حرّك المؤشرات حسب ما سلّمته، ثم احفظ.", workDate: "التاريخ", workNote: "ملاحظة (اختياري)", workNotePh: "مثال: محتوى نوفمبر، حملة رمضان",
+  workLink: "رابط (اختياري)", saveWork: "حفظ التسليم", workEmpty: "حرّك مؤشرًا واحدًا على الأقل فوق الصفر.", workLog: "سجل التسليمات", noWork: "لم يُسجَّل شيء بعد. استخدم المؤشرات بالأعلى لتسجيل الريلز والمنشورات والكاروسيل والستوريز التي تسلّمها.",
+  contentMix: "توزيع المحتوى", totalDelivered: "إجمالي المُسلَّم", revenueTile: "مدفوعات هذا العميل", payments: "الدفعات", noPayments: "لا توجد دفعات مسجّلة بعد.",
+  addPayment: "إضافة دفعة", amountJod: "المبلغ (دينار)", payDate: "التاريخ", payNote: "مقابل ماذا؟ (اختياري)", payNotePh: "مثال: باقة سوشيال ميديا نوفمبر", savePayment: "حفظ الدفعة",
+  delWorkQ: "حذف هذا السجل؟", delPayQ: "حذف هذه الدفعة؟", workSaved: "حُفظ في ملف {name}.", paySaved: "تم تسجيل الدفعة.",
+  finNet: "صافي هذا الشهر", finNetAll: "الصافي منذ البداية: {v}", finRevenue: "إيرادات هذا الشهر", finSpend: "مصاريف الأدوات هذا الشهر", finActive: "اشتراكات فعّالة", finAllTime: "منذ البداية: {v}",
+  finExpiredN: "{n} منتهية", finSoonN: "{n} تنتهي قريبًا", finAllGood: "كلها محدّثة", fin6: "الإيرادات مقابل المصاريف، آخر 6 أشهر", revLegend: "الإيرادات", spendLegend: "المصاريف",
+  toolsH: "أدواتنا", toolsHSub: "كل اشتراك يبقى فعّالًا لمدته، ثم يتحول للأحمر عند انتهائه", newSub: "اشتراك جديد", recordPayment: "تسجيل دفعة من عميل",
+  toolLbl: "الأداة", customTool: "أداة أخرى", toolName: "اسم الأداة", toolNamePh: "مثال: Midjourney", startDate: "تاريخ البدء", duration: "المدة",
+  m1: "شهر", m3: "3 أشهر", m6: "6 أشهر", m12: "سنة", amountPaid: "المبلغ المدفوع (دينار)", subNote: "ملاحظة (اختياري)", saveSub: "حفظ الاشتراك", activeUntil: "فعّال حتى <b>{d}</b>",
+  stActive: "فعّال", stSoon: "ينتهي قريبًا", stExpired: "منتهي", daysLeft: "باقي {n} يوم", lastDayToday: "آخر يوم اليوم", expiredOn: "انتهى في {d}", untilD: "حتى {d}",
+  lastPaid: "آخر دفعة", spentTotal: "إجمالي المدفوع", renew: "تجديد", subHistory: "سجل الاشتراكات", subHistorySub: "كل اشتراك دفعتم ثمنه",
+  colTool: "الأداة", colPeriod: "الفترة", colPaid: "المدفوع", colStatus: "الحالة", colBy: "أضافه", colDate: "التاريخ", colClient: "العميل", colAmount: "المبلغ", colNote: "ملاحظة",
+  noSubs: "لا توجد اشتراكات بعد. أضف الأدوات التي تدفعون ثمنها (Claude، Canva، CapCut…) لمتابعة التجديد والتكاليف.", revByClient: "الإيرادات حسب العميل", revByClientSub: "كل ما دفعه كل عميل",
+  noRevenue: "لا توجد دفعات بعد. سجّل ما يدفعه كل عميل لتظهر الإيرادات والأرباح.", clientPayments: "دفعات العملاء", ofTotal: "{p}% من الإيرادات",
+  delSubQ: "حذف هذا الاشتراك من السجل؟", subSaved: "تم حفظ الاشتراك. فعّال حتى {d}.", needTool: "اختر الأداة.", needAmount: "أدخل المبلغ بالدينار.", needClient: "اختر العميل.",
+  chooseClient: "اختر العميل", tool_hosting: "استضافة", tool_domain: "دومين", fFinance: "الأدوات والمالية",
+  act_sub_added: "اشترك في {tool} ({amount}) حتى {d}", act_sub_renewed: "جدّد {tool} ({amount}) حتى {d}", act_sub_deleted: "حذف اشتراك {tool}",
+  act_pay_added: "سجّل دفعة {amount} من {name}", act_pay_deleted: "حذف دفعة {amount} من {name}",
+  act_work_added: "سجّل {counts} لـ{name}", act_work_deleted: "حذف سجل تسليم لـ{name}", act_target_set: "حدّد الهدف الأسبوعي بـ{n} مهمة",
   nav_overview: "نظرة عامة", nav_tasks: "المهام", nav_leads: "العملاء", nav_portfolio: "أعمالنا", nav_activity: "السجل",
   signedIn: "مسجّل الدخول", signOut: "تسجيل الخروج", switchLang: "English", close: "إغلاق",
   bannerNotConnected: "البوابة غير متصلة. افتحها وأنت مسجّل الدخول في claude.ai لتحميل بياناتك وحفظها.",
@@ -773,7 +1003,7 @@ const MEMBERS = {
 };
 const MIDS = ["faisal", "abdulrahman"];
 const partnerOf = id => id === "faisal" ? "abdulrahman" : "faisal";
-const CAT_KEYS = ["website","reels","posts","page","admin"];
+const CAT_KEYS = ["website","reels","posts","carousel","stories","page","admin"];
 const STATUSES = [["todo","var(--muted)"],["doing","var(--info)"],["review","var(--warn)"],["done","var(--good)"]];
 const STAGES = [["potential","var(--info)"],["discussion","var(--violet)"],["closing","var(--warn)"],["client","var(--good)"],["lost","var(--bad)"]];
 const SERVICE_KEYS = ["website","store","social","both"];
@@ -797,6 +1027,8 @@ const TEMPLATES = {
     reels: ["Concept & script","Shoot or collect footage","Edit, music & captions","Cover frame","Client approval","Publish & pin to profile"],
     posts: ["Plan the content calendar for this batch","Write captions (Arabic / English)","Design the posts","Client approval","Schedule in Meta Business Suite"],
     page: ["Audit the current Instagram & Facebook pages","Bio, highlights & profile photo","Contact buttons & link in bio","Plan the first 9 posts of the grid","Connect Meta Business Suite"],
+    carousel: ["Pick the topic & key message","Write the slide copy (Arabic / English)","Design the slides","Client approval","Publish & schedule"],
+    stories: ["Plan the story sequence","Design or film the stories","Add stickers, links & polls","Client approval","Publish & save to highlights"],
     admin: ["Prepare the quote","Send the agreement","Collect the deposit"]
   },
   ar: {
@@ -804,10 +1036,12 @@ const TEMPLATES = {
     reels: ["الفكرة والسكربت","التصوير أو جمع اللقطات","المونتاج والموسيقى والنصوص","صورة الغلاف","موافقة العميل","النشر والتثبيت في الملف"],
     posts: ["خطة المحتوى لهذه الدفعة","كتابة النصوص (عربي / إنجليزي)","تصميم المنشورات","موافقة العميل","الجدولة في Meta Business Suite"],
     page: ["مراجعة صفحات إنستغرام وفيسبوك الحالية","البايو والهايلايت وصورة الملف","أزرار التواصل ورابط البايو","تخطيط أول 9 منشورات في الشبكة","ربط Meta Business Suite"],
+    carousel: ["اختيار الموضوع والرسالة الأساسية","كتابة نص الشرائح (عربي / إنجليزي)","تصميم الشرائح","موافقة العميل","النشر والجدولة"],
+    stories: ["تخطيط تسلسل الستوريز","تصميم أو تصوير الستوريز","إضافة الملصقات والروابط والاستفتاءات","موافقة العميل","النشر والحفظ في الهايلايت"],
     admin: ["تجهيز عرض السعر","إرسال الاتفاقية","استلام الدفعة المقدمة"]
   }
 };
-const VIEWS = ["overview","tasks","leads","portfolio","activity"];
+const VIEWS = ["overview","tasks","leads","portfolio","tools","activity"];
 const DAY = 864e5;
 const MONTHS = { en: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], ar: ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"] };
 const MONTHS_L = { en: ["January","February","March","April","May","June","July","August","September","October","November","December"], ar: MONTHS.ar };
@@ -823,7 +1057,7 @@ const S = {
   tf: { who: "mine", cat: "all", client: "all", q: "" },
   lf: { tab: "pipeline", q: "", seg: "all", svc: "all" }, pf: { type: "all", seg: "all" }, af: { who: "all", kind: "all" },
   drawer: null, notes: [], notesFor: null, notesUnsub: null, notesLoaded: false, drafts: {}, confirm: null,
-  chartMode: "tasks", showAllDone: false
+  chartMode: "tasks", showAllDone: false, subs: [], payments: [], work: [], settings: {}, editTarget: false
 };
 
 /* ---------- Helpers ---------- */
@@ -884,6 +1118,53 @@ function waLink(phone) {
 const uid = () => Math.random().toString(36).slice(2, 10) + now().toString(36).slice(-4);
 const draft = (key, fallback) => (key in S.drafts ? S.drafts[key] : (fallback == null ? "" : fallback));
 
+/* ---------- Content types, money, tools ---------- */
+const CT_KEYS = ["reels","posts","carousels","stories","pages"];
+const CT_COLORS = { reels: "var(--coral)", posts: "var(--pink)", carousels: "var(--info)", stories: "var(--warn)", pages: "var(--violet)" };
+const CT_MAX = { reels: 30, posts: 30, carousels: 30, stories: 60, pages: 20 };
+const ctL = k => t("ct_" + k);
+const toNum = v => { const n = Number(String(v == null ? "" : v).replace(/[,\s]/g, "").replace(/[٠-٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d))); return isFinite(n) ? n : 0; };
+function money(n) { const v = Math.round((+n || 0) * 100) / 100; const s = v.toLocaleString("en-US", { maximumFractionDigits: 2 }); return LANG === "ar" ? s + " د.أ" : s + " JOD"; }
+const ymd = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const todayStr = () => ymd(new Date());
+function addMonths(ds, m) { const d = new Date(ds + "T12:00:00"); const day = d.getDate(); d.setMonth(d.getMonth() + m); if (d.getDate() < day) d.setDate(0); return ymd(d); }
+const TOOLS = [
+  { k: "claude", n: "Claude", c: "#C96442", m: "Cl" }, { k: "chatgpt", n: "ChatGPT", c: "#10A37F", m: "GP" }, { k: "canva", n: "Canva Pro", c: "#0E9BB0", m: "Ca" },
+  { k: "capcut", n: "CapCut Pro", c: "#2E2E36", m: "CC" }, { k: "adobe", n: "Adobe Creative Cloud", c: "#D7261E", m: "Ad" }, { k: "figma", n: "Figma", c: "#8B5CF6", m: "Fi" },
+  { k: "envato", n: "Envato Elements", c: "#6E9A2E", m: "En" }, { k: "meta", n: "Meta Verified", c: "#0866FF", m: "Me" }, { k: "gworkspace", n: "Google Workspace", c: "#3B78E7", m: "GW" },
+  { k: "shopify", n: "Shopify", c: "#5E8E3E", m: "Sh" }, { k: "hosting", n: "Hosting", c: "#56607A", m: "Ho" }, { k: "domain", n: "Domain", c: "#3F4A63", m: "Do" },
+  { k: "notion", n: "Notion", c: "#3F3F46", m: "No" }, { k: "other", n: "", c: "#6B3FD6", m: "+" }
+];
+const toolDef = k => TOOLS.find(x => x.k === k) || TOOLS[TOOLS.length - 1];
+function toolLabel(k, custom) { if (k === "other") return custom || t("customTool"); const tk = "tool_" + k; return I18N.en[tk] ? t(tk) : toolDef(k).n; }
+function toolMono(k, custom) { const d = toolDef(k); const m = k === "other" ? (String(custom || "+").trim().slice(0, 2) || "+") : d.m; return `<span class="tmono" style="background:${d.c}">${esc(m)}</span>`; }
+const toolKey = s => s.tool === "other" ? "other:" + String(s.toolName || "").trim().toLowerCase() : s.tool;
+function subStatus(s) {
+  const end = new Date(s.end + "T23:59:59").getTime(), start = new Date(s.start + "T00:00:00").getTime();
+  if (end < now()) return { k: "expired", left: 0, frac: 1 };
+  const left = Math.floor((end - now()) / DAY); const frac = Math.min(1, Math.max(0, (now() - start) / Math.max(1, end - start)));
+  return { k: left <= 5 ? "soon" : "active", left, frac };
+}
+function toolGroups() {
+  const g = {};
+  S.subs.forEach(s => { const k = toolKey(s); (g[k] = g[k] || []).push(s); });
+  return Object.keys(g).map(k => { const list = g[k].sort((a, b) => (b.end || "").localeCompare(a.end || "")); return { key: k, latest: list[0], list, total: list.reduce((a, s) => a + toNum(s.amount), 0) }; })
+    .sort((a, b) => { const o = { expired: 0, soon: 1, active: 2 }; const sa = subStatus(a.latest), sb = subStatus(b.latest); return o[sa.k] - o[sb.k] || sa.left - sb.left; });
+}
+function workTotals(clientId) { const tot = {}; CT_KEYS.forEach(k => tot[k] = 0); S.work.filter(w => w.clientId === clientId).forEach(w => CT_KEYS.forEach(k => tot[k] += toNum((w.counts || {})[k]))); return tot; }
+const paidBy = clientId => S.payments.filter(p => p.clientId === clientId).reduce((a, p) => a + toNum(p.amount), 0);
+const initials = s => { const w = String(s || "?").trim().split(/\s+/).filter(Boolean); return ((w[0] || "?")[0] + (w[1] ? w[1][0] : "")).toUpperCase(); };
+const countsText = c => Object.keys(c || {}).filter(k => toNum(c[k]) > 0).map(k => `${c[k]} ${ctL(k)}`).join(LANG === "ar" ? "، " : ", ");
+function weekInfo() {
+  const ws = weekStarts(1)[0]; const target = Math.max(1, toNum((S.settings || {}).weeklyTarget) || 100);
+  const done = S.tasks.filter(x => x.status === "done" && x.completedAt >= ws && x.completedAt < ws + 7 * DAY);
+  const by = { faisal: 0, abdulrahman: 0 }; done.forEach(x => { if (by[x.completedBy] != null) by[x.completedBy]++; });
+  const perDay = [0,0,0,0,0,0,0]; done.forEach(x => { const i = Math.min(6, Math.floor((x.completedAt - ws) / DAY)); perDay[i]++; });
+  const elapsed = Math.min(1, (now() - ws) / (7 * DAY)); const expected = Math.round(target * elapsed);
+  const dayIdx = Math.min(6, Math.floor((now() - ws) / DAY));
+  return { ws, target, n: done.length, by, perDay, diff: done.length - expected, daysLeft: 6 - dayIdx, dayIdx };
+}
+
 /* Activity & history entries are stored as codes + params so they read in either language */
 function enumize(p) {
   const o = {};
@@ -894,6 +1175,7 @@ function enumize(p) {
     else if (k === "d") v = v ? fmtD(dateMs(v)) : ""; else if (k === "field") v = t("fld_" + v);
     else if (k === "reason") v = v ? (LANG === "ar" ? "، السبب: " : ": ") + v : "";
     else if (k === "client") v = v || t("aClient");
+    else if (k === "amount") v = money(v); else if (k === "tool") v = toolLabel(v, (p || {}).toolName); else if (k === "counts") v = countsText(v);
     o[k] = esc(v);
   });
   return o;
@@ -907,6 +1189,7 @@ const ICONS = {
   leads: '<path d="M4 5h16l-6 7.5V19l-4-2v-4.5z"/>',
   portfolio: '<rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3 13h18"/>',
   activity: '<path d="M3 12h4l3-7 4 14 3-7h4"/>',
+  wallet: '<rect x="3" y="6" width="18" height="14" rx="3"/><path d="M3 10h18M16 15h2M7 6V4.5A1.5 1.5 0 0 1 8.5 3h9"/>',
   plus: '<path d="M12 5v14M5 12h14"/>',
   x: '<path d="M6 6l12 12M18 6L6 18"/>',
   logout: '<path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4M10 8l-4 4 4 4M6 12h10"/>',
@@ -1127,6 +1410,61 @@ async function deleteProject(id) {
   if (ok) { logAct("portfolio", "proj_removed", { title: p ? p.title : "" }, null); closeDrawer(); toast(t("tProjRemoved")); }
 }
 
+/* ---------- Finance & delivery writes ---------- */
+async function addWork(clientId, f) {
+  const l = findLead(clientId); const counts = {};
+  CT_KEYS.forEach(k => { const v = Math.round(toNum(f[k])); if (v > 0) counts[k] = v; });
+  if (!Object.keys(counts).length) { toast(t("workEmpty"), "bad"); return false; }
+  const doc = { clientId, clientName: leadName(l), date: f.date || todayStr(), counts, note: f.note || "", link: safeUrl(f.link), createdBy: S.me, createdAt: now() };
+  let ref; const ok = await guard(async () => { ref = await S.db.collection("clientwork").add(doc); });
+  if (ok) { logAct("portfolio", "work_added", { counts, name: doc.clientName }, clientId); toast(esc(t("workSaved", { name: doc.clientName })), "good"); }
+  return ok;
+}
+async function deleteWork(id) {
+  const w = S.work.find(x => x.id === id); if (!w) return;
+  const ok = await guard(() => S.db.doc("clientwork/" + id).delete());
+  if (ok) logAct("portfolio", "work_deleted", { name: w.clientName }, w.clientId);
+  S.confirm = null; schedule();
+}
+async function addPayment(f) {
+  const l = findLead(f.clientId); const amount = toNum(f.amount);
+  if (!f.clientId) { toast(t("needClient"), "bad"); return false; }
+  if (!(amount > 0)) { toast(t("needAmount"), "bad"); return false; }
+  const doc = { clientId: f.clientId, clientName: leadName(l), amount, date: f.date || todayStr(), note: f.note || "", createdBy: S.me, createdAt: now() };
+  const ok = await guard(() => S.db.collection("payments").add(doc));
+  if (ok) { logAct("finance", "pay_added", { amount, name: doc.clientName }, f.clientId); toast(t("paySaved"), "good"); }
+  return ok;
+}
+async function deletePayment(id) {
+  const p = S.payments.find(x => x.id === id); if (!p) return;
+  const ok = await guard(() => S.db.doc("payments/" + id).delete());
+  if (ok) logAct("finance", "pay_deleted", { amount: p.amount, name: p.clientName }, p.clientId);
+  S.confirm = null; schedule();
+}
+async function addSub(f) {
+  const amount = toNum(f.amount); const months = Math.max(1, Math.round(toNum(f.months)) || 1);
+  if (!f.tool || (f.tool === "other" && !String(f.toolName || "").trim())) { toast(t("needTool"), "bad"); return false; }
+  if (!(amount > 0)) { toast(t("needAmount"), "bad"); return false; }
+  const start = f.start || todayStr(); const end = addMonths(start, months);
+  const doc = { tool: f.tool, toolName: f.tool === "other" ? String(f.toolName).trim() : "", amount, start, months, end, note: f.note || "", createdBy: S.me, createdAt: now() };
+  const renewing = S.subs.some(s => toolKey(s) === toolKey(doc));
+  const ok = await guard(() => S.db.collection("subscriptions").add(doc));
+  if (ok) { logAct("finance", renewing ? "sub_renewed" : "sub_added", { tool: doc.tool, toolName: doc.toolName, amount, d: end }, null); toast(esc(t("subSaved", { d: fmtD(dateMs(end)) })), "good"); }
+  return ok;
+}
+async function deleteSub(id) {
+  const s = S.subs.find(x => x.id === id); if (!s) return;
+  const ok = await guard(() => S.db.doc("subscriptions/" + id).delete());
+  if (ok) logAct("finance", "sub_deleted", { tool: s.tool, toolName: s.toolName }, null);
+  S.confirm = null; schedule();
+}
+async function setWeeklyTarget(n) {
+  n = Math.round(toNum(n)); if (!(n >= 1 && n <= 1000)) { toast(t("wkNeedNum"), "bad"); return false; }
+  const ok = await guard(() => S.db.doc("settings/general").set(Object.assign({}, S.settings || {}, { weeklyTarget: n, updatedBy: S.me, updatedAt: now() })));
+  if (ok) { S.settings = Object.assign({}, S.settings, { weeklyTarget: n }); logAct("finance", "target_set", { n }, null); S.editTarget = false; schedule(); }
+  return ok;
+}
+
 /* ---------- PIN login ---------- */
 async function hashPin(id, pin) {
   const data = new TextEncoder().encode("highmedia:" + id + ":" + pin);
@@ -1275,8 +1613,9 @@ function renderShell() {
 }
 function renderNav() {
   const myOpen = openTasks().filter(isMine).length;
-  const items = [["overview","home",null],["tasks","tasks",myOpen],["leads","leads",activeLeads().length],["portfolio","portfolio",null],["activity","activity",null]];
-  $("#nav").innerHTML = items.map(([v, i, n]) => `<a href="#${v}" class="${S.view === v ? "on" : ""}" ${S.view === v ? 'aria-current="page"' : ""}>${ic(i)}<span>${t("nav_" + v)}</span>${n ? `<em>${n}</em>` : ""}</a>`).join("");
+  const expired = toolGroups().filter(g => subStatus(g.latest).k === "expired").length;
+  const items = [["overview","home",null],["tasks","tasks",myOpen],["leads","leads",activeLeads().length],["portfolio","portfolio",null],["tools","wallet",expired, "bad"],["activity","activity",null]];
+  $("#nav").innerHTML = items.map(([v, i, n, cls]) => `<a href="#${v}" class="${S.view === v ? "on" : ""}" ${S.view === v ? 'aria-current="page"' : ""}>${ic(i)}<span>${t("nav_" + v)}</span>${n ? `<em class="${cls || ""}">${n}</em>` : ""}</a>`).join("");
   $("#sidelang").innerHTML = langBtn();
   $("#sidefoot").innerHTML = `${av(S.me)}<div><b>${esc(mName(S.me))}</b><small>${t("signedIn")}</small></div><button class="iconbtn" data-action="logout" title="${t("signOut")}" aria-label="${t("signOut")}">${ic("logout")}</button>`;
 }
@@ -1322,6 +1661,7 @@ function renderOverview() {
   const feed = acts.length ? `<div class="feed">${acts.map(feedItem).join("")}</div><a class="btn sm ghost" href="#activity" style="margin-top:6px">${t("fullLog")} ${ic("arrow")}</a>` : `<div class="empty"><span>${t("feedEmpty")}</span></div>`;
   return `<div class="wrap">${mobileHead()}${ph(`${WEEKDAYS[LANG][d.getDay()]} · ${d.getDate()} ${MONTHS_L[LANG][d.getMonth()]} ${d.getFullYear()}`, t("greet", { g: greeting(), name: esc(mName(S.me)) }), btnNewTask() + btnNewLead())}
     ${banners()}${kpis}
+    ${weekCard()}
     <div class="g2">
       <section class="card"><div class="card-h"><div><h2>${t("queue")}</h2><p>${t("queueSub")}</p></div></div>${queue}</section>
       <section class="card">${chartHTML()}</section>
@@ -1494,14 +1834,6 @@ function leadCard(l) {
 }
 
 /* ---------- Portfolio ---------- */
-function renderPortfolio() {
-  const f = S.pf; const pseg = p => p.segment || (findLead(p.clientId) || {}).segment || "";
-  const list = S.portfolio.filter(p => (f.type === "all" || p.type === f.type) && (f.seg === "all" || pseg(p) === f.seg)).sort((a, b) => (b.deliveredAt || "").localeCompare(a.deliveredAt || "") || (b.createdAt || 0) - (a.createdAt || 0));
-  const chips = `<div class="seg" role="group"><button class="${f.type === "all" ? "on" : ""}" data-action="pf-type" data-v="all">${t("all")}</button>${PTYPE_KEYS.map(k => `<button class="${f.type === k ? "on" : ""}" data-action="pf-type" data-v="${k}">${ptL(k)}</button>`).join("")}</div>`;
-  const addBtn = `<button class="btn primary" data-action="new-project">${ic("plus")} ${t("addProject")}</button>`;
-  const body = list.length ? `<div class="pgrid">${list.map(projCard).join("")}</div>` : `<section class="card"><div class="empty"><b>${t(S.portfolio.length ? "emptyCat" : "emptyAll")}</b><span>${t("emptyPortSub")}</span>${addBtn}</div></section>`;
-  return `<div class="wrap">${mobileHead()}${ph(t("ourWork"), t("nav_portfolio"), addBtn)}${banners()}<div class="filters">${chips}<select class="sel" id="pf-seg" data-pfilter="seg" aria-label="${t("clientCat")}"><option value="all">${t("allClientCats")}</option>${segOptions(f.seg, false)}</select></div>${body}</div>`;
-}
 function projCard(p) {
   const social = p.type === "social";
   const cover = social ? `<div class="igrid">${"<i></i>".repeat(9)}</div>` :
@@ -1515,6 +1847,182 @@ function projCard(p) {
     <button class="btn sm" data-action="edit-project" data-id="${p.id}">${t("edit")}</button></div></div></article>`;
 }
 
+/* ---------- Weekly target ---------- */
+function weekCard() {
+  const w = weekInfo(); const pct = Math.round(w.n / w.target * 100); const shown = Math.min(100, pct);
+  const R = 52, C = 2 * Math.PI * R; const color = pct >= 100 ? "var(--good)" : "var(--violet)";
+  const pace = pct >= 100 ? `<span class="pace good">${ic("check")} ${t("wkReached")}</span>` : w.diff >= 0 ? `<span class="pace good">${w.diff > 0 ? t("wkAhead", { n: w.diff }) : t("wkOnPace")}</span>` : `<span class="pace warn">${t("wkBehind", { n: -w.diff })}</span>`;
+  const max = Math.max(1, ...w.perDay);
+  const days = w.perDay.map((n, i) => { const d = new Date(w.ws + i * DAY + 12 * 3600e3); return `<div class="${i === w.dayIdx ? "today" : ""}" title="${esc(fmtD(d.getTime()))}: ${n}"><i class="${n ? "" : "zero"}" style="height:${n ? Math.max(8, n / max * 100) : 6}%"></i><span>${WEEKDAYS[LANG][d.getDay()].slice(0, LANG === "ar" ? 3 : 2)}</span></div>`; }).join("");
+  const split = w.n ? `<div class="split" style="direction:ltr;margin-top:0"><span style="width:${w.by.faisal / w.n * 100}%;background:var(--c-faisal)"></span><span style="flex:1;background:var(--c-abd)"></span></div>` : `<div class="split" style="margin-top:0"></div>`;
+  const edit = S.editTarget ? `<form class="wk-edit" data-form="target"><label class="lbl" for="wk-target">${t("wkTargetLbl")}</label><input class="inp" id="wk-target" name="target" type="number" min="1" max="1000" inputmode="numeric" value="${w.target}"><button class="btn sm primary" type="submit">${t("save")}</button><button class="btn sm ghost" type="button" data-action="wk-cancel">${t("cancelBtn")}</button></form>` : "";
+  return `<section class="card"><div class="wk">
+    <div class="ring" role="img" aria-label="${pct}%"><svg viewBox="0 0 120 120"><circle class="trk" cx="60" cy="60" r="${R}"/><circle class="val" cx="60" cy="60" r="${R}" stroke="${color}" stroke-dasharray="${C}" stroke-dashoffset="${C * (1 - shown / 100)}"/></svg><div class="lbl"><b>${pct}%</b><small>${w.n} / ${w.target}</small></div></div>
+    <div class="wk-info">
+      <div class="wk-top"><div><h2>${t("wkTitle")}</h2><p>${t("wkSub", { done: w.n, target: w.target })} · ${w.daysLeft > 1 ? t("wkDaysLeft", { n: w.daysLeft }) : w.daysLeft === 1 ? t("wkDayLeft1") : t("wkLastDay")}</p></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">${pace}${S.editTarget ? "" : `<button class="btn sm ghost" data-action="wk-edit">${t("wkEdit")}</button>`}</div></div>
+      ${edit}
+      <div class="days7" style="direction:ltr">${days}</div>
+      <div class="legend" style="margin:0;justify-content:space-between"><span><i style="background:var(--c-faisal)"></i>${mName("faisal")} <b>${w.by.faisal}</b></span><span><i style="background:var(--c-abd)"></i>${mName("abdulrahman")} <b>${w.by.abdulrahman}</b></span></div>
+      ${split}
+    </div></div></section>`;
+}
+
+/* ---------- Portfolio: clients ---------- */
+function clientTile(l) {
+  const tot = workTotals(l.id); const paid = paidBy(l.id); const any = CT_KEYS.some(k => tot[k] > 0);
+  const last = S.work.filter(w => w.clientId === l.id).sort((a, b) => (b.date || "").localeCompare(a.date || ""))[0];
+  return `<article class="ctile" data-action="open-client" data-id="${l.id}" tabindex="0" role="button" aria-label="${esc(leadName(l))}">
+    <div class="ct-head"><span class="cmono">${esc(initials(leadName(l)))}</span><div style="min-width:0"><b dir="auto">${esc(leadName(l))}</b><small dir="auto">${esc(l.name || "")}</small></div></div>
+    <div class="chips">${segChip(l.segment)}<span class="chip">${svL(l.service) || ""}</span></div>
+    <div class="cnums">${CT_KEYS.map(k => `<div class="cnum"><i style="background:${CT_COLORS[k]}"></i><b>${tot[k]}</b><span>${ctL(k)}</span></div>`).join("")}</div>
+    <div class="ct-foot"><span>${any && last ? t("lastDelivery", { d: fmtDM(dateMs(last.date)) }) : t("noDeliveries")}</span><span>${t("paidTotal")} <b>${money(paid)}</b></span></div>
+  </article>`;
+}
+function renderPortfolio() {
+  const f = S.pf; const pseg = p => p.segment || (findLead(p.clientId) || {}).segment || "";
+  const list = S.portfolio.filter(p => (f.type === "all" || p.type === f.type) && (f.seg === "all" || pseg(p) === f.seg)).sort((a, b) => (b.deliveredAt || "").localeCompare(a.deliveredAt || "") || (b.createdAt || 0) - (a.createdAt || 0));
+  const cl = clients().filter(l => f.seg === "all" || (l.segment || "") === f.seg).sort((a, b) => paidBy(b.id) - paidBy(a.id) || leadName(a).localeCompare(leadName(b)));
+  const chips = `<div class="seg" role="group"><button class="${f.type === "all" ? "on" : ""}" data-action="pf-type" data-v="all">${t("all")}</button>${PTYPE_KEYS.map(k => `<button class="${f.type === k ? "on" : ""}" data-action="pf-type" data-v="${k}">${ptL(k)}</button>`).join("")}</div>`;
+  const addBtn = `<button class="btn primary" data-action="new-project">${ic("plus")} ${t("addProject")}</button>`;
+  const clientsHTML = cl.length ? `<div class="cgrid">${cl.map(clientTile).join("")}</div>` : `<section class="card"><div class="empty"><span>${t("noClientsPort")}</span></div></section>`;
+  const body = list.length ? `<div class="pgrid">${list.map(projCard).join("")}</div>` : `<section class="card"><div class="empty"><b>${t(S.portfolio.length ? "emptyCat" : "emptyAll")}</b><span>${t("emptyPortSub")}</span>${addBtn}</div></section>`;
+  return `<div class="wrap">${mobileHead()}${ph(t("ourWork"), t("nav_portfolio"), addBtn)}${banners()}
+    <div class="filters"><select class="sel" id="pf-seg" data-pfilter="seg" aria-label="${t("clientCat")}"><option value="all">${t("allClientCats")}</option>${segOptions(f.seg, false)}</select></div>
+    <div class="sec-title"><div><h2>${t("clientsH")}</h2><p>${t("clientsHSub")}</p></div></div>${clientsHTML}
+    <div class="sec-title" style="margin-top:8px"><div><h2>${t("projectsH")}</h2></div><div class="filters">${chips}</div></div>${body}</div>`;
+}
+function clientDrawer(l) {
+  const head = `${segChip(l.segment)}<span class="meta">${t("clientSince")} ${fmtD(l.clientSince || l.stageAt)}</span><span style="flex:1"></span>`;
+  const tot = workTotals(l.id); const sum = CT_KEYS.reduce((a, k) => a + tot[k], 0); const paid = paidBy(l.id);
+  const entries = S.work.filter(w => w.clientId === l.id).sort((a, b) => (b.date || "").localeCompare(a.date || "") || (b.createdAt || 0) - (a.createdAt || 0));
+  const pays = S.payments.filter(p => p.clientId === l.id).sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+  const projs = S.portfolio.filter(p => p.clientId === l.id);
+  const sliders = CT_KEYS.map(k => { const id = "ws-" + k + "-" + l.id; const v = toNum(draft(id, 0)); return `<div class="srow" style="--c:${CT_COLORS[k]}"><label for="${id}"><i style="background:${CT_COLORS[k]}"></i>${ctL(k)}</label><input type="range" id="${id}" name="${k}" min="0" max="${CT_MAX[k]}" step="1" value="${v}" data-draft><output class="${v ? "on" : ""}" for="${id}" id="${id}-o">${v}</output></div>`; }).join("");
+  const entryHTML = entries.length ? `<div class="wentries">${entries.map(w => { const d = new Date(dateMs(w.date)); return `<div class="wentry"><div class="wdate"><b>${d.getDate()}</b><span>${MONTHS[LANG][d.getMonth()]} ${d.getFullYear()}</span></div><div class="wbody">
+      <div class="pills">${CT_KEYS.filter(k => toNum((w.counts || {})[k]) > 0).map(k => `<span class="cpill" style="--c:${CT_COLORS[k]}"><b>${w.counts[k]}</b><span>${ctL(k)}</span></span>`).join("")}</div>
+      ${w.note ? `<p dir="auto" style="font-size:13.5px">${esc(w.note)}</p>` : ""}
+      <div class="wmeta">${av(w.createdBy, "sm")}<span>${esc(mName(w.createdBy))} · <span class="mono">${fmtDT(w.createdAt)}</span></span>${w.link ? `<a class="extl" href="${esc(w.link)}" target="_blank" rel="noopener">${ic("ext")}${t("visitSite")}</a>` : ""}
+      <span class="end">${S.confirm === "w-" + w.id ? `<span class="confirm"><button class="btn sm danger solid" data-action="delete-work" data-id="${w.id}">${t("yesDelete")}</button><button class="btn sm" data-action="cancel-confirm">${t("keepIt")}</button></span>` : `<button class="btn sm ghost" data-action="ask-confirm" data-key="w-${w.id}" aria-label="${t("delWorkQ")}">${ic("trash")}</button>`}</span></div>
+    </div></div>`; }).join("")}</div>` : `<p class="lp-sub" style="font-size:13px">${t("noWork")}</p>`;
+  const payHTML = pays.length ? `<div>${pays.map(p => `<div class="prow"><div><b class="amt">${money(p.amount)}</b> <small>· ${fmtD(dateMs(p.date))}</small>${p.note ? `<div dir="auto" style="font-size:13px;color:var(--fg-2)">${esc(p.note)}</div>` : ""}</div>
+      <div class="wmeta">${av(p.createdBy, "sm")}${S.confirm === "p-" + p.id ? `<span class="confirm"><button class="btn sm danger solid" data-action="delete-pay" data-id="${p.id}">${t("yesDelete")}</button><button class="btn sm" data-action="cancel-confirm">${t("keepIt")}</button></span>` : `<button class="btn sm ghost" data-action="ask-confirm" data-key="p-${p.id}" aria-label="${t("delPayQ")}">${ic("trash")}</button>`}</div></div>`).join("")}</div>` : `<p class="lp-sub" style="font-size:13px">${t("noPayments")}</p>`;
+  const body = `
+    <div class="cp-hero"><span class="cmono lg">${esc(initials(leadName(l)))}</span><div style="min-width:0;flex:1"><h2 dir="auto">${esc(leadName(l))}</h2>
+      <div class="meta2"><span dir="auto">${esc(l.name || "")}</span>${l.phone ? `<span class="mono ltr">${esc(l.phone)}</span>` : ""}<span class="chip">${svL(l.service) || ""}</span></div></div>
+      <button class="btn sm" data-action="open-lead" data-id="${l.id}">${t("openLead")} ${ic("arrow")}</button></div>
+    <div class="cstats">${CT_KEYS.map(k => `<div class="cstat" style="--c:${CT_COLORS[k]}"><b>${tot[k]}</b><span>${ctL(k)}</span></div>`).join("")}<div class="cstat money" style="--c:var(--good)"><b>${money(paid)}</b><span>${t("revenueTile")}</span></div></div>
+    ${sum ? `<div class="sec"><div class="sec-h"><h3>${t("contentMix")}</h3><small class="num">${t("totalDelivered")}: ${sum}</small></div><div class="mix" style="direction:ltr">${CT_KEYS.filter(k => tot[k]).map(k => `<span style="width:${tot[k] / sum * 100}%;background:${CT_COLORS[k]}" title="${ctL(k)}: ${tot[k]}"></span>`).join("")}</div><div class="mixleg">${CT_KEYS.filter(k => tot[k]).map(k => `<span><i style="background:${CT_COLORS[k]}"></i>${ctL(k)} · ${Math.round(tot[k] / sum * 100)}%</span>`).join("")}</div></div>` : ""}
+    <form class="wform" data-form="work" data-id="${l.id}"><div><h3 style="font-size:15px">${t("logWork")}</h3><p class="lp-sub" style="font-size:12.5px">${t("logWorkSub")}</p></div>
+      ${sliders}
+      <div class="inline-form"><div class="fld"><label for="wd-${l.id}">${t("workDate")}</label><input class="inp" type="date" id="wd-${l.id}" name="date" data-draft value="${esc(draft("wd-" + l.id, todayStr()))}"></div>
+      <div class="fld"><label for="wl-${l.id}">${t("workLink")}</label><input class="inp" id="wl-${l.id}" name="link" data-draft dir="ltr" inputmode="url" value="${esc(draft("wl-" + l.id))}" placeholder="https://instagram.com/…"></div>
+      <div class="fld full"><label for="wn-${l.id}">${t("workNote")}</label><input class="inp" id="wn-${l.id}" name="note" data-draft dir="auto" value="${esc(draft("wn-" + l.id))}" placeholder="${t("workNotePh")}"></div></div>
+      <button class="btn primary" type="submit" style="align-self:flex-start">${ic("check")} ${t("saveWork")}</button></form>
+    <div class="sec"><div class="sec-h"><h3>${t("workLog")}</h3><small class="num">${entries.length}</small></div>${entryHTML}</div>
+    <div class="sec"><div class="sec-h"><h3>${t("payments")}</h3><small class="num">${money(paid)}</small></div>${payHTML}
+      <form class="inline-form" data-form="payment" data-client="${l.id}"><div class="fld"><label for="pa-${l.id}">${t("amountJod")}</label><input class="inp" id="pa-${l.id}" name="amount" data-draft inputmode="decimal" dir="ltr" value="${esc(draft("pa-" + l.id))}" placeholder="250"></div>
+      <div class="fld"><label for="pd-${l.id}">${t("payDate")}</label><input class="inp" type="date" id="pd-${l.id}" name="date" data-draft value="${esc(draft("pd-" + l.id, todayStr()))}"></div>
+      <div class="fld full"><label for="pn-${l.id}">${t("payNote")}</label><input class="inp" id="pn-${l.id}" name="note" data-draft dir="auto" value="${esc(draft("pn-" + l.id))}" placeholder="${t("payNotePh")}"></div>
+      <div class="full"><button class="btn" type="submit">${ic("plus")} ${t("savePayment")}</button></div></form></div>
+    <div class="sec"><div class="sec-h"><h3>${t("projectsH")}</h3><button class="btn sm" data-action="new-project" data-client="${l.id}">${ic("plus")} ${t("addProject")}</button></div>
+      ${projs.length ? projs.map(p => `<div class="prow"><div><b dir="auto">${esc(p.title)}</b><div class="wmeta"><span class="chip">${ptL(p.type) || ""}</span>${p.deliveredAt ? `<span>${fmtD(dateMs(p.deliveredAt))}</span>` : ""}</div></div><div class="t-act">${p.url ? `<a class="extl" href="${esc(p.url)}" target="_blank" rel="noopener">${ic("ext")}${t("visitSite")}</a>` : ""}<button class="btn sm" data-action="edit-project" data-id="${p.id}">${t("edit")}</button></div></div>`).join("") : ""}</div>`;
+  return [head, body];
+}
+
+/* ---------- Tools & finance ---------- */
+function monthKey(ms) { const d = new Date(ms); return d.getFullYear() * 12 + d.getMonth(); }
+function finChart() {
+  const nowD = new Date(); const months = []; for (let i = 5; i >= 0; i--) { const d = new Date(nowD.getFullYear(), nowD.getMonth() - i, 1); months.push({ k: d.getFullYear() * 12 + d.getMonth(), label: MONTHS[LANG][d.getMonth()], rev: 0, spend: 0 }); }
+  S.payments.forEach(p => { const m = months.find(x => x.k === monthKey(dateMs(p.date))); if (m) m.rev += toNum(p.amount); });
+  S.subs.forEach(s => { const m = months.find(x => x.k === monthKey(dateMs(s.start))); if (m) m.spend += toNum(s.amount); });
+  const W = 600, H = 190, ml = 44, mr = 6, mt = 10, mb = 26, pw = W - ml - mr, phh = H - mt - mb;
+  const maxV = Math.max(...months.map(m => Math.max(m.rev, m.spend))); if (!maxV) return "";
+  const raw = maxV / 4; const mag = Math.pow(10, Math.floor(Math.log10(raw))); const step = [1, 2, 2.5, 5, 10].map(x => x * mag).find(x => x >= raw); const top = Math.ceil(maxV / step) * step;
+  const y = v => mt + phh - (v / top) * phh; const gw = pw / months.length; const bw = Math.min(22, gw * .3);
+  let g = "";
+  for (let v = 0; v <= top + 1e-9; v += step) g += `<line class="${v === 0 ? "base" : "gl"}" x1="${ml}" x2="${W - mr}" y1="${y(v)}" y2="${y(v)}"/><text x="${ml - 8}" y="${y(v) + 4}" text-anchor="end">${Math.round(v).toLocaleString("en-US")}</text>`;
+  months.forEach((m, i) => { const cx = ml + gw * i + gw / 2;
+    g += `<g><title>${esc(m.label)} · ${esc(t("revLegend"))}: ${esc(money(m.rev))} · ${esc(t("spendLegend"))}: ${esc(money(m.spend))}</title><rect x="${ml + gw * i + 2}" y="${mt}" width="${gw - 4}" height="${phh}" fill="transparent"/>`;
+    if (m.rev > 0) g += `<path d="${barPath(cx - bw - 1, y(m.rev), bw, y(0) - y(m.rev))}" fill="var(--violet)"/>`;
+    if (m.spend > 0) g += `<path d="${barPath(cx + 1, y(m.spend), bw, y(0) - y(m.spend))}" fill="var(--coral)"/>`;
+    g += `</g><text x="${cx}" y="${H - 8}" text-anchor="middle">${esc(m.label)}</text>`; });
+  return `<div class="fh-chart"><div class="legend"><span><i style="background:var(--violet)"></i>${t("revLegend")}</span><span><i style="background:var(--coral)"></i>${t("spendLegend")}</span><span style="color:var(--muted)">${t("fin6")}</span></div>
+    <div class="chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(t("fin6"))}">${g}</svg></div>
+    <details class="tbl"><summary>${t("viewTable")}</summary><div class="tablewrap"><table><thead><tr><th></th><th class="n">${t("revLegend")}</th><th class="n">${t("spendLegend")}</th></tr></thead><tbody>${months.slice().reverse().map(m => `<tr><td>${esc(m.label)}</td><td class="n">${money(m.rev)}</td><td class="n">${money(m.spend)}</td></tr>`).join("")}</tbody></table></div></details></div>`;
+}
+function renderTools() {
+  const mk = monthKey(now());
+  const revM = S.payments.filter(p => monthKey(dateMs(p.date)) === mk).reduce((a, p) => a + toNum(p.amount), 0);
+  const spendM = S.subs.filter(s => monthKey(dateMs(s.start)) === mk).reduce((a, s) => a + toNum(s.amount), 0);
+  const revAll = S.payments.reduce((a, p) => a + toNum(p.amount), 0), spendAll = S.subs.reduce((a, s) => a + toNum(s.amount), 0);
+  const groups = toolGroups(); const st = groups.map(g => subStatus(g.latest).k);
+  const nExp = st.filter(x => x === "expired").length, nSoon = st.filter(x => x === "soon").length, nAct = st.filter(x => x !== "expired").length;
+  const net = revM - spendM;
+  const hero = `<section class="fin-hero">
+    <div class="fh-top"><div class="fh-net"><small>${t("finNet")} · ${MONTHS_L[LANG][new Date().getMonth()]}</small><b class="${net < 0 ? "neg" : ""}">${net < 0 ? "−" : ""}${money(Math.abs(net))}</b><span>${t("finNetAll", { v: money(revAll - spendAll) })}</span></div>
+      <div class="ph-actions"><button class="btn primary" data-action="new-sub">${ic("plus")} ${t("newSub")}</button><button class="btn" data-action="new-payment" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);color:var(--fg)">${ic("plus")} ${t("recordPayment")}</button></div></div>
+    <div class="fh-figs">
+      <div class="fh-fig"><small><i style="background:var(--violet)"></i>${t("finRevenue")}</small><b>${money(revM)}</b><em>${t("finAllTime", { v: money(revAll) })}</em></div>
+      <div class="fh-fig"><small><i style="background:var(--coral)"></i>${t("finSpend")}</small><b>${money(spendM)}</b><em>${t("finAllTime", { v: money(spendAll) })}</em></div>
+      <div class="fh-fig"><small><i style="background:${nExp ? "var(--bad)" : "var(--good)"}"></i>${t("finActive")}</small><b>${nAct}</b><em style="${nExp ? "color:var(--bad)" : ""}">${nExp ? t("finExpiredN", { n: nExp }) : nSoon ? t("finSoonN", { n: nSoon }) : t("finAllGood")}</em></div>
+    </div>${finChart()}</section>`;
+  const toolCards = groups.length ? `<div class="tgrid">${groups.map(g => { const s = g.latest; const ss = subStatus(s);
+      const pill = ss.k === "expired" ? `<span class="spill expired">${t("stExpired")}</span>` : ss.k === "soon" ? `<span class="spill soon">${t("stSoon")}</span>` : `<span class="spill active">${t("stActive")}</span>`;
+      const when = ss.k === "expired" ? t("expiredOn", { d: fmtD(dateMs(s.end)) }) : ss.left === 0 ? t("lastDayToday") : t("daysLeft", { n: ss.left });
+      return `<article class="tool ${ss.k}"><div class="t-head">${toolMono(s.tool, s.toolName)}<div style="min-width:0;flex:1"><b dir="auto">${esc(toolLabel(s.tool, s.toolName))}</b><small>${ss.k === "expired" ? "" : t("untilD", { d: fmtD(dateMs(s.end)) })}</small></div>${pill}</div>
+        <div class="tbar"><span style="width:${Math.round(ss.frac * 100)}%"></span></div>
+        <div class="t-row"><span style="${ss.k === "expired" ? "color:var(--bad);font-weight:600" : ""}">${when}</span><span>${t("lastPaid")} <b>${money(s.amount)}</b></span></div>
+        <div class="t-row"><span>${t("spentTotal")}</span><b>${money(g.total)}</b></div>
+        <div class="t-act"><button class="btn sm ${ss.k === "expired" ? "danger solid" : ""}" data-action="renew-sub" data-id="${s.id}">${ic("plus")} ${t("renew")}</button></div></article>`; }).join("")}</div>`
+    : `<div class="empty"><span>${t("noSubs")}</span><button class="btn primary" data-action="new-sub">${ic("plus")} ${t("newSub")}</button></div>`;
+  const byClient = {}; S.payments.forEach(p => { const k = p.clientId || p.clientName; byClient[k] = byClient[k] || { name: (findLead(p.clientId) && leadName(findLead(p.clientId))) || p.clientName, v: 0, n: 0 }; byClient[k].v += toNum(p.amount); byClient[k].n++; });
+  const rows = Object.values(byClient).sort((a, b) => b.v - a.v); const maxR = Math.max(1, ...rows.map(r => r.v));
+  const rev = rows.length ? `<div class="rev">${rows.map(r => `<div class="rev-row"><span class="nm" dir="auto">${esc(r.name)}</span><span class="am">${money(r.v)}</span><span class="bar"><span style="width:${r.v / maxR * 100}%"></span></span><small>${t("ofTotal", { p: Math.round(r.v / Math.max(1, revAll) * 100) })}</small></div>`).join("")}</div>` : `<div class="empty"><span>${t("noRevenue")}</span></div>`;
+  const hist = S.subs.slice().sort((a, b) => (b.start || "").localeCompare(a.start || "") || (b.createdAt || 0) - (a.createdAt || 0));
+  const histHTML = hist.length ? `<div class="tablewrap"><table class="ftable"><thead><tr><th>${t("colTool")}</th><th>${t("colPeriod")}</th><th>${t("colStatus")}</th><th>${t("colBy")}</th><th class="amt">${t("colPaid")}</th><th></th></tr></thead><tbody>${hist.map(s => { const ss = subStatus(s); return `<tr>
+      <td><span class="tcell">${toolMono(s.tool, s.toolName)}<span dir="auto">${esc(toolLabel(s.tool, s.toolName))}</span></span></td><td>${fmtD(dateMs(s.start))} → ${fmtD(dateMs(s.end))}</td>
+      <td><span class="spill ${ss.k}">${t(ss.k === "expired" ? "stExpired" : ss.k === "soon" ? "stSoon" : "stActive")}</span></td><td>${av(s.createdBy, "sm")}</td><td class="amt">${money(s.amount)}</td>
+      <td>${S.confirm === "s-" + s.id ? `<span class="confirm"><button class="btn sm danger solid" data-action="delete-sub" data-id="${s.id}">${t("yesDelete")}</button><button class="btn sm" data-action="cancel-confirm">${t("keepIt")}</button></span>` : `<button class="btn sm ghost" data-action="ask-confirm" data-key="s-${s.id}" aria-label="${t("delSubQ")}">${ic("trash")}</button>`}</td></tr>`; }).join("")}</tbody></table></div>` : `<p class="lp-sub" style="font-size:13px">${t("noSubs")}</p>`;
+  const pays = S.payments.slice().sort((a, b) => (b.date || "").localeCompare(a.date || "") || (b.createdAt || 0) - (a.createdAt || 0));
+  const payHTML = pays.length ? `<div class="tablewrap"><table class="ftable"><thead><tr><th>${t("colDate")}</th><th>${t("colClient")}</th><th>${t("colNote")}</th><th>${t("colBy")}</th><th class="amt">${t("colAmount")}</th><th></th></tr></thead><tbody>${pays.map(p => `<tr><td>${fmtD(dateMs(p.date))}</td><td dir="auto">${esc((findLead(p.clientId) && leadName(findLead(p.clientId))) || p.clientName)}</td><td dir="auto" style="white-space:normal;min-width:140px">${esc(p.note || "")}</td><td>${av(p.createdBy, "sm")}</td><td class="amt" style="color:var(--good)">${money(p.amount)}</td>
+      <td>${S.confirm === "p-" + p.id ? `<span class="confirm"><button class="btn sm danger solid" data-action="delete-pay" data-id="${p.id}">${t("yesDelete")}</button><button class="btn sm" data-action="cancel-confirm">${t("keepIt")}</button></span>` : `<button class="btn sm ghost" data-action="ask-confirm" data-key="p-${p.id}" aria-label="${t("delPayQ")}">${ic("trash")}</button>`}</td></tr>`).join("")}</tbody></table></div>` : `<p class="lp-sub" style="font-size:13px">${t("noRevenue")}</p>`;
+  return `<div class="wrap">${mobileHead()}${ph(t("toolsEyebrow"), t("toolsTitle"), "")}${banners()}${hero}
+    <div class="g2 fin"><section class="card"><div class="card-h"><div><h2>${t("toolsH")}</h2><p>${t("toolsHSub")}</p></div></div>${toolCards}</section>
+      <section class="card"><div class="card-h"><div><h2>${t("revByClient")}</h2><p>${t("revByClientSub")}</p></div></div>${rev}</section></div>
+    <section class="card"><div class="card-h"><div><h2>${t("subHistory")}</h2><p>${t("subHistorySub")}</p></div></div>${histHTML}</section>
+    <section class="card"><div class="card-h"><div><h2>${t("clientPayments")}</h2></div></div>${payHTML}</section></div>`;
+}
+function subForm() {
+  const pre = S.drawer.extra || {};
+  const head = `<h2>${pre.renew ? t("renew") : t("newSub")}</h2>`;
+  const tool = draft("sf-tool", pre.tool || ""); const months = draft("sf-months", String(pre.months || 1)); const start = draft("sf-start", pre.start || todayStr());
+  const end = addMonths(start || todayStr(), Math.max(1, toNum(months) || 1));
+  const body = `<form class="sec" data-form="sub" style="gap:16px">
+    <div class="fld"><span class="lbl">${t("toolLbl")}</span><div class="tpick" role="radiogroup">${TOOLS.map(x => `<label><input type="radio" name="tool" value="${x.k}" ${tool === x.k ? "checked" : ""} data-sub="tool">${toolMono(x.k, "")}<span>${esc(toolLabel(x.k, ""))}</span></label>`).join("")}</div></div>
+    <div class="fld" ${tool === "other" ? "" : "hidden"} id="sf-other-wrap"><label for="sf-name">${t("toolName")}</label><input class="inp" id="sf-name" name="toolName" data-draft dir="auto" value="${esc(draft("sf-name", pre.toolName || ""))}" placeholder="${t("toolNamePh")}"></div>
+    <div class="fgrid">
+      <div class="fld"><label for="sf-amount">${t("amountPaid")}</label><input class="inp" id="sf-amount" name="amount" data-draft inputmode="decimal" dir="ltr" value="${esc(draft("sf-amount", pre.amount != null ? String(pre.amount) : ""))}" placeholder="15"></div>
+      <div class="fld"><label for="sf-start">${t("startDate")}</label><input class="inp" type="date" id="sf-start" name="start" data-sub="start" value="${esc(start)}"></div>
+    </div>
+    <div class="fld"><span class="lbl">${t("duration")}</span><div class="dur" role="radiogroup">${[1, 3, 6, 12].map(m => `<label><input type="radio" name="months" value="${m}" data-sub="months" ${String(months) === String(m) ? "checked" : ""}>${t("m" + m)}</label>`).join("")}</div></div>
+    <div class="until" id="sf-until">${t("activeUntil", { d: esc(fmtD(dateMs(end))) })}</div>
+    <div class="fld"><label for="sf-note">${t("subNote")}</label><input class="inp" id="sf-note" name="note" data-draft dir="auto" value="${esc(draft("sf-note"))}"></div>
+    <div class="d-actions"><button class="btn primary" type="submit">${ic("check")} ${t("saveSub")}</button><button class="btn ghost" type="button" data-action="close">${t("cancel")}</button></div></form>`;
+  return [head, body];
+}
+function paymentForm() {
+  const pre = S.drawer.extra || {};
+  const opts = S.leads.filter(l => l.stage !== "lost").sort((a, b) => (a.stage === "client" ? 0 : 1) - (b.stage === "client" ? 0 : 1) || leadName(a).localeCompare(leadName(b)));
+  const head = `<h2>${t("recordPayment")}</h2>`;
+  const body = `<form class="sec" data-form="payment" data-client="" style="gap:16px">
+    <div class="fld"><label for="pf-client">${t("colClient")}</label><select class="sel" id="pf-client" name="clientId" required><option value="">${t("chooseClient")}</option>${opts.map(l => `<option value="${l.id}" ${pre.client === l.id ? "selected" : ""}>${esc(leadName(l))}${l.stage !== "client" ? " " + t("leadTag") : ""}</option>`).join("")}</select></div>
+    <div class="fgrid"><div class="fld"><label for="pf-amount">${t("amountJod")}</label><input class="inp" id="pf-amount" name="amount" inputmode="decimal" dir="ltr" placeholder="250" required></div>
+    <div class="fld"><label for="pf-date">${t("payDate")}</label><input class="inp" type="date" id="pf-date" name="date" value="${todayStr()}"></div></div>
+    <div class="fld"><label for="pf-note">${t("payNote")}</label><input class="inp" id="pf-note" name="note" dir="auto" placeholder="${t("payNotePh")}"></div>
+    <div class="d-actions"><button class="btn primary" type="submit">${ic("check")} ${t("savePayment")}</button><button class="btn ghost" type="button" data-action="close">${t("cancel")}</button></div></form>`;
+  return [head, body];
+}
+
 /* ---------- Activity ---------- */
 function renderActivity() {
   const f = S.af;
@@ -1522,13 +2030,13 @@ function renderActivity() {
   let lastDay = null, body = "";
   list.forEach(a => { const k = dayKey(a.at); if (k !== lastDay) { body += `<div class="day-h">${dayLabel(a.at)}</div>`; lastDay = k; } body += `<div class="fi">${av(a.by, "sm")}<p><b>${esc(mName(a.by))}</b> <span dir="auto">${actText(a)}</span></p><span class="mono" title="${esc(fmtDT(a.at))}">${fmtDM(a.at)} · ${fmtT(a.at)}</span></div>`; });
   const filters = `<div class="filters"><div class="seg" role="group"><button class="${f.who === "all" ? "on" : ""}" data-action="af-who" data-v="all">${t("everyone")}</button>${MIDS.map(id => `<button class="${f.who === id ? "on" : ""}" data-action="af-who" data-v="${id}">${mName(id)}</button>`).join("")}</div>
-    <select class="sel" id="af-kind" data-afilter="kind" aria-label="${t("type")}"><option value="all">${t("allAct")}</option><option value="task" ${f.kind === "task" ? "selected" : ""}>${t("fTasks")}</option><option value="lead" ${f.kind === "lead" ? "selected" : ""}>${t("fLeads")}</option><option value="note" ${f.kind === "note" ? "selected" : ""}>${t("fNotes")}</option><option value="portfolio" ${f.kind === "portfolio" ? "selected" : ""}>${t("fPortfolio")}</option></select></div>`;
+    <select class="sel" id="af-kind" data-afilter="kind" aria-label="${t("type")}"><option value="all">${t("allAct")}</option><option value="task" ${f.kind === "task" ? "selected" : ""}>${t("fTasks")}</option><option value="lead" ${f.kind === "lead" ? "selected" : ""}>${t("fLeads")}</option><option value="note" ${f.kind === "note" ? "selected" : ""}>${t("fNotes")}</option><option value="portfolio" ${f.kind === "portfolio" ? "selected" : ""}>${t("fPortfolio")}</option><option value="finance" ${f.kind === "finance" ? "selected" : ""}>${t("fFinance")}</option></select></div>`;
   return `<div class="wrap">${mobileHead()}${ph(t("everyStep"), t("activityLog"), "")}${banners()}${filters}
     <section class="card">${list.length ? `<div class="feed">${body}</div>${S.activity.length >= 300 ? `<p class="mono" style="color:var(--muted);margin-top:10px">${t("latest300")}</p>` : ""}` : `<div class="empty"><b>${t("noAct")}</b><span>${t("noActSub")}</span></div>`}</section></div>`;
 }
 
 /* ---------- Drawer ---------- */
-const FORM_DRAWERS = ["new-task","new-lead","project"];
+const FORM_DRAWERS = ["new-task","new-lead","project","sub","payment"];
 function openDrawer(type, id, extra) {
   if (S.notesUnsub && !(type === "lead" && id === S.notesFor)) { S.notesUnsub(); S.notesUnsub = null; S.notes = []; S.notesFor = null; }
   S.drawer = { type, id, extra: extra || {} }; S.confirm = null;
@@ -1551,6 +2059,9 @@ function renderDrawer(fresh) {
   else if (D.type === "new-task") [head, body] = newTaskForm();
   else if (D.type === "new-lead") [head, body] = newLeadForm();
   else if (D.type === "project") [head, body] = projectForm(D.id ? findProj(D.id) : null);
+  else if (D.type === "client") { const l = findLead(D.id); if (!l) { if (D.seen) closeDrawer(); return; } D.seen = true; [head, body] = clientDrawer(l); }
+  else if (D.type === "sub") [head, body] = subForm();
+  else if (D.type === "payment") [head, body] = paymentForm();
   const prevBody = $(".d-body", root); const sc = prevBody ? prevBody.scrollTop : 0;
   root.innerHTML = `<div class="scrim" data-action="close"></div><aside class="drawer" role="dialog" aria-modal="true"><div class="d-head">${head}<button class="iconbtn" data-action="close" aria-label="${t("close")}">${ic("x")}</button></div><div class="d-body">${body}</div></aside>`;
   document.body.style.overflow = "hidden";
@@ -1701,7 +2212,7 @@ function render() {
   renderShell(); renderNav();
   const main = $("#main"); const board = $(".board", main); const bl = board ? board.scrollLeft : 0;
   const v = S.view;
-  main.innerHTML = v === "tasks" ? renderTasks() : v === "leads" ? renderLeads() : v === "portfolio" ? renderPortfolio() : v === "activity" ? renderActivity() : renderOverview();
+  main.innerHTML = v === "tasks" ? renderTasks() : v === "leads" ? renderLeads() : v === "portfolio" ? renderPortfolio() : v === "tools" ? renderTools() : v === "activity" ? renderActivity() : renderOverview();
   const nb = $(".board", main); if (nb && bl) nb.scrollLeft = bl;
   if (S.drawer && !FORM_DRAWERS.includes(S.drawer.type)) renderDrawer(!$("#drawer-root .drawer"));
   else if (S.drawer && !$("#drawer-root .drawer")) renderDrawer(true);
@@ -1742,6 +2253,16 @@ document.addEventListener("click", async e => {
     case "edit-project": openDrawer("project", id); break;
     case "open-task": openDrawer("task", id); break;
     case "open-lead": openDrawer("lead", id); break;
+    case "open-client": openDrawer("client", id); break;
+    case "new-sub": Object.keys(S.drafts).forEach(k => { if (k.startsWith("sf-")) delete S.drafts[k]; }); openDrawer("sub", null, {}); break;
+    case "renew-sub": { const sb = S.subs.find(x => x.id === id); if (!sb) break; Object.keys(S.drafts).forEach(k => { if (k.startsWith("sf-")) delete S.drafts[k]; });
+      const ss = subStatus(sb); openDrawer("sub", null, { renew: true, tool: sb.tool, toolName: sb.toolName, amount: sb.amount, months: sb.months || 1, start: ss.k === "expired" ? todayStr() : sb.end }); break; }
+    case "new-payment": openDrawer("payment", null, { client: el.dataset.client || "" }); break;
+    case "delete-work": await deleteWork(id); break;
+    case "delete-pay": await deletePayment(id); break;
+    case "delete-sub": await deleteSub(id); break;
+    case "wk-edit": S.editTarget = true; render(); { const i = document.getElementById("wk-target"); if (i) { i.focus(); i.select(); } } break;
+    case "wk-cancel": S.editTarget = false; render(); break;
     case "close": closeDrawer(); break;
     case "quick-done": el.classList.add("on"); await setStatus(id, "done"); break;
     case "set-status": await setStatus(id, el.dataset.st); break;
@@ -1751,8 +2272,8 @@ document.addEventListener("click", async e => {
     case "set-stage": await setStage(id, el.dataset.st); break;
     case "toggle-lstep": await toggleLeadStep(id, el.dataset.sid); break;
     case "remove-lstep": await removeLeadStep(id, el.dataset.sid); break;
-    case "ask-confirm": S.confirm = el.dataset.key; renderDrawer(false); { const f = $("#drawer-root form[data-form='lost'] input"); if (f) f.focus(); } break;
-    case "cancel-confirm": S.confirm = null; renderDrawer(false); break;
+    case "ask-confirm": S.confirm = el.dataset.key; if (S.drawer && FORM_DRAWERS.includes(S.drawer.type)) renderDrawer(false); else render(); { const f = $("#drawer-root form[data-form='lost'] input"); if (f) f.focus(); } break;
+    case "cancel-confirm": S.confirm = null; if (S.drawer && FORM_DRAWERS.includes(S.drawer.type)) renderDrawer(false); else render(); break;
     case "delete-task": await deleteTask(id); break;
     case "delete-lead": await deleteLead(id); break;
     case "delete-note": await deleteNote(id, el.dataset.nid); break;
@@ -1785,11 +2306,22 @@ document.addEventListener("input", e => {
   const x = e.target;
   if (x.id && (x.hasAttribute("data-draft") || x.dataset.field)) S.drafts[x.id] = x.value;
   if (x.classList.contains("title-in")) autoGrow(x);
+  if (x.type === "range") { const o = document.getElementById(x.id + "-o"); if (o) { o.textContent = x.value; o.classList.toggle("on", +x.value > 0); } }
+  if (x.dataset.sub) subFormSync(x);
   if (x.dataset.filter === "q") { S.tf.q = x.value; schedule(); }
   if (x.dataset.lfilter === "q") { S.lf.q = x.value; schedule(); }
 });
+function subFormSync(x) {
+  if (x.dataset.sub === "tool") { S.drafts["sf-tool"] = x.value; const w = document.getElementById("sf-other-wrap"); if (w) w.hidden = x.value !== "other"; if (x.value === "other") { const n = document.getElementById("sf-name"); if (n) n.focus(); } }
+  if (x.dataset.sub === "months") S.drafts["sf-months"] = x.value;
+  if (x.dataset.sub === "start") S.drafts["sf-start"] = x.value;
+  const st = S.drafts["sf-start"] || (document.getElementById("sf-start") || {}).value || todayStr();
+  const mo = (document.querySelector('input[name="months"]:checked') || {}).value || "1";
+  const u = document.getElementById("sf-until"); if (u && st) u.innerHTML = t("activeUntil", { d: esc(fmtD(dateMs(addMonths(st, toNum(mo) || 1)))) });
+}
 document.addEventListener("change", async e => {
   const x = e.target;
+  if (x.dataset.sub) { subFormSync(x); return; }
   if (x.dataset.filter && x.dataset.filter !== "q") { S.tf[x.dataset.filter] = x.value; render(); return; }
   if (x.dataset.afilter) { S.af[x.dataset.afilter] = x.value; render(); return; }
   if (x.dataset.lfilter && x.dataset.lfilter !== "q") { S.lf[x.dataset.lfilter] = x.value; render(); return; }
@@ -1829,6 +2361,21 @@ document.addEventListener("submit", async e => {
   try {
     if (kind === "fb-login") { await fbSignIn((fd.get("username") || "").toString(), (fd.get("password") || "").toString()); return; }
     if (kind === "fb-create") { await fbCreate((fd.get("username") || "").toString(), (fd.get("password") || "").toString(), (fd.get("password2") || "").toString()); return; }
+    if (kind === "target") { await setWeeklyTarget(g("target")); return; }
+    if (kind === "work") {
+      const cid = f.dataset.id; const vals = { date: g("date"), note: g("note"), link: g("link") }; CT_KEYS.forEach(k => vals[k] = g(k));
+      if (await addWork(cid, vals)) { Object.keys(S.drafts).forEach(k => { if (k.endsWith("-" + cid) && /^(ws-|wd-|wl-|wn-)/.test(k)) delete S.drafts[k]; }); f.reset(); f.querySelectorAll("output").forEach(o => { o.textContent = "0"; o.classList.remove("on"); }); const dd = f.querySelector('input[type="date"]'); if (dd) dd.value = todayStr(); }
+      return;
+    }
+    if (kind === "payment") {
+      const cid = f.dataset.client || g("clientId");
+      if (await addPayment({ clientId: cid, amount: g("amount"), date: g("date"), note: g("note") })) { ["pa-","pd-","pn-"].forEach(px => delete S.drafts[px + cid]); if (S.drawer && S.drawer.type === "payment") closeDrawer(); else f.reset(); }
+      return;
+    }
+    if (kind === "sub") {
+      if (await addSub({ tool: g("tool"), toolName: g("toolName"), amount: g("amount"), start: g("start"), months: g("months"), note: g("note") })) { Object.keys(S.drafts).forEach(k => { if (k.startsWith("sf-")) delete S.drafts[k]; }); closeDrawer(); if (S.view !== "tools") location.hash = "tools"; }
+      return;
+    }
     if (kind === "new-task") {
       if (!g("title")) return;
       const id = await createTask({ title: g("title"), category: g("category"), assignee: g("assignee"), due: g("due"), priority: g("priority"), clientId: g("clientId"), description: g("description"), useTemplate: !!fd.get("useTemplate") });
@@ -1899,12 +2446,16 @@ function subscribe() {
     S.tasks = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); done("tasks")(snap); schedule();
   }, fail("tasks")));
   keep(db.collection("leads").onSnapshot(snap => { S.leads = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); done("leads")(snap); schedule(); }, fail("leads")));
+  keep(db.collection("subscriptions").onSnapshot(snap => { S.subs = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); schedule(); }, fail("subscriptions")));
+  keep(db.collection("payments").onSnapshot(snap => { S.payments = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); schedule(); }, fail("payments")));
+  keep(db.collection("clientwork").onSnapshot(snap => { S.work = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); schedule(); }, fail("clientwork")));
+  keep(db.doc("settings/general").onSnapshot(d => { S.settings = (d && d.exists) ? (d.data() || {}) : {}; schedule(); }, () => {}) || (() => {}));
   keep(db.collection("portfolio").onSnapshot(snap => { S.portfolio = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); done("portfolio")(snap); schedule(); }, fail("portfolio")));
   keep(db.collection("activity").orderBy("at", "desc").limit(300).onSnapshot(snap => { S.activity = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); done("activity")(snap); schedule(); }, fail("activity")));
 }
 function stopData() {
   S.unsubs.forEach(u => { try { u(); } catch (e) {} }); S.unsubs = [];
-  S.dataErr = null; S.slow = false; S.tasks = []; S.leads = []; S.portfolio = []; S.activity = []; S.loaded = { seats: S.loaded.seats, members: S.loaded.members }; S.subscribed = false;
+  S.dataErr = null; S.slow = false; S.tasks = []; S.leads = []; S.portfolio = []; S.activity = []; S.subs = []; S.payments = []; S.work = []; S.settings = {}; S.loaded = { seats: S.loaded.seats, members: S.loaded.members }; S.subscribed = false;
 }
 
 /* ---------- Firebase mode (any device, outside claude.ai) ---------- */
