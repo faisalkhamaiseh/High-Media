@@ -1,0 +1,31 @@
+rules_version = '2';
+
+// HIGH MEDIA portal: Cloud Storage rules for the Content page.
+// Only the two team accounts (the "faisal" and "abdulrahman" seats in Firestore) can
+// see, upload or delete files. Paste this in Firebase → Storage → Rules → Publish.
+// The first time you publish, Firebase asks to let Storage read Firestore: allow it.
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Exactly two Firestore lookups (the limit for Storage rules).
+    // A seat that isn't set up yet just doesn't match.
+    function isTeam() {
+      return request.auth != null && (
+        firestore.get(/databases/(default)/documents/members/faisal).data.uid == request.auth.uid ||
+        firestore.get(/databases/(default)/documents/members/abdulrahman).data.uid == request.auth.uid
+      );
+    }
+
+    // Each item: content/{itemId}/{the file} and content/{itemId}/thumb.jpg (its preview).
+    match /content/{itemId}/{fileName} {
+      allow read: if isTeam();
+      allow create, update: if isTeam() && request.resource.size < 500 * 1024 * 1024;
+      allow delete: if isTeam();
+    }
+
+    // Nothing else in the bucket is readable or writable from the portal.
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
