@@ -4,6 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0B0D17">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="HIGH MEDIA">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <script>window.HM_HOSTED = true;</script>
 <script src="config.js"></script>
@@ -358,9 +364,11 @@ td.n,th.n{text-align:end;font-variant-numeric:tabular-nums}
 .extl .ic{width:15px;height:15px}
 
 /* Drawer */
-.scrim{position:fixed;inset:0;background:rgba(5,6,12,.55);z-index:40;animation:fade .15s}
-.drawer{position:fixed;top:0;bottom:0;inset-inline-end:0;width:min(600px,100%);background:var(--surface);border-inline-start:1px solid var(--line);z-index:41;display:flex;flex-direction:column;box-shadow:var(--shadow);animation:slide .2s ease-out;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
-[dir="rtl"] .drawer{animation-name:slidertl}
+.scrim{position:fixed;inset:0;background:rgba(5,6,12,.55);z-index:40}
+.scrim.anim{animation:fade .15s}
+.drawer{position:fixed;top:0;bottom:0;inset-inline-end:0;width:min(600px,100%);background:var(--surface);border-inline-start:1px solid var(--line);z-index:41;display:flex;flex-direction:column;box-shadow:var(--shadow);padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+.drawer.anim{animation:slide .2s ease-out}
+[dir="rtl"] .drawer.anim{animation-name:slidertl}
 @keyframes slide{from{transform:translateX(24px);opacity:.4}}
 @keyframes slidertl{from{transform:translateX(-24px);opacity:.4}}
 @keyframes fade{from{opacity:0}}
@@ -600,6 +608,104 @@ textarea.inp{height:auto;min-height:84px;padding:9px 11px;resize:vertical;line-h
 }
 @media (max-width:400px){.dur{grid-template-columns:repeat(2,minmax(0,1fr))}.cnum span{font-size:9.5px}}
 
+/* ---------- Content library ---------- */
+.ic.fill{fill:currentColor;stroke:none}
+.chip.ct-image{background:var(--tint-info);color:var(--info)}
+.chip.ct-reel{background:var(--tint-coral);color:var(--coral)}
+.chip.ct-video{background:var(--tint-violet);color:var(--violet)}
+.chip.for-client{background:var(--tint-good);color:var(--good)}
+.chip.for-leads{background:var(--tint-warn);color:var(--warn)}
+.chip.for-internal{background:var(--tint-teal);color:var(--teal)}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(210px,100%),1fr));gap:16px}
+.mcard{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;cursor:pointer;transition:border-color .15s,transform .15s;min-width:0}
+.mcard:hover{border-color:var(--line-2);transform:translateY(-2px)}
+.mthumb{position:relative;aspect-ratio:4/5;background-color:var(--surface-2);background-image:radial-gradient(var(--dot) 1px,transparent 1.2px);background-size:16px 16px;display:grid;place-items:center;overflow:hidden}
+.mthumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ochip{position:absolute;top:10px;inset-inline-start:10px;display:inline-flex;align-items:center;gap:6px;padding:3px 9px 3px 7px;border-radius:999px;background:rgba(8,9,16,.68);color:#fff;font-size:11.5px;font-weight:700;backdrop-filter:blur(6px)}
+.ochip::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--c)}
+.mthumb .mdur{position:absolute;bottom:10px;inset-inline-end:10px;background:rgba(8,9,16,.68);color:#fff;font-family:var(--f-mono);font-size:11px;padding:2px 7px;border-radius:6px;direction:ltr}
+.playb{position:relative;width:48px;height:48px;border-radius:50%;background:rgba(8,9,16,.55);display:grid;place-items:center;color:#fff;backdrop-filter:blur(4px);box-shadow:0 0 0 1px rgba(255,255,255,.18)}
+.playb .ic{width:20px;height:20px;margin-left:3px}
+.fext{font-family:var(--f-brand);font-stretch:110%;font-weight:800;font-size:20px;color:var(--fg-2);padding:12px 14px;border:2px solid var(--line-2);border-radius:12px;text-transform:uppercase;direction:ltr;max-width:80%;overflow:hidden;text-overflow:ellipsis}
+.mbody{padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px;flex:1;min-width:0}
+.mbody h4{font-size:14px;font-weight:600;line-height:1.35;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.mbody .chip{max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.mfoot{display:flex;align-items:center;gap:8px;margin-top:auto;font-size:12px;color:var(--muted);min-width:0}
+.mfoot span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mfoot .iconbtn{width:32px;height:32px}
+.cv{position:relative;border-radius:14px;overflow:hidden;background:#000;display:grid;place-items:center;min-height:120px}
+.cv img,.cv video{display:block;max-width:100%;max-height:62vh;width:auto;height:auto}
+.cv video{width:100%;background:#000}
+.cv.file{background:var(--surface-2);padding:44px 20px}
+.cv .nopv{display:none;color:#fff;padding:30px 20px;text-align:center;font-size:13.5px}
+.cv.failed video{display:none}.cv.failed .nopv{display:block}
+.finfo{display:grid;grid-template-columns:auto minmax(0,1fr);gap:7px 16px;font-size:13px;margin:0}
+.finfo dt{color:var(--muted)}.finfo dd{margin:0;overflow-wrap:anywhere}
+.choice{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.choice label{position:relative;display:flex;flex-direction:column;gap:2px;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface);cursor:pointer;min-width:0}
+.choice input{position:absolute;opacity:0;pointer-events:none}
+.choice label:has(input:checked){border-color:var(--violet);background:var(--tint-violet)}
+.choice label:has(input:focus-visible){outline:2px solid var(--violet);outline-offset:2px}
+.choice b{font-size:13.5px}.choice small{font-size:12px;color:var(--muted)}
+.lpick{max-height:240px;overflow-y:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface);overscroll-behavior:contain}
+.lpick label{display:flex;gap:10px;align-items:center;padding:9px 12px;border-top:1px solid var(--line);cursor:pointer;font-size:13.5px}
+.lpick label:first-child{border-top:0}
+.lpick label span[dir]{flex:1;min-width:0;overflow-wrap:anywhere}
+.lpick input{accent-color:var(--violet);width:18px;height:18px;flex:none}
+.dz{display:flex;flex-direction:column;align-items:center;gap:6px;padding:26px 18px;border:2px dashed var(--line-2);border-radius:16px;background:var(--surface-2);color:var(--fg-2);text-align:center;cursor:pointer;transition:border-color .15s,background .15s}
+.dz:hover,body.filedrag .dz{border-color:var(--violet);background:var(--tint-violet)}
+.dz .ic{width:26px;height:26px;color:var(--violet)}
+.dz b{color:var(--fg)}.dz small{font-size:12.5px;color:var(--muted)}
+.pfiles{display:flex;flex-direction:column;gap:8px}
+.pfile{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:12px;align-items:center;padding:8px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.pth{width:52px;height:52px;border-radius:9px;background:var(--surface-3);display:grid;place-items:center;overflow:hidden;color:var(--fg-2);font-size:10px;text-transform:uppercase}
+.pth img{width:100%;height:100%;object-fit:cover}
+.pfile b{display:block;font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pfile small{color:var(--muted);font-size:12px}
+.pfile .iconbtn{margin:0}
+.cstrip{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px}
+.cs-i{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;background:var(--surface-2);border:1px solid var(--line);display:grid;place-items:center;padding:0;color:var(--fg-2);font-size:10px;text-transform:uppercase}
+.cs-i:hover{border-color:var(--line-2)}
+.cs-i img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cs-i .cs-t{position:absolute;bottom:6px;inset-inline-start:6px;width:9px;height:9px;border-radius:50%;box-shadow:0 0 0 2px rgba(8,9,16,.6)}
+.csum{color:var(--muted);font-size:12.5px;font-variant-numeric:tabular-nums}
+#uptray{position:fixed;inset-inline-start:max(20px,env(safe-area-inset-left,0px));bottom:max(20px,env(safe-area-inset-bottom,0px));z-index:61;width:min(360px,calc(100vw - 32px))}
+.upt{background:var(--surface-3);border:1px solid var(--line-2);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px;max-height:50vh;overflow-y:auto}
+.upt > b{font-size:13.5px}
+.upj{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:5px 10px;align-items:center;font-size:12.5px}
+.upj .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--fg-2)}
+.upj .st{display:inline-flex;align-items:center;gap:4px;color:var(--muted);font-variant-numeric:tabular-nums}
+.upj .x{border:0;background:none;color:var(--muted);padding:2px;border-radius:6px;display:inline-grid}
+.upj .x:hover{color:var(--bad)}.upj .x .ic{width:15px;height:15px}
+.upj .bar{grid-column:1/-1;height:4px;border-radius:4px;background:var(--surface);overflow:hidden}
+.upj .bar span{display:block;height:100%;background:var(--violet);border-radius:4px;transition:width .2s}
+.upj.done .bar span{background:var(--good)}.upj.canceled .bar span{background:var(--muted)}.upj.error .bar span{background:var(--bad);width:100%!important}
+.upj.done .st{color:var(--good)}.upj.error .st{color:var(--bad)}
+.upj small{grid-column:1/-1;color:var(--bad);font-size:12px}
+.qcap{margin-top:5px;font-size:12.5px;color:var(--fg-2);white-space:pre-wrap;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.qthumb{width:46px;height:46px;border-radius:9px;object-fit:cover;flex:none;background:var(--surface-2)}
+.cv.zoomable{cursor:zoom-in}
+.lstat{flex-wrap:wrap}
+.lstat .txt b{font-weight:600}
+.lstat .t-act{align-self:center}
+#lightbox{position:fixed;inset:0;z-index:70;background:rgba(5,6,12,.94);display:flex;flex-direction:column;animation:fade .15s;color:#fff;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.lb-top{display:flex;align-items:center;gap:12px;padding:12px max(16px,env(safe-area-inset-right,0px)) 12px max(16px,env(safe-area-inset-left,0px))}
+.lb-top b{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb-top .mono{color:rgba(255,255,255,.6)}
+.lb-top .btn,.lb-top .iconbtn{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#fff;margin:0}
+.lb-img{flex:1;min-height:0;display:grid;place-items:center;padding:0 12px 16px}
+.lb-img img{max-width:100%;max-height:100%;object-fit:contain;border-radius:6px}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);color:#fff;display:grid;place-items:center}
+.lb-nav.prev{inset-inline-start:12px}.lb-nav.next{inset-inline-end:12px}
+@media (max-width:860px){
+  .mgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .mbody{padding:10px 11px 12px}
+  .mbody h4{font-size:13.5px}
+  .mfoot .av{display:none}
+  .choice{grid-template-columns:minmax(0,1fr)}
+  #uptray{top:calc(10px + env(safe-area-inset-top,0px));bottom:auto;left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));width:auto}
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width:1180px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.g2,.g2.even{grid-template-columns:minmax(0,1fr)}}
 /* Tablet: icon rail */
@@ -676,6 +782,7 @@ textarea.inp{height:auto;min-height:84px;padding:9px 11px;resize:vertical;line-h
 <div id="app"><div class="skel">HIGH MEDIA…</div></div>
 <div id="drawer-root"></div>
 <div id="toasts" aria-live="polite"></div>
+<div id="uptray" hidden></div>
 
 <script>
 (function(){
@@ -837,7 +944,50 @@ en: {
   log_step_checked: "checked off “{step}”", log_step_unchecked: "unchecked “{step}”", log_step_added: "added step “{step}”", log_step_removed: "removed step “{step}”",
   log_template: "added the {cat} workflow checklist", log_renamed: "renamed it to “{v}”", log_assigned: "assigned it to {who}", log_due_set: "set the due date to {d}",
   log_due_removed: "removed the due date", log_priority: "set priority to {pr}", log_category: "changed category to {cat}", log_client_linked: "linked it to {name}",
-  log_client_unlinked: "unlinked the client", log_details: "updated the details"
+  log_client_unlinked: "unlinked the client", log_details: "updated the details",
+  nav_content: "Content", contentTitle: "Content", contentEyebrow: "Files, reels & demos", upload: "Upload", uploadContent: "Upload content",
+  cTabAll: "All", cTabClient: "Client content", cTabDemo: "Demos",
+  ct2_image: "Image", ct2_reel: "Reel", ct2_video: "Video", ct2_file: "Other file",
+  ctp_image: "Images", ctp_reel: "Reels", ctp_video: "Videos", ctp_file: "Files", allTypes: "All types",
+  audAll: "All demos", aud_leads: "For leads", aud_internal: "Internal",
+  demoFor: "Demo · {name}", demoForN: "Demo · {n} leads", demoAnyLead: "Demo · any lead", demoInternal: "Demo · internal",
+  allPeople: "All clients & leads", searchContent: "Search title, file or client", cCount: "{n} files · {size}",
+  noContent: "No content yet", noContentSub: "Upload images, Reels and videos, and mark each one as a client's content or as a demo — for specific leads or for internal use.",
+  noContentMatch: "Nothing matches these filters.", storageOnlyFb: "Uploading files needs the hosted (Firebase) version of the portal. The claude.ai version can't store files.",
+  eStLoad: "File storage couldn't load. Check your connection and reload the page.",
+  dropHere: "Drop files here or click to choose", dropSub: "Images and videos up to 500 MB each. Other files (PDF, PSD, ZIP…) work too.",
+  chosenN: "{n} selected", removeFile: "Remove file", detecting: "Reading file…",
+  whoFor: "Who is it for?", purposeClient: "Client content", purposeClientSub: "Made for, or delivered to, a client", purposeDemo: "Demo", purposeDemoSub: "Samples to show leads, or for our own use",
+  demoAudience: "Demo for", audLeadsSub: "Specific leads", audInternalSub: "Our own internal use",
+  pickLeads: "Which leads?", pickLeadsHint: "Leave all unticked if it's for any lead.", noLeadsToPick: "No leads yet. Add leads on the Leads & clients page.",
+  fileType: "Type", typeAuto: "Detect automatically", titleLbl: "Title", titleMulti: "Each file is titled with its file name. You can rename them after uploading.",
+  cNote: "Note (optional)", cNotePh: "e.g. Final version, approved by the client", chooseClientC: "Choose a client",
+  uploadN: "Upload {n} files", upload1: "Upload file", needFiles: "Choose at least one file.", needClientC: "Choose the client this content belongs to.", tooBig: "“{name}” is larger than 500 MB.",
+  uploadingN: "Uploading {n}…", upFinished: "Uploads", upQueued: "Waiting", upSaving: "Saving…", upDone: "Uploaded", upFailed: "Failed", upCanceled: "Cancelled",
+  cancelUpload: "Cancel upload", dismiss: "Dismiss", upAllDone: "{n} uploaded to Content.",
+  download: "Download", copyLink: "Copy link", linkCopied: "Link copied. Anyone with this link can view the file.", upBy: "Uploaded by {name} · {dt}",
+  noPreview: "This browser can't preview this video. Download it to watch.", fName: "File name", fSize: "Size", fDims: "Dimensions", fDur: "Length", fFormat: "Format",
+  delContentQ: "Delete this file for good?", tContentDeleted: "File deleted.", contentForLead: "Content & demos", viewAllN: "View all {n}", noContentLead: "No files yet.",
+  dest_client: "for {name}", dest_leads1: "as a demo for {name}", dest_leadsN: "as a demo for {n} leads", dest_leadsAny: "as a demo for leads", dest_internal: "as an internal demo",
+  act_content_added: "uploaded “{title}” {dest}", act_content_updated: "updated “{title}” in Content", act_content_deleted: "deleted “{title}” from Content", fContent: "Content",
+  eStUnauthorized: "Storage refused the file. Publish <b>storage.rules</b> in Firebase → Storage → Rules (steps in the README).",
+  eStMissing: "File storage isn't set up yet. In Firebase → Build → Storage, click “Get started” (it needs the Blaze plan). The steps are in the README.",
+  eStQuota: "The storage quota is used up. Delete old files or check your Firebase plan.", eStNet: "The upload stopped. Check your connection and try again.", eStOther: "The upload failed: {err}",
+  schedTitle: "Posting schedule", schedH: "Posting schedule", schedHSub: "Client content to post, with a reminder on the day", postDate: "Post on", postTime: "Time (optional)",
+  caption: "What to post", captionPh: "Caption, hashtags, where to post (Instagram, TikTok…), anything to remember",
+  schedHint: "Set a date to get a reminder on that day saying which client it's for and what to post.", schedHintMulti: "The date and text apply to every file in this upload. You can change each one afterwards.",
+  postToday: "Post today", postTodayAt: "Post today · {time}", postOverdue: "Not posted · {n}d late", postOn: "Post {d}", postedChip: "Posted",
+  markPosted: "Mark as posted", postedBy: "Posted by <b>{name}</b> · {dt}", undo: "Undo", noSched: "Nothing scheduled. Set a post date on a client's file to plan it here.",
+  remTitle: "Post today for {name}", addCal: "Add to calendar", notifEnable: "Turn on reminders on this device", notifOn: "Reminders on for this device",
+  notifBlocked: "Notifications are blocked for this site in the browser settings. Reminders still appear in the portal.",
+  notifUnsupported: "This browser can't show notifications. On iPhone, add the portal to your Home Screen (Share → Add to Home Screen) and open it from there, or use “Add to calendar”.",
+  notifTestT: "Reminders are on", notifTestB: "You'll get a reminder here on each post's day.", calSummary: "Post for {name}: {type} – {title}", calWhat: "What to post", calFile: "File", calPortal: "Open in the portal",
+  act_content_posted: "marked “{title}” as posted for {name}", act_content_unposted: "marked “{title}” as not posted",
+  leadStatusH: "Lead status", leadStatusSub: "Did the demo work?", convertClient: "Converted to client", resWon1: "Converted to client", resWonN: "{n} converted", resLost: "Lost",
+  resAll: "All results", resOpen: "Waiting", resWon: "Converted", saveShare: "Save / Share", shareTapAgain: "Ready. Tap “Save / Share” again.", viewFull: "View full size",
+  prevItem: "Previous", nextItem: "Next",
+  upPacking: "Compressing…", fStored: "Stored as", storedNote: "{size} · compressed, {p}% smaller", storedRaw: "{size} · already compact (photo and video formats are compressed by design), stored as is",
+  csumSaved: " · {size} saved by compression", packNote: "Files are compressed without any loss when that saves space, and restored to the exact original when downloaded."
 },
 ar: {
   tagline: "سوشيال ميديا · محتوى · مواقع", teamPortal: "بوابة الفريق",
@@ -985,7 +1135,50 @@ ar: {
   log_step_checked: "أنجز «{step}»", log_step_unchecked: "ألغى إنجاز «{step}»", log_step_added: "أضاف الخطوة «{step}»", log_step_removed: "حذف الخطوة «{step}»",
   log_template: "أضاف قائمة خطوات {cat}", log_renamed: "غيّر العنوان إلى «{v}»", log_assigned: "أسندها إلى {who}", log_due_set: "حدّد الاستحقاق في {d}",
   log_due_removed: "أزال تاريخ الاستحقاق", log_priority: "غيّر الأولوية إلى {pr}", log_category: "غيّر الفئة إلى {cat}", log_client_linked: "ربطها بـ{name}",
-  log_client_unlinked: "ألغى ربط العميل", log_details: "حدّث التفاصيل"
+  log_client_unlinked: "ألغى ربط العميل", log_details: "حدّث التفاصيل",
+  nav_content: "المحتوى", contentTitle: "المحتوى", contentEyebrow: "الملفات والريلز والنماذج", upload: "رفع", uploadContent: "رفع محتوى",
+  cTabAll: "الكل", cTabClient: "محتوى العملاء", cTabDemo: "النماذج",
+  ct2_image: "صورة", ct2_reel: "ريل", ct2_video: "فيديو", ct2_file: "ملف آخر",
+  ctp_image: "صور", ctp_reel: "ريلز", ctp_video: "فيديوهات", ctp_file: "ملفات", allTypes: "كل الأنواع",
+  audAll: "كل النماذج", aud_leads: "للعملاء المحتملين", aud_internal: "داخلي",
+  demoFor: "نموذج · {name}", demoForN: "نموذج · {n} عملاء محتملين", demoAnyLead: "نموذج · لأي عميل محتمل", demoInternal: "نموذج · داخلي",
+  allPeople: "كل العملاء والمحتملين", searchContent: "ابحث بالعنوان أو الملف أو العميل", cCount: "{n} ملف · {size}",
+  noContent: "لا يوجد محتوى بعد", noContentSub: "ارفع الصور والريلز والفيديوهات، وحدّد لكل ملف إن كان محتوى لعميل أو نموذجًا — لعملاء محتملين محددين أو للاستخدام الداخلي.",
+  noContentMatch: "لا يوجد ما يطابق هذا الفلتر.", storageOnlyFb: "رفع الملفات يحتاج نسخة البوابة المستضافة (Firebase). نسخة claude.ai لا يمكنها تخزين الملفات.",
+  eStLoad: "تعذّر تحميل خدمة تخزين الملفات. تحقق من اتصالك وأعد تحميل الصفحة.",
+  dropHere: "أفلت الملفات هنا أو اضغط للاختيار", dropSub: "صور وفيديوهات حتى 500 ميغابايت لكل ملف. الملفات الأخرى (PDF، PSD، ZIP…) مقبولة أيضًا.",
+  chosenN: "{n} مختارة", removeFile: "إزالة الملف", detecting: "جارٍ قراءة الملف…",
+  whoFor: "لمن هذا المحتوى؟", purposeClient: "محتوى عميل", purposeClientSub: "مُعدّ لعميل أو مُسلَّم له", purposeDemo: "نموذج", purposeDemoSub: "عينات نعرضها على العملاء المحتملين أو لاستخدامنا",
+  demoAudience: "النموذج موجّه إلى", audLeadsSub: "عملاء محتملين محددين", audInternalSub: "لاستخدامنا الداخلي",
+  pickLeads: "أي عملاء محتملين؟", pickLeadsHint: "اترك الكل بدون تحديد إن كان لأي عميل محتمل.", noLeadsToPick: "لا يوجد عملاء محتملون بعد. أضفهم من صفحة العملاء.",
+  fileType: "النوع", typeAuto: "تحديد تلقائي", titleLbl: "العنوان", titleMulti: "يأخذ كل ملف اسمه كعنوان. يمكنك تغيير العناوين بعد الرفع.",
+  cNote: "ملاحظة (اختياري)", cNotePh: "مثال: النسخة النهائية، وافق عليها العميل", chooseClientC: "اختر العميل",
+  uploadN: "رفع {n} ملفات", upload1: "رفع الملف", needFiles: "اختر ملفًا واحدًا على الأقل.", needClientC: "اختر العميل الذي يخصه هذا المحتوى.", tooBig: "حجم «{name}» أكبر من 500 ميغابايت.",
+  uploadingN: "جارٍ رفع {n}…", upFinished: "الرفع", upQueued: "بالانتظار", upSaving: "جارٍ الحفظ…", upDone: "تم الرفع", upFailed: "فشل", upCanceled: "أُلغي",
+  cancelUpload: "إلغاء الرفع", dismiss: "إخفاء", upAllDone: "تم رفع {n} إلى المحتوى.",
+  download: "تنزيل", copyLink: "نسخ الرابط", linkCopied: "تم نسخ الرابط. أي شخص لديه الرابط يمكنه مشاهدة الملف.", upBy: "رفعه {name} · {dt}",
+  noPreview: "هذا المتصفح لا يستطيع عرض هذا الفيديو. نزّله لمشاهدته.", fName: "اسم الملف", fSize: "الحجم", fDims: "الأبعاد", fDur: "المدة", fFormat: "الصيغة",
+  delContentQ: "حذف هذا الملف نهائيًا؟", tContentDeleted: "تم حذف الملف.", contentForLead: "المحتوى والنماذج", viewAllN: "عرض الكل ({n})", noContentLead: "لا توجد ملفات بعد.",
+  dest_client: "لـ{name}", dest_leads1: "كنموذج لـ{name}", dest_leadsN: "كنموذج لـ{n} عملاء محتملين", dest_leadsAny: "كنموذج للعملاء المحتملين", dest_internal: "كنموذج داخلي",
+  act_content_added: "رفع «{title}» {dest}", act_content_updated: "حدّث «{title}» في المحتوى", act_content_deleted: "حذف «{title}» من المحتوى", fContent: "المحتوى",
+  eStUnauthorized: "رفض التخزين الملف. انشر <b>storage.rules</b> في Firebase ← Storage ← Rules (الخطوات في ملف README).",
+  eStMissing: "تخزين الملفات غير مُفعّل بعد. في Firebase ← Build ← Storage اضغط «Get started» (يحتاج خطة Blaze). الخطوات في ملف README.",
+  eStQuota: "انتهت مساحة التخزين المتاحة. احذف ملفات قديمة أو راجع خطة Firebase.", eStNet: "توقف الرفع. تحقق من اتصالك وحاول مرة أخرى.", eStOther: "فشل الرفع: {err}",
+  schedTitle: "موعد النشر", schedH: "جدول النشر", schedHSub: "محتوى العملاء المطلوب نشره، مع تذكير في يومه", postDate: "النشر في", postTime: "الوقت (اختياري)",
+  caption: "ماذا ننشر", captionPh: "النص والهاشتاغات ومكان النشر (إنستغرام، تيك توك…) وأي ملاحظة",
+  schedHint: "حدّد تاريخًا لتصلك في ذلك اليوم رسالة تذكير باسم العميل وما المطلوب نشره.", schedHintMulti: "التاريخ والنص ينطبقان على كل ملفات هذا الرفع. يمكنك تعديل كل ملف بعدها.",
+  postToday: "النشر اليوم", postTodayAt: "النشر اليوم · {time}", postOverdue: "لم يُنشر · متأخر {n} يوم", postOn: "النشر {d}", postedChip: "تم النشر",
+  markPosted: "تحديد كمنشور", postedBy: "نشره <b>{name}</b> · {dt}", undo: "تراجع", noSched: "لا يوجد نشر مجدول. حدّد تاريخ نشر لملف عميل ليظهر هنا.",
+  remTitle: "انشر اليوم لـ{name}", addCal: "إضافة إلى التقويم", notifEnable: "تفعيل التذكيرات على هذا الجهاز", notifOn: "التذكيرات مفعّلة على هذا الجهاز",
+  notifBlocked: "الإشعارات محظورة لهذا الموقع في إعدادات المتصفح. ستظهر التذكيرات داخل البوابة.",
+  notifUnsupported: "هذا المتصفح لا يدعم الإشعارات. على الآيفون أضف البوابة إلى الشاشة الرئيسية (مشاركة ← إضافة إلى الشاشة الرئيسية) وافتحها من هناك، أو استخدم «إضافة إلى التقويم».",
+  notifTestT: "التذكيرات مفعّلة", notifTestB: "سيصلك تذكير هنا في يوم كل منشور.", calSummary: "نشر لـ{name}: {type} – {title}", calWhat: "المطلوب نشره", calFile: "الملف", calPortal: "فتح في البوابة",
+  act_content_posted: "حدّد «{title}» كمنشور لـ{name}", act_content_unposted: "ألغى تحديد «{title}» كمنشور",
+  leadStatusH: "حالة العميل المحتمل", leadStatusSub: "هل نجح النموذج؟", convertClient: "تحوّل إلى عميل", resWon1: "تحوّل إلى عميل", resWonN: "{n} تحوّلوا لعملاء", resLost: "مفقود",
+  resAll: "كل النتائج", resOpen: "بالانتظار", resWon: "تحوّل لعميل", saveShare: "حفظ / مشاركة", shareTapAgain: "جاهز. اضغط «حفظ / مشاركة» مرة أخرى.", viewFull: "عرض بالحجم الكامل",
+  prevItem: "السابق", nextItem: "التالي",
+  upPacking: "جارٍ الضغط…", fStored: "المساحة المخزّنة", storedNote: "{size} · مضغوط، أصغر بنسبة {p}%", storedRaw: "{size} · حجمه مضغوط أصلًا (صيغ الصور والفيديو مضغوطة بطبيعتها)، خُزّن كما هو",
+  csumSaved: " · وُفّر {size} بالضغط", packNote: "تُضغط الملفات دون أي فقدان في الجودة عندما يوفّر ذلك مساحة، وتعود إلى نسختها الأصلية تمامًا عند التنزيل."
 }};
 function t(k, p) {
   let s = I18N[LANG][k]; if (s == null) s = I18N.en[k]; if (s == null) s = k;
@@ -1041,7 +1234,7 @@ const TEMPLATES = {
     admin: ["تجهيز عرض السعر","إرسال الاتفاقية","استلام الدفعة المقدمة"]
   }
 };
-const VIEWS = ["overview","tasks","leads","portfolio","tools","activity"];
+const VIEWS = ["overview","tasks","leads","portfolio","content","tools","activity"];
 const DAY = 864e5;
 const MONTHS = { en: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], ar: ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"] };
 const MONTHS_L = { en: ["January","February","March","April","May","June","July","August","September","October","November","December"], ar: MONTHS.ar };
@@ -1057,7 +1250,8 @@ const S = {
   tf: { who: "mine", cat: "all", client: "all", q: "" },
   lf: { tab: "pipeline", q: "", seg: "all", svc: "all" }, pf: { type: "all", seg: "all" }, af: { who: "all", kind: "all" },
   drawer: null, notes: [], notesFor: null, notesUnsub: null, notesLoaded: false, drafts: {}, confirm: null,
-  chartMode: "tasks", showAllDone: false, subs: [], payments: [], work: [], settings: {}, editTarget: false
+  chartMode: "tasks", showAllDone: false, subs: [], payments: [], work: [], settings: {}, editTarget: false,
+  storage: null, content: [], cf: { purpose: "all", aud: "all", res: "all", type: "all", who: "all", q: "" }, uploads: [], up: null, zoom: null
 };
 
 /* ---------- Helpers ---------- */
@@ -1175,6 +1369,7 @@ function enumize(p) {
     else if (k === "d") v = v ? fmtD(dateMs(v)) : ""; else if (k === "field") v = t("fld_" + v);
     else if (k === "reason") v = v ? (LANG === "ar" ? "، السبب: " : ": ") + v : "";
     else if (k === "client") v = v || t("aClient");
+    else if (k === "dest") v = t("dest_" + v, { name: (p || {}).name || "", n: (p || {}).n || "" });
     else if (k === "amount") v = money(v); else if (k === "tool") v = toolLabel(v, (p || {}).toolName); else if (k === "counts") v = countsText(v);
     o[k] = esc(v);
   });
@@ -1202,7 +1397,13 @@ const ICONS = {
   arrow: '<path d="M9 5l7 7-7 7"/>',
   trash: '<path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/>',
   note: '<path d="M5 4h10l4 4v12H5z"/><path d="M9 12h6M9 16h4"/>',
-  globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>'
+  globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+  content: '<rect x="3" y="4" width="18" height="16" rx="3"/><path d="M10 9.2v5.6l4.8-2.8z"/>',
+  upload: '<path d="M12 15V4M7.5 8.5L12 4l4.5 4.5M4 15v3.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V15"/>',
+  download: '<path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M4 15v3.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V15"/>',
+  play: '<path d="M7 4.8v14.4L19 12z"/>',
+  bell: '<path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15zM10 20.5a2 2 0 0 0 4 0"/>',
+  link: '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>'
 };
 const FLIP = { arrow: 1, back: 1, logout: 1 };
 const ic = (n, cls = "") => `<svg class="ic ${FLIP[n] ? "flip " : ""}${cls}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n] || ""}</svg>`;
@@ -1226,9 +1427,9 @@ function logoSVG(w) {
 }
 
 /* ---------- Toasts ---------- */
-function toast(html, kind = "") {
+function toast(html, kind = "", ms) {
   const el = document.createElement("div"); el.className = "toast " + kind; el.innerHTML = html;
-  $("#toasts").appendChild(el); setTimeout(() => el.remove(), kind === "bad" ? 7000 : 4500);
+  $("#toasts").appendChild(el); setTimeout(() => el.remove(), ms || (kind === "bad" ? 7000 : 4500));
 }
 
 /* ---------- Data writes ---------- */
@@ -1614,7 +1815,7 @@ function renderShell() {
 function renderNav() {
   const myOpen = openTasks().filter(isMine).length;
   const expired = toolGroups().filter(g => subStatus(g.latest).k === "expired").length;
-  const items = [["overview","home",null],["tasks","tasks",myOpen],["leads","leads",activeLeads().length],["portfolio","portfolio",null],["tools","wallet",expired, "bad"],["activity","activity",null]];
+  const items = [["overview","home",null],["tasks","tasks",myOpen],["leads","leads",activeLeads().length],["portfolio","portfolio",null],["content","content",dueCount().length,"bad"],["tools","wallet",expired, "bad"],["activity","activity",null]];
   $("#nav").innerHTML = items.map(([v, i, n, cls]) => `<a href="#${v}" class="${S.view === v ? "on" : ""}" ${S.view === v ? 'aria-current="page"' : ""}>${ic(i)}<span>${t("nav_" + v)}</span>${n ? `<em class="${cls || ""}">${n}</em>` : ""}</a>`).join("");
   $("#sidelang").innerHTML = langBtn();
   $("#sidefoot").innerHTML = `${av(S.me)}<div><b>${esc(mName(S.me))}</b><small>${t("signedIn")}</small></div><button class="iconbtn" data-action="logout" title="${t("signOut")}" aria-label="${t("signOut")}">${ic("logout")}</button>`;
@@ -1661,6 +1862,7 @@ function renderOverview() {
   const feed = acts.length ? `<div class="feed">${acts.map(feedItem).join("")}</div><a class="btn sm ghost" href="#activity" style="margin-top:6px">${t("fullLog")} ${ic("arrow")}</a>` : `<div class="empty"><span>${t("feedEmpty")}</span></div>`;
   return `<div class="wrap">${mobileHead()}${ph(`${WEEKDAYS[LANG][d.getDay()]} · ${d.getDate()} ${MONTHS_L[LANG][d.getMonth()]} ${d.getFullYear()}`, t("greet", { g: greeting(), name: esc(mName(S.me)) }), btnNewTask() + btnNewLead())}
     ${banners()}${kpis}
+    ${scheduled().some(c => c.postDate <= ymd(new Date(now() + 7 * DAY))) ? scheduleCard(7) : ""}
     ${weekCard()}
     <div class="g2">
       <section class="card"><div class="card-h"><div><h2>${t("queue")}</h2><p>${t("queueSub")}</p></div></div>${queue}</section>
@@ -1919,6 +2121,7 @@ function clientDrawer(l) {
       <div class="fld full"><label for="wn-${l.id}">${t("workNote")}</label><input class="inp" id="wn-${l.id}" name="note" data-draft dir="auto" value="${esc(draft("wn-" + l.id))}" placeholder="${t("workNotePh")}"></div></div>
       <button class="btn primary" type="submit" style="align-self:flex-start">${ic("check")} ${t("saveWork")}</button></form>
     <div class="sec"><div class="sec-h"><h3>${t("workLog")}</h3><small class="num">${entries.length}</small></div>${entryHTML}</div>
+    ${contentStrip(l)}
     <div class="sec"><div class="sec-h"><h3>${t("payments")}</h3><small class="num">${money(paid)}</small></div>${payHTML}
       <form class="inline-form" data-form="payment" data-client="${l.id}"><div class="fld"><label for="pa-${l.id}">${t("amountJod")}</label><input class="inp" id="pa-${l.id}" name="amount" data-draft inputmode="decimal" dir="ltr" value="${esc(draft("pa-" + l.id))}" placeholder="250"></div>
       <div class="fld"><label for="pd-${l.id}">${t("payDate")}</label><input class="inp" type="date" id="pd-${l.id}" name="date" data-draft value="${esc(draft("pd-" + l.id, todayStr()))}"></div>
@@ -2030,14 +2233,539 @@ function renderActivity() {
   let lastDay = null, body = "";
   list.forEach(a => { const k = dayKey(a.at); if (k !== lastDay) { body += `<div class="day-h">${dayLabel(a.at)}</div>`; lastDay = k; } body += `<div class="fi">${av(a.by, "sm")}<p><b>${esc(mName(a.by))}</b> <span dir="auto">${actText(a)}</span></p><span class="mono" title="${esc(fmtDT(a.at))}">${fmtDM(a.at)} · ${fmtT(a.at)}</span></div>`; });
   const filters = `<div class="filters"><div class="seg" role="group"><button class="${f.who === "all" ? "on" : ""}" data-action="af-who" data-v="all">${t("everyone")}</button>${MIDS.map(id => `<button class="${f.who === id ? "on" : ""}" data-action="af-who" data-v="${id}">${mName(id)}</button>`).join("")}</div>
-    <select class="sel" id="af-kind" data-afilter="kind" aria-label="${t("type")}"><option value="all">${t("allAct")}</option><option value="task" ${f.kind === "task" ? "selected" : ""}>${t("fTasks")}</option><option value="lead" ${f.kind === "lead" ? "selected" : ""}>${t("fLeads")}</option><option value="note" ${f.kind === "note" ? "selected" : ""}>${t("fNotes")}</option><option value="portfolio" ${f.kind === "portfolio" ? "selected" : ""}>${t("fPortfolio")}</option><option value="finance" ${f.kind === "finance" ? "selected" : ""}>${t("fFinance")}</option></select></div>`;
+    <select class="sel" id="af-kind" data-afilter="kind" aria-label="${t("type")}"><option value="all">${t("allAct")}</option><option value="task" ${f.kind === "task" ? "selected" : ""}>${t("fTasks")}</option><option value="lead" ${f.kind === "lead" ? "selected" : ""}>${t("fLeads")}</option><option value="note" ${f.kind === "note" ? "selected" : ""}>${t("fNotes")}</option><option value="portfolio" ${f.kind === "portfolio" ? "selected" : ""}>${t("fPortfolio")}</option><option value="finance" ${f.kind === "finance" ? "selected" : ""}>${t("fFinance")}</option><option value="content" ${f.kind === "content" ? "selected" : ""}>${t("fContent")}</option></select></div>`;
   return `<div class="wrap">${mobileHead()}${ph(t("everyStep"), t("activityLog"), "")}${banners()}${filters}
     <section class="card">${list.length ? `<div class="feed">${body}</div>${S.activity.length >= 300 ? `<p class="mono" style="color:var(--muted);margin-top:10px">${t("latest300")}</p>` : ""}` : `<div class="empty"><b>${t("noAct")}</b><span>${t("noActSub")}</span></div>`}</section></div>`;
 }
 
+/* ---------- Content library (files in Firebase Storage, details in Firestore "content") ---------- */
+const CTYPES = ["image","reel","video","file"];
+const CT2_COLOR = { image: "var(--info)", reel: "var(--coral)", video: "var(--violet)", file: "var(--muted)" };
+const MAX_UP = 500 * 1024 * 1024;
+/* Lossless compression: gzip on this device before upload, gunzip back to the exact original on download.
+   Photo and video formats (JPEG, PNG, MP4, MOV…) are already compressed, so they're only packed if it saves at least 15%. */
+const gzipBlob = b => new Response(b.stream().pipeThrough(new CompressionStream("gzip"))).blob();
+const gunzipBlob = b => new Response(b.stream().pipeThrough(new DecompressionStream("gzip"))).blob();
+async function packFile(f) {
+  if (typeof CompressionStream === "undefined" || f.size < 2048 || f.size > 300 * 1024 * 1024) return null;
+  try {
+    if (f.size > 8 * 1024 * 1024) { const s = f.slice(0, 4 * 1024 * 1024); const zs = await gzipBlob(s); if (zs.size > s.size * 0.85) return null; }
+    const z = await gzipBlob(f); return z.size <= f.size * 0.85 ? z : null;
+  } catch (e) { return null; }
+}
+async function unpackIfNeeded(c, b) {
+  if (!c.compressed || typeof DecompressionStream === "undefined") return b;
+  const h = new Uint8Array(await b.slice(0, 2).arrayBuffer());
+  return h[0] === 0x1f && h[1] === 0x8b ? gunzipBlob(b) : b; // the server may already have decompressed it
+}
+const ctypeL = k => t("ct2_" + (CTYPES.includes(k) ? k : "file"));
+const isVid = c => c.type === "reel" || c.type === "video";
+const findContent = id => S.content.find(x => x.id === id);
+// Who a file belongs to, by its current purpose (fields from an earlier purpose are kept so switching back restores them, but don't count).
+const linkedIds = c => c.purpose === "client" ? (c.clientId ? [c.clientId] : []) : c.audience === "internal" ? [] : (c.leadIds || []);
+const contentFor = id => S.content.filter(c => linkedIds(c).includes(id));
+const extOf = n => { const m = /\.([a-z0-9]{1,6})$/i.exec(String(n || "")); return m ? m[1] : ""; };
+const stemOf = n => String(n || "").replace(/\.[a-z0-9]{1,6}$/i, "").replace(/[_]+/g, " ").trim() || String(n || "");
+function fmtSize(b) { b = +b || 0; const u = ["B","KB","MB","GB"]; let i = 0; while (b >= 1024 && i < 3) { b /= 1024; i++; } return "\u2066" + (i ? b.toFixed(b < 10 ? 1 : 0) : Math.round(b)) + " " + u[i] + "\u2069"; }
+function fmtDur(s) { s = Math.round(+s || 0); return Math.floor(s / 60) + ":" + pad(s % 60); }
+function contentDest(c) {
+  if (c.purpose === "client") { const l = findLead(c.clientId); return { cls: "for-client", text: l ? leadName(l) : (c.clientName || t("noClient")) }; }
+  if (c.audience === "internal") return { cls: "for-internal", text: t("demoInternal") };
+  const ids = (c.leadIds || []).filter(findLead);
+  return { cls: "for-leads", text: ids.length === 1 ? t("demoFor", { name: leadName(findLead(ids[0])) }) : ids.length ? t("demoForN", { n: ids.length }) : t("demoAnyLead") };
+}
+function destParams(d) {
+  if (d.purpose === "client") return { dest: "client", name: d.clientName || "" };
+  if (d.audience === "internal") return { dest: "internal" };
+  const ids = d.leadIds || [];
+  return ids.length === 1 ? { dest: "leads1", name: leadName(findLead(ids[0])) } : ids.length ? { dest: "leadsN", n: ids.length } : { dest: "leadsAny" };
+}
+function detectType(f, info) {
+  const k = (info && info.kind) || ((f.type || "").startsWith("image/") ? "image" : (f.type || "").startsWith("video/") ? "video" : "file");
+  if (k === "image") return "image";
+  if (k === "video") return info && info.w && info.h && info.w >= info.h ? "video" : "reel";
+  return "file";
+}
+function safeName(n) { const e = extOf(n); const b = String(n || "file").normalize("NFKD").replace(/\.[^.]*$/, "").replace(/[^\w.-]+/g, "_").replace(/^_+|_+$/g, "").slice(0, 60) || "file"; return b + (e ? "." + e.toLowerCase() : ""); }
+function dispo(n) { const ascii = String(n).replace(/[^\x20-\x7e]/g, "_").replace(/["\\]/g, "_"); return `attachment; filename="${ascii}"; filename*=UTF-8''${encodeURIComponent(n)}`; }
+function stErr(e) {
+  const c = String((e && e.code) || ""); const msg = String((e && e.message) || "");
+  if (c.includes("unauthorized") || c.includes("permission")) return t("eStUnauthorized");
+  if (c.includes("bucket-not-found") || c.includes("project-not-found") || (c.includes("unknown") && /404|not found/i.test(msg))) return t("eStMissing");
+  if (c.includes("quota")) return t("eStQuota");
+  if (c.includes("retry-limit") || c.includes("network") || c.includes("unavailable")) return t("eStNet");
+  return t("eStOther", { err: esc(c || msg || "error") });
+}
+
+/* Reads size, length and a small JPEG preview from a file, on the device, before it's uploaded */
+function waitEv(el, ev, ms) {
+  return new Promise((res, rej) => {
+    const tm = setTimeout(() => rej(new Error("timeout")), ms);
+    el.addEventListener(ev, () => { clearTimeout(tm); res(); }, { once: true });
+    el.addEventListener("error", () => { clearTimeout(tm); rej(new Error("media")); }, { once: true });
+  });
+}
+function thumbBlob(src, w, h) {
+  return new Promise(res => {
+    if (!w || !h) return res(null);
+    const k = Math.min(1, 640 / Math.max(w, h)); const c = document.createElement("canvas");
+    c.width = Math.max(1, Math.round(w * k)); c.height = Math.max(1, Math.round(h * k));
+    try { const g = c.getContext("2d"); g.fillStyle = "#fff"; g.fillRect(0, 0, c.width, c.height); g.drawImage(src, 0, 0, c.width, c.height); c.toBlob(b => res(b), "image/jpeg", .82); }
+    catch (e) { res(null); }
+  });
+}
+async function mediaInfo(f) {
+  const mt = f.type || ""; const kind = mt.startsWith("image/") ? "image" : mt.startsWith("video/") ? "video" : "file";
+  if (kind === "file") return { kind };
+  const url = URL.createObjectURL(f);
+  try {
+    if (kind === "image") {
+      const i = new Image(); const p = waitEv(i, "load", 15000); i.src = url; await p;
+      return { kind, w: i.naturalWidth, h: i.naturalHeight, thumb: await thumbBlob(i, i.naturalWidth, i.naturalHeight) };
+    }
+    const v = document.createElement("video"); v.muted = true; v.playsInline = true; v.preload = "auto";
+    const p = waitEv(v, "loadedmetadata", 15000); v.src = url; await p;
+    const info = { kind, w: v.videoWidth, h: v.videoHeight, dur: isFinite(v.duration) ? v.duration : 0 };
+    try {
+      if (v.readyState < 2) await waitEv(v, "loadeddata", 5000);
+      const s = waitEv(v, "seeked", 5000); v.currentTime = info.dur ? Math.min(1, info.dur / 3) : 0.1; await s;
+      info.thumb = await thumbBlob(v, info.w, info.h);
+    } catch (e) {}
+    return info;
+  } catch (e) { return { kind }; }
+  finally { URL.revokeObjectURL(url); }
+}
+
+/* Upload queue: one file at a time, progress shown in the tray */
+const upActive = j => j.state === "queued" || j.state === "packing" || j.state === "uploading" || j.state === "saving";
+function renderTray() {
+  const el = $("#uptray"); if (!el) return;
+  const js = S.uploads; if (!js.length) { el.innerHTML = ""; el.hidden = true; return; }
+  const active = js.filter(upActive).length; el.hidden = false;
+  el.innerHTML = `<div class="upt" role="status"><b>${active ? t("uploadingN", { n: active }) : t("upFinished")}</b>${js.map(j => {
+    const pct = Math.round((j.pct || 0) * 100);
+    const st = j.state === "uploading" ? pct + "%" : t({ queued: "upQueued", packing: "upPacking", saving: "upSaving", done: "upDone", canceled: "upCanceled" }[j.state] || "upFailed");
+    const btn = j.state === "queued" || j.state === "packing" || j.state === "uploading" ? `<button class="x" data-action="up-cancel" data-key="${j.key}" aria-label="${t("cancelUpload")}">${ic("x")}</button>`
+      : j.state === "error" ? `<button class="x" data-action="up-dismiss" data-key="${j.key}" aria-label="${t("dismiss")}">${ic("x")}</button>` : "";
+    return `<div class="upj ${j.state}"><span class="nm" dir="auto">${esc(j.file.name)}</span><span class="st"><span id="ups-${j.key}">${st}</span>${btn}</span><span class="bar"><span id="upb-${j.key}" style="width:${j.state === "done" ? 100 : pct}%"></span></span>${j.err ? `<small>${j.err}</small>` : ""}</div>`;
+  }).join("")}</div>`;
+}
+function trayProgress(j) {
+  const pct = Math.round((j.pct || 0) * 100);
+  const b = document.getElementById("upb-" + j.key), s = document.getElementById("ups-" + j.key);
+  if (b) b.style.width = pct + "%"; if (s) s.textContent = pct + "%";
+}
+async function runUpload(job) {
+  const db = S.db, st = S.storage, f = job.file, info = job.info || {}, c = job.common;
+  const id = db.collection("content").doc().id; const base = "content/" + id + "/";
+  const path = base + safeName(f.name);
+  job.state = "packing"; renderTray();
+  const z = await packFile(f); const body = z || f;
+  const meta = { contentType: f.type || "application/octet-stream", contentDisposition: dispo(f.name), customMetadata: { uploadedBy: S.me } };
+  if (z) { meta.contentEncoding = "gzip"; meta.customMetadata.compressed = "gzip"; meta.customMetadata.originalSize = String(f.size); }
+  if (job.state === "canceled") throw { code: "storage/canceled" };
+  job.state = "uploading"; renderTray();
+  const task = st.ref(path).put(body, meta);
+  job.task = task;
+  await new Promise((res, rej) => task.on("state_changed", s => { job.pct = s.totalBytes ? s.bytesTransferred / s.totalBytes : 0; trayProgress(job); }, rej, res));
+  job.state = "saving"; renderTray();
+  const url = await task.snapshot.ref.getDownloadURL();
+  let thumbPath = "", thumbUrl = "";
+  if (info.thumb) {
+    try { thumbPath = base + "thumb.jpg"; const ts = await st.ref(thumbPath).put(info.thumb, { contentType: "image/jpeg", cacheControl: "public,max-age=31536000" }); thumbUrl = await ts.ref.getDownloadURL(); }
+    catch (e) { thumbPath = ""; thumbUrl = ""; }
+  }
+  const lead = c.purpose === "client" ? findLead(c.clientId) : null; const at = now();
+  const doc = {
+    title: job.title, note: c.note || "", type: job.type, purpose: c.purpose,
+    clientId: c.purpose === "client" ? c.clientId : "", clientName: lead ? leadName(lead) : "",
+    audience: c.purpose === "demo" ? c.audience : "", leadIds: c.purpose === "demo" && c.audience === "leads" ? c.leadIds.slice() : [],
+    postDate: c.purpose === "client" ? (c.postDate || "") : "", postTime: c.purpose === "client" && c.postDate ? (c.postTime || "") : "",
+    caption: c.purpose === "client" ? (c.caption || "") : "", postedAt: null, postedBy: null,
+    fileName: f.name, mime: f.type || "", size: f.size, storedSize: body.size, compressed: !!z, path, url, thumbPath, thumbUrl,
+    w: info.w || 0, h: info.h || 0, dur: info.dur ? Math.round(info.dur * 10) / 10 : 0,
+    createdBy: S.me, createdAt: at, updatedAt: at
+  };
+  try { await db.doc("content/" + id).set(doc); }
+  catch (e) { st.ref(path).delete().catch(() => {}); if (thumbPath) st.ref(thumbPath).delete().catch(() => {}); throw e; }
+  logAct("content", "content_added", Object.assign({ title: doc.title }, destParams(doc)), id);
+}
+let pumping = false;
+async function pumpUploads() {
+  if (pumping) return; pumping = true; let ok = 0;
+  try {
+    for (;;) {
+      const job = S.uploads.find(j => j.state === "queued"); if (!job) break;
+      try { await runUpload(job); job.state = "done"; job.pct = 1; ok++; }
+      catch (e) {
+        if (job.state !== "canceled") {
+          job.state = "error";
+          job.err = e && e.code && !String(e.code).startsWith("storage/") ? (e.code === "permission-denied" ? t("eNoPermission") : t("eSave")) : stErr(e);
+        }
+      }
+      renderTray();
+    }
+  } finally { pumping = false; }
+  if (ok) toast(t("upAllDone", { n: ok }), "good");
+  setTimeout(() => { S.uploads = S.uploads.filter(j => j.state !== "done" && j.state !== "canceled"); renderTray(); }, 4000);
+}
+window.addEventListener("beforeunload", e => { if (S.uploads.some(upActive)) { e.preventDefault(); e.returnValue = ""; } });
+
+/* Upload form state (kept outside the DOM so chosen files survive re-renders) */
+function freeUp() { if (S.up) S.up.files.forEach(x => { if (x.prev) URL.revokeObjectURL(x.prev); }); S.up = null; }
+function openUpload(pre) {
+  if (!S.storage) { toast(S.mode === "firebase" ? t("eStLoad") : t("storageOnlyFb"), "bad"); return; }
+  freeUp(); pre = pre || {};
+  const l = findLead(pre.client || pre.lead);
+  const asClient = !!(l && (pre.client || l.stage === "client"));
+  S.up = { files: [], purpose: l ? (asClient ? "client" : "demo") : "client", clientId: asClient ? l.id : "", audience: "leads", leadIds: l && !asClient ? [l.id] : [], type: "auto", title: "", note: "", postDate: "", postTime: "", caption: "" };
+  openDrawer("upload");
+}
+function renderUpload(focusId) {
+  if (!S.drawer || S.drawer.type !== "upload") return;
+  renderDrawer(false);
+  if (focusId) { const n = document.getElementById(focusId); if (n) n.focus({ preventScroll: true }); }
+}
+function addPicked(list) {
+  const U = S.up; if (!U) return;
+  Array.from(list || []).forEach(f => {
+    if (U.files.some(x => x.f.name === f.name && x.f.size === f.size && x.f.lastModified === f.lastModified)) return;
+    const x = { f, info: null, prev: "" }; U.files.push(x);
+    x.pending = mediaInfo(f).then(info => { x.info = info; if (info.thumb && S.up === U) x.prev = URL.createObjectURL(info.thumb); if (S.up === U) renderUpload(); });
+  });
+  const big = U.files.find(x => x.f.size > MAX_UP); if (big) toast(esc(t("tooBig", { name: big.f.name })), "bad");
+  renderUpload();
+}
+async function startUploads() {
+  const U = S.up; if (!U) return;
+  if (!U.files.length) { toast(t("needFiles"), "bad"); return; }
+  if (U.purpose === "client" && !U.clientId) { toast(t("needClientC"), "bad"); return; }
+  const big = U.files.find(x => x.f.size > MAX_UP); if (big) { toast(esc(t("tooBig", { name: big.f.name })), "bad"); return; }
+  if (!S.storage || !S.db) { toast(t("storageOnlyFb"), "bad"); return; }
+  await Promise.all(U.files.map(x => x.pending));
+  if (S.up !== U) return;
+  const common = { purpose: U.purpose, clientId: U.clientId, audience: U.audience, leadIds: U.leadIds.slice(), note: U.note.trim(), postDate: U.postDate, postTime: U.postTime, caption: U.caption.trim() };
+  const one = U.files.length === 1;
+  U.files.forEach(x => S.uploads.push({
+    key: uid(), file: x.f, info: x.info || { kind: "file" }, common, pct: 0, state: "queued",
+    type: U.type === "auto" ? detectType(x.f, x.info) : U.type, title: (one && U.title.trim()) || stemOf(x.f.name)
+  }));
+  closeDrawer(); if (S.view !== "content") location.hash = "content";
+  renderTray(); pumpUploads();
+}
+
+/* Content writes */
+async function patchContent(id, patch, title) {
+  const ok = await guard(() => S.db.doc("content/" + id).update(Object.assign({}, patch, { updatedAt: now() })));
+  if (ok) logAct("content", "content_updated", { title }, id);
+  return ok;
+}
+async function deleteContent(id) {
+  const c = findContent(id); if (!c) return;
+  if (S.readOnly || !S.db) { toast(t("eReadOnly"), "bad"); return; }
+  if (S.storage) {
+    for (const p of [c.path, c.thumbPath].filter(Boolean)) {
+      try { await S.storage.ref(p).delete(); }
+      catch (e) { if (!String((e && e.code) || "").includes("object-not-found")) { toast(stErr(e), "bad"); S.confirm = null; schedule(); return; } }
+    }
+  }
+  const ok = await guard(() => S.db.doc("content/" + id).delete());
+  if (ok) { logAct("content", "content_deleted", { title: c.title }, null); closeDrawer(); toast(t("tContentDeleted")); }
+}
+
+/* Content: shared pieces */
+function contentClientOptions(sel) {
+  const ls = S.leads.filter(l => l.stage !== "lost").sort((a, b) => (b.stage === "client") - (a.stage === "client") || leadName(a).localeCompare(leadName(b)));
+  return `<option value="">${t("chooseClientC")}</option>` + ls.map(l => `<option value="${l.id}" ${sel === l.id ? "selected" : ""}>${esc(leadName(l))}${l.stage !== "client" ? " " + t("leadTag") : ""}</option>`).join("");
+}
+function leadPicker(sel, attr, idp) {
+  const ls = S.leads.filter(l => l.stage !== "lost" || (sel || []).includes(l.id)).sort((a, b) => (a.stage === "client") - (b.stage === "client") || leadName(a).localeCompare(leadName(b)));
+  if (!ls.length) return `<p class="lp-sub" style="font-size:13px">${t("noLeadsToPick")}</p>`;
+  return `<div class="lpick" role="group" aria-label="${t("pickLeads")}">${ls.map(l => `<label><input type="checkbox" id="${idp}-${l.id}" value="${l.id}" ${(sel || []).includes(l.id) ? "checked" : ""} ${attr}><span dir="auto">${esc(leadName(l))}</span><span class="chip st-${l.stage}">${sgL(l.stage)}</span></label>`).join("")}</div>`;
+}
+function thumbHTML(c) {
+  if (c.thumbUrl) return `<img src="${esc(c.thumbUrl)}" alt="" loading="lazy" decoding="async">`;
+  if (c.type === "image" && c.url) return `<img src="${esc(c.url)}" alt="" loading="lazy" decoding="async">`;
+  return `<span class="fext">${esc(extOf(c.fileName) || ctypeL(c.type))}</span>`;
+}
+function contentStrip(l) {
+  const items = contentFor(l.id).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+  const up = S.storage ? `<button class="btn sm" data-action="new-upload" ${l.stage === "client" ? `data-client="${l.id}"` : `data-lead="${l.id}"`}>${ic("upload")} ${t("upload")}</button>` : "";
+  return `<div class="sec"><div class="sec-h"><h3>${t("contentForLead")}</h3><div style="display:flex;gap:8px;align-items:center">${items.length ? `<button class="btn sm ghost" data-action="content-all" data-id="${l.id}">${t("viewAllN", { n: items.length })}</button>` : ""}${up}</div></div>
+    ${items.length ? `<div class="cstrip">${items.slice(0, 8).map(c => `<button class="cs-i" data-action="open-content" data-id="${c.id}" title="${esc(c.title)}" aria-label="${esc(c.title)}">${c.thumbUrl || (c.type === "image" && c.url) ? `<img src="${esc(c.thumbUrl || c.url)}" alt="" loading="lazy">` : `<span>${esc(extOf(c.fileName) || ctypeL(c.type))}</span>`}<span class="cs-t" style="background:${CT2_COLOR[c.type] || "var(--muted)"}"></span></button>`).join("")}</div>` : `<p class="lp-sub" style="font-size:13px">${t("noContentLead")}</p>`}</div>`;
+}
+
+/* ---------- Posting schedule & reminders ---------- */
+const portalUrl = () => location.origin + location.pathname + "#content";
+const scheduled = () => S.content.filter(c => c.purpose === "client" && c.postDate && !c.postedAt)
+  .sort((a, b) => (a.postDate + (a.postTime || "99")).localeCompare(b.postDate + (b.postTime || "99")));
+const dueCount = () => { const td = todayStr(); return scheduled().filter(c => c.postDate <= td); };
+function postState(c) {
+  if (c.purpose !== "client" || !c.postDate) return null;
+  if (c.postedAt) return { k: "posted", cls: "st-client", text: t("postedChip") };
+  const td = todayStr();
+  if (c.postDate < td) return { k: "over", cls: "hi", text: t("postOverdue", { n: Math.round((dateMs(td) - dateMs(c.postDate)) / DAY) }) };
+  if (c.postDate === td) return { k: "today", cls: "st-closing", text: c.postTime ? t("postTodayAt", { time: c.postTime }) : t("postToday") };
+  return { k: "soon", cls: "st-potential", text: t("postOn", { d: fmtDM(dateMs(c.postDate)) }) + (c.postTime ? " · " + c.postTime : "") };
+}
+const clientOf = c => { const l = findLead(c.clientId); return l ? leadName(l) : (c.clientName || ""); };
+function reminderText(c) {
+  return { title: t("remTitle", { name: clientOf(c) }), body: `${ctypeL(c.type)}: ${c.title}${c.postTime ? " · " + c.postTime : ""}${c.caption ? "\n" + c.caption.slice(0, 200) : ""}` };
+}
+const swOk = () => "serviceWorker" in navigator && window.HM_HOSTED && (location.protocol === "https:" || location.hostname === "localhost");
+async function ensureSW() { if (!swOk()) return null; try { return await navigator.serviceWorker.register("sw.js"); } catch (e) { return null; } }
+async function notify(title, body, tag) {
+  if (!("Notification" in window) || Notification.permission !== "granted") return false;
+  const opts = { body, tag, icon: "icon-192.png", badge: "icon-192.png", data: { url: portalUrl() } };
+  try { const reg = swOk() && await navigator.serviceWorker.getRegistration(); if (reg) { await reg.showNotification(title, opts); return true; } } catch (e) {}
+  try { const n = new Notification(title, opts); n.onclick = () => { window.focus(); location.hash = "content"; n.close(); }; return true; } catch (e) { return false; }
+}
+function checkReminders() {
+  if (!S.me || !S.loaded.content) return;
+  const d = new Date(); const td = todayStr(); const hm = pad(d.getHours()) + ":" + pad(d.getMinutes());
+  scheduled().forEach(c => {
+    if (c.postDate !== td || (c.postTime && c.postTime > hm)) return;
+    const key = "rem." + c.id + "." + c.postDate + "." + (c.postTime || "");
+    if (store.get(key)) return; store.set(key, now());
+    const r = reminderText(c);
+    toast(`<b dir="auto">${esc(r.title)}</b><br><span dir="auto">${esc(r.body).replace(/\n/g, "<br>")}</span>`, "coral", 15000);
+    notify(r.title, r.body, "post-" + c.id);
+  });
+}
+setInterval(checkReminders, 30000);
+(function pruneReminders() { try { const td = todayStr(); Object.keys(localStorage).forEach(k => { const m = /^hm\.rem\.[^.]+\.(\d{4}-\d{2}-\d{2})\./.exec(k); if (m && m[1] < td) localStorage.removeItem(k); }); } catch (e) {} })();
+function remindUI() {
+  if (!("Notification" in window)) return `<p class="lp-sub" style="font-size:12.5px">${t("notifUnsupported")}</p>`;
+  if (Notification.permission === "granted") return `<span class="pace good">${ic("check")} ${t("notifOn")}</span>`;
+  if (Notification.permission === "denied") return `<p class="lp-sub" style="font-size:12.5px">${t("notifBlocked")}</p>`;
+  return `<button class="btn sm" data-action="notif-on">${ic("bell")} ${t("notifEnable")}</button>`;
+}
+async function setPosted(id, on) {
+  const c = findContent(id); if (!c) return;
+  const ok = await guard(() => S.db.doc("content/" + id).update(on ? { postedAt: now(), postedBy: S.me, updatedAt: now() } : { postedAt: null, postedBy: null, updatedAt: now() }));
+  if (ok) logAct("content", on ? "content_posted" : "content_unposted", { title: c.title, name: clientOf(c) }, id);
+}
+function schedRow(c) {
+  const ps = postState(c);
+  return `<div class="qi"><button class="ck" data-action="c-posted" data-id="${c.id}" aria-label="${t("markPosted")}: ${esc(c.title)}" title="${t("markPosted")}">${ic("check")}</button>
+    <div class="qi-main" data-action="open-content" data-id="${c.id}" tabindex="0" role="button"><b dir="auto">${esc(clientOf(c))} · ${esc(c.title)}</b>
+    <div class="qi-meta"><span class="chip ${ps.cls}">${ps.text}</span><span class="chip ct-${c.type}">${ctypeL(c.type)}</span></div>${c.caption ? `<p class="qcap" dir="auto">${esc(c.caption)}</p>` : ""}</div>
+    ${c.thumbUrl || (c.type === "image" && c.url) ? `<img class="qthumb" src="${esc(c.thumbUrl || c.url)}" alt="" loading="lazy">` : ""}</div>`;
+}
+function scheduleCard(days) {
+  const until = ymd(new Date(now() + days * DAY)); const list = scheduled().filter(c => c.postDate <= until);
+  return `<section class="card"><div class="card-h"><div><h2>${t("schedH")}</h2><p>${t("schedHSub")}</p></div>${remindUI()}</div>
+    ${list.length ? `<div class="list">${list.map(schedRow).join("")}</div>` : `<p class="lp-sub" style="font-size:13px">${t("noSched")}</p>`}</section>`;
+}
+
+/* Calendar export: a reminder on the device's own calendar, even with the portal closed */
+const icsEsc = s => String(s || "").replace(/\\/g, "\\\\").replace(/\r?\n/g, "\\n").replace(/([,;])/g, "\\$1");
+function icsFold(line) { const enc = new TextEncoder(); const out = []; let cur = ""; for (const ch of line) { if (enc.encode(cur + ch).length > 73) { out.push(cur); cur = " " + ch; } else cur += ch; } out.push(cur); return out.join("\r\n"); }
+function calInfo(c) {
+  const sum = t("calSummary", { name: clientOf(c), type: ctypeL(c.type), title: c.title });
+  const desc = [t("calWhat") + ": " + c.title + " (" + ctypeL(c.type) + ")", c.caption ? t("caption") + ":\n" + c.caption : "", c.url ? t("calFile") + ": " + c.url : "", t("calPortal") + ": " + portalUrl()].filter(Boolean).join("\n\n");
+  return { sum, desc };
+}
+function calTimes(c) {
+  const d = c.postDate.replace(/-/g, "");
+  if (!c.postTime) return { allDay: true, s: d, e: ymd(new Date(dateMs(c.postDate) + DAY)).replace(/-/g, "") };
+  const [h, m] = c.postTime.split(":"); const e = new Date(dateMs(c.postDate)); e.setHours(+h, +m + 30, 0, 0);
+  return { allDay: false, s: `${d}T${h}${m}00`, e: `${ymd(e).replace(/-/g, "")}T${pad(e.getHours())}${pad(e.getMinutes())}00` };
+}
+function icsFor(c) {
+  const { sum, desc } = calInfo(c); const tm = calTimes(c);
+  const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d+/, "");
+  return ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//HIGH MEDIA//Portal//EN", "CALSCALE:GREGORIAN", "METHOD:PUBLISH", "BEGIN:VEVENT",
+    `UID:${c.id}-${tm.s}@highmedia-portal`, `DTSTAMP:${stamp}`,
+    tm.allDay ? `DTSTART;VALUE=DATE:${tm.s}` : `DTSTART:${tm.s}`, tm.allDay ? `DTEND;VALUE=DATE:${tm.e}` : `DTEND:${tm.e}`,
+    "SUMMARY:" + icsEsc(sum), "DESCRIPTION:" + icsEsc(desc), "BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsEsc(sum),
+    tm.allDay ? "TRIGGER:PT9H" : "TRIGGER:-PT0M", "END:VALARM", "END:VEVENT", "END:VCALENDAR"].map(icsFold).join("\r\n") + "\r\n";
+}
+function saveBlob(blob, name) { const u = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = u; a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 60000); }
+function downloadIcs(c) { saveBlob(new Blob([icsFor(c)], { type: "text/calendar;charset=utf-8" }), safeName("post " + clientOf(c) + " " + c.postDate).replace(/\.[^.]*$/, "") + ".ics"); }
+function gcalUrl(c) {
+  const { sum, desc } = calInfo(c); const tm = calTimes(c); let tz = ""; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e) {}
+  return "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + encodeURIComponent(sum) + "&dates=" + tm.s + "/" + tm.e + "&details=" + encodeURIComponent(desc) + (tz && !tm.allDay ? "&ctz=" + encodeURIComponent(tz) : "");
+}
+
+/* Download with the original file name, or share / save to Photos on phones */
+const blobCache = new Map();
+function directDownload(c) { const a = document.createElement("a"); a.href = c.url; a.download = c.fileName || ""; a.target = "_blank"; a.rel = "noopener"; document.body.appendChild(a); a.click(); a.remove(); }
+async function fetchFile(c) {
+  if (blobCache.has(c.id)) return blobCache.get(c.id);
+  const r = await fetch(c.url, { mode: "cors" }); if (!r.ok) throw new Error("HTTP " + r.status);
+  const b = await unpackIfNeeded(c, await r.blob()); const f = new File([b], c.fileName || "file", { type: c.mime || b.type || "application/octet-stream" });
+  blobCache.clear(); blobCache.set(c.id, f); return f;
+}
+async function downloadContent(c, share) {
+  if (!c || !c.url) return;
+  // Very large files go straight to the browser's own download (the file is served with its original name).
+  if (!share && !c.compressed && (+c.size || 0) > 150 * 1024 * 1024) return directDownload(c);
+  let f; try { f = await fetchFile(c); } catch (e) { return directDownload(c); }
+  if (share && navigator.canShare && navigator.canShare({ files: [f] })) {
+    try { await navigator.share({ files: [f], title: c.title }); }
+    catch (e) { if (e && e.name === "NotAllowedError") toast(t("shareTapAgain")); }
+    return;
+  }
+  saveBlob(f, f.name);
+}
+const canShareFiles = () => { try { return !!(navigator.canShare && navigator.canShare({ files: [new File(["x"], "x.txt", { type: "text/plain" })] })); } catch (e) { return false; } };
+
+/* Demo results: the leads' real stage (Leads & clients stays the single source) */
+function demoResult(c) {
+  if (c.purpose !== "demo" || c.audience === "internal") return null;
+  const ls = (c.leadIds || []).map(findLead).filter(Boolean); if (!ls.length) return null;
+  const won = ls.filter(l => l.stage === "client").length, lost = ls.filter(l => l.stage === "lost").length;
+  if (won) return { k: "won", cls: "st-client", text: ls.length === 1 ? t("resWon1") : t("resWonN", { n: won }) };
+  if (lost === ls.length) return { k: "lost", cls: "st-lost", text: t("resLost") };
+  return { k: "open", cls: "", text: "" };
+}
+function leadStatusRow(l) {
+  const st = l.stage; const key = "clost-" + l.id;
+  const btns = st === "client" || st === "lost" ? `<button class="btn sm" data-action="lead-reopen" data-id="${l.id}">${t("reopen")}</button>`
+    : `<button class="btn sm good" data-action="lead-won" data-id="${l.id}">${ic("check")} ${t("convertClient")}</button><button class="btn sm danger" data-action="ask-confirm" data-key="${key}">${t("markLost")}</button>`;
+  const lostForm = S.confirm === key ? `<form class="lostbox" data-form="lost" data-id="${l.id}" style="margin-top:8px"><label class="lbl" for="lr-${l.id}">${t("whyLost")}</label><input class="inp" id="lr-${l.id}" data-draft value="${esc(draft("lr-" + l.id))}" placeholder="${t("lostPh")}" dir="auto"><div class="d-actions"><button class="btn sm danger solid" type="submit">${t("markLost")}</button><button class="btn sm" type="button" data-action="cancel-confirm">${t("cancel")}</button></div></form>` : "";
+  return `<div class="step lstat"><div class="txt"><span dir="auto"><b>${esc(leadName(l))}</b></span><div class="by"><span class="chip st-${st}">${sgL(st)}</span>${st === "lost" && l.lostReason ? `<span dir="auto">${esc(l.lostReason)}</span>` : ""}<span class="mono">${fmtDT(l.stageAt)}</span></div>${lostForm}</div><div class="t-act">${S.confirm === key ? "" : btns}</div></div>`;
+}
+
+/* Full-screen viewer for images, with previous / next */
+function renderLightbox() {
+  let el = document.getElementById("lightbox");
+  if (!S.zoom) { if (el) el.remove(); return; }
+  const c = findContent(S.zoom.id); if (!c) { S.zoom = null; if (el) el.remove(); return; }
+  const list = S.zoom.list.map(findContent).filter(Boolean); const i = list.indexOf(c);
+  if (!el) { el = document.createElement("div"); el.id = "lightbox"; el.setAttribute("role", "dialog"); el.setAttribute("aria-modal", "true"); document.body.appendChild(el); }
+  el.innerHTML = `<div class="lb-top"><b dir="auto">${esc(c.title)}</b><span class="mono">${i + 1} / ${list.length}</span><span style="flex:1"></span>
+      <button class="btn sm" data-action="dl" data-id="${c.id}">${ic("download")} ${t("download")}</button><button class="iconbtn" data-action="zoom-close" aria-label="${t("close")}">${ic("x")}</button></div>
+    <div class="lb-img" data-action="zoom-close"><img src="${esc(c.compressed && c.thumbUrl ? c.thumbUrl : c.url)}" alt="${esc(c.title)}"></div>
+    ${list.length > 1 ? `<button class="lb-nav prev" data-action="zoom-step" data-d="-1" aria-label="${t("prevItem")}">${ic("back")}</button><button class="lb-nav next" data-action="zoom-step" data-d="1" aria-label="${t("nextItem")}">${ic("arrow")}</button>` : ""}`;
+}
+function openZoom(id) {
+  const c = findContent(id); if (!c) return;
+  let list = contentFiltered().filter(x => x.type === "image").sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0) || String(a.id).localeCompare(String(b.id))).map(x => x.id);
+  if (!list.includes(id)) list = [id];
+  S.zoom = { id, list }; renderLightbox();
+}
+function zoomStep(d) { if (!S.zoom) return; const L = S.zoom.list; const i = L.indexOf(S.zoom.id); S.zoom.id = L[(i + d + L.length) % L.length]; renderLightbox(); }
+
+/* Content page */
+function contentCard(c) {
+  const d = contentDest(c); const ps = postState(c); const dr = demoResult(c);
+  return `<article class="mcard" data-action="open-content" data-id="${c.id}" tabindex="0" role="button" aria-label="${esc(c.title)}">
+    <div class="mthumb">${thumbHTML(c)}<span class="ochip" style="--c:${CT2_COLOR[c.type] || "var(--muted)"}">${ctypeL(c.type)}</span>${isVid(c) ? `<span class="playb">${ic("play", "fill")}</span>${c.dur ? `<span class="mdur">${fmtDur(c.dur)}</span>` : ""}` : ""}</div>
+    <div class="mbody"><h4 dir="auto">${esc(c.title || c.fileName)}</h4><div class="chips"><span class="chip ${d.cls}" dir="auto">${esc(d.text)}</span>${ps ? `<span class="chip ${ps.cls}">${ps.text}</span>` : ""}${dr && dr.text ? `<span class="chip ${dr.cls}">${dr.text}</span>` : ""}</div>
+      <div class="mfoot">${av(c.createdBy, "sm")}<span>${fmtDM(c.createdAt)} · ${fmtSize(c.size)}</span>${c.url ? `<button class="iconbtn" data-action="dl" data-id="${c.id}" aria-label="${t("download")}: ${esc(c.fileName)}" title="${t("download")}">${ic("download")}</button>` : ""}</div></div></article>`;
+}
+function contentFiltered() {
+  const f = S.cf; const q = f.q.trim().toLowerCase();
+  return S.content.filter(c => (f.purpose === "all" || c.purpose === f.purpose)
+    && (f.purpose !== "demo" || f.aud === "all" || c.audience === f.aud)
+    && (f.purpose !== "demo" || f.res === "all" || (demoResult(c) || {}).k === f.res)
+    && (f.type === "all" || c.type === f.type)
+    && (f.who === "all" || linkedIds(c).includes(f.who))
+    && (!q || [c.title, c.fileName, c.note, contentDest(c).text].join(" ").toLowerCase().includes(q)));
+}
+function renderContent() {
+  const f = S.cf; const canUp = !!S.storage;
+  const upBtn = `<button class="btn primary" data-action="new-upload" ${canUp ? "" : "disabled"}>${ic("upload")} ${t("upload")}</button>`;
+  const notice = !canUp && S.dbState === "ready" ? `<div class="banner">${t(S.mode === "firebase" ? "eStLoad" : "storageOnlyFb")}</div>` : "";
+  const tabs = `<div class="tabs" role="tablist">${[["all", "cTabAll", S.content.length], ["client", "cTabClient", S.content.filter(c => c.purpose === "client").length], ["demo", "cTabDemo", S.content.filter(c => c.purpose === "demo").length]]
+    .map(([k, l, n]) => `<button role="tab" aria-selected="${f.purpose === k}" class="${f.purpose === k ? "on" : ""}" data-action="cf-tab" data-v="${k}">${t(l)}<em>${n}</em></button>`).join("")}</div>`;
+  const pool = S.content.filter(c => (f.purpose === "all" || c.purpose === f.purpose) && (f.purpose !== "demo" || f.aud === "all" || c.audience === f.aud));
+  const typeChips = `<div class="fchips" role="group" aria-label="${t("fileType")}">${["all"].concat(CTYPES).map(k => { const n = k === "all" ? pool.length : pool.filter(c => c.type === k).length; if (k !== "all" && !n && f.type !== k) return "";
+    return `<button class="fchip ${f.type === k ? "on" : ""}" data-action="cf-type" data-v="${k}">${k !== "all" ? `<span class="dot" style="background:${CT2_COLOR[k]}"></span>` : ""}${k === "all" ? t("allTypes") : t("ctp_" + k)}<em>${n}</em></button>`; }).join("")}</div>`;
+  const aud = f.purpose === "demo" ? `<div class="seg" role="group">${["all", "leads", "internal"].map(k => `<button class="${f.aud === k ? "on" : ""}" data-action="cf-aud" data-v="${k}">${t(k === "all" ? "audAll" : "aud_" + k)}</button>`).join("")}</div>`
+    + (f.aud !== "internal" ? `<select class="sel" id="cf-res" data-cfilter="res" aria-label="${t("leadStatusH")}">${[["all", "resAll"], ["open", "resOpen"], ["won", "resWon"], ["lost", "resLost"]].map(([k, l]) => `<option value="${k}" ${f.res === k ? "selected" : ""}>${t(l)}</option>`).join("")}</select>` : "") : "";
+  const ids = []; pool.forEach(c => linkedIds(c).forEach(id => { if (id && findLead(id) && !ids.includes(id)) ids.push(id); }));
+  if (f.who !== "all" && !ids.includes(f.who) && findLead(f.who)) ids.push(f.who);
+  ids.sort((a, b) => leadName(findLead(a)).localeCompare(leadName(findLead(b))));
+  const who = ids.length ? `<select class="sel" id="cf-who" data-cfilter="who" aria-label="${t("client")}"><option value="all">${t("allPeople")}</option>${ids.map(id => `<option value="${id}" ${f.who === id ? "selected" : ""}>${esc(leadName(findLead(id)))}</option>`).join("")}</select>` : "";
+  const filters = `<div class="filters">${aud}${who}<label class="search">${ic("search")}<input class="inp" id="cf-q" data-cfilter="q" placeholder="${t("searchContent")}" value="${esc(f.q)}" aria-label="${t("searchContent")}"></label></div>`;
+  const list = contentFiltered().sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+  let body;
+  if (!S.content.length) body = `<section class="card"><div class="empty"><b>${t("noContent")}</b><span>${t("noContentSub")}</span>${canUp ? upBtn : ""}</div></section>`;
+  else if (!list.length) body = `<section class="card"><div class="empty"><b>${t("noContentMatch")}</b></div></section>`;
+  else { const saved = list.reduce((a, c) => a + (c.compressed ? Math.max(0, (+c.size || 0) - (+c.storedSize || 0)) : 0), 0);
+    body = `<p class="csum">${t("cCount", { n: list.length, size: fmtSize(list.reduce((a, c) => a + (+c.size || 0), 0)) })}${saved ? t("csumSaved", { size: fmtSize(saved) }) : ""}</p><div class="mgrid">${list.map(contentCard).join("")}</div>`; }
+  const sched = f.purpose !== "demo" && S.content.some(c => c.purpose === "client" && c.postDate) ? scheduleCard(14) : "";
+  return `<div class="wrap">${mobileHead()}${ph(t("contentEyebrow"), t("contentTitle"), upBtn)}${banners()}${notice}${sched}${tabs}${S.content.length ? typeChips + filters : ""}${body}</div>`;
+}
+
+/* Content detail drawer (live: updates when either of you edits it) */
+function contentDrawer(c) {
+  const head = `<span class="chip ct-${c.type}">${ctypeL(c.type)}</span><span class="meta">${esc(t("upBy", { name: mName(c.createdBy), dt: fmtDT(c.createdAt) }))}</span><span style="flex:1"></span>`;
+  const pv = c.type === "image" ? `<div class="cv zoomable" data-action="zoom" data-id="${c.id}" role="button" tabindex="0" aria-label="${t("viewFull")}"><img src="${esc(c.compressed && c.thumbUrl ? c.thumbUrl : c.url)}" alt="${esc(c.title)}"></div>`
+    : isVid(c) ? `<div class="cv"><video data-keep="${c.id}" src="${esc(c.url)}" ${c.thumbUrl ? `poster="${esc(c.thumbUrl)}"` : ""} controls playsinline preload="metadata"></video><p class="nopv">${t("noPreview")}</p></div>`
+    : `<div class="cv file"><span class="fext">${esc(extOf(c.fileName) || ctypeL(c.type))}</span></div>`;
+  const purpose = `<div class="seg" role="group" aria-label="${t("whoFor")}">${[["client", "purposeClient"], ["demo", "purposeDemo"]].map(([k, l]) => `<button class="${c.purpose === k ? "on" : ""}" data-action="c-set" data-id="${c.id}" data-f="purpose" data-v="${k}">${t(l)}</button>`).join("")}</div>`;
+  const dest = c.purpose === "client"
+    ? `<div class="fld"><label for="ccl-${c.id}">${t("client")}</label><select class="sel" id="ccl-${c.id}" data-field="clientId" data-content="${c.id}">${contentClientOptions(c.clientId || "")}</select></div>`
+    : `<div class="fld"><span class="lbl">${t("demoAudience")}</span><div class="seg" role="group">${["leads", "internal"].map(k => `<button class="${(c.audience || "leads") === k ? "on" : ""}" data-action="c-set" data-id="${c.id}" data-f="audience" data-v="${k}">${t("aud_" + k)}</button>`).join("")}</div></div>
+      ${(c.audience || "leads") === "leads" ? `<div class="fld"><span class="lbl">${t("pickLeads")}</span>${leadPicker(c.leadIds || [], `data-clead="${c.id}"`, "cl-" + c.id)}<small class="lp-sub" style="font-size:12px">${t("pickLeadsHint")}</small></div>` : ""}`;
+  const dims = c.w && c.h ? `${c.w} × ${c.h}` : "";
+  const ps = postState(c);
+  const sched = c.purpose !== "client" ? "" : `<div class="sec"><div class="sec-h"><h3>${t("schedTitle")}</h3>${ps ? `<span class="chip ${ps.cls}">${ps.text}</span>` : ""}</div>
+    <div class="fgrid"><div class="fld"><label for="cpd-${c.id}">${t("postDate")}</label><input class="inp" type="date" id="cpd-${c.id}" data-field="postDate" data-content="${c.id}" value="${esc(c.postDate || "")}"></div>
+      <div class="fld"><label for="cpt-${c.id}">${t("postTime")}</label><input class="inp" type="time" id="cpt-${c.id}" data-field="postTime" data-content="${c.id}" value="${esc(c.postTime || "")}"></div>
+      <div class="fld full"><label for="ccap-${c.id}">${t("caption")}</label><textarea class="inp" id="ccap-${c.id}" data-field="caption" data-content="${c.id}" dir="auto" placeholder="${t("captionPh")}">${esc(draft("ccap-" + c.id, c.caption || ""))}</textarea></div></div>
+    ${c.postedAt ? `<div class="callout"><span>${ic("check")} ${t("postedBy", { name: esc(mName(c.postedBy)), dt: fmtDT(c.postedAt) })}</span><button class="btn sm" data-action="c-unposted" data-id="${c.id}">${t("undo")}</button></div>`
+      : c.postDate ? `<div class="d-actions"><button class="btn good" data-action="c-posted" data-id="${c.id}">${ic("check")} ${t("markPosted")}</button><button class="btn sm" data-action="ics" data-id="${c.id}">${ic("bell")} ${t("addCal")}</button><a class="btn sm" href="${esc(gcalUrl(c))}" target="_blank" rel="noopener">${ic("ext")} Google Calendar</a></div>${remindUI()}`
+      : `<small class="lp-sub" style="font-size:12px">${t("schedHint")}</small>`}</div>`;
+  const sl = (c.leadIds || []).map(findLead).filter(Boolean);
+  const status = c.purpose === "demo" && c.audience !== "internal" && sl.length ? `<div class="sec"><div class="sec-h"><h3>${t("leadStatusH")}</h3><small>${t("leadStatusSub")}</small></div><div class="steps">${sl.map(leadStatusRow).join("")}</div></div>` : "";
+  const body = `${pv}
+    <div class="d-actions"><button class="btn primary" data-action="dl" data-id="${c.id}">${ic("download")} ${t("download")}</button>${canShareFiles() ? `<button class="btn" data-action="dl-share" data-id="${c.id}">${ic("upload")} ${t("saveShare")}</button>` : ""}${c.type === "image" ? `<button class="btn" data-action="zoom" data-id="${c.id}">${ic("ext")} ${t("viewFull")}</button>` : ""}<button class="btn" data-action="copy-link" data-text="${esc(c.url)}">${ic("link")} ${t("copyLink")}</button></div>
+    <textarea class="title-in" id="cvt-${c.id}" data-field="title" data-content="${c.id}" rows="1" dir="auto" aria-label="${t("titleLbl")}">${esc(draft("cvt-" + c.id, c.title))}</textarea>
+    <div class="sec"><div class="sec-h"><h3>${t("whoFor")}</h3></div>${purpose}${dest}</div>
+    ${status}${sched}
+    <div class="fgrid">
+      <div class="fld"><label for="cty-${c.id}">${t("fileType")}</label><select class="sel" id="cty-${c.id}" data-field="type" data-content="${c.id}">${CTYPES.map(k => `<option value="${k}" ${c.type === k ? "selected" : ""}>${ctypeL(k)}</option>`).join("")}</select></div>
+      <div class="fld full"><label for="cno-${c.id}">${t("cNote")}</label><textarea class="inp" id="cno-${c.id}" data-field="note" data-content="${c.id}" dir="auto" placeholder="${t("cNotePh")}">${esc(draft("cno-" + c.id, c.note || ""))}</textarea></div>
+    </div>
+    <dl class="finfo"><dt>${t("fName")}</dt><dd dir="auto">${esc(c.fileName)}</dd><dt>${t("fSize")}</dt><dd class="num">${fmtSize(c.size)}</dd>
+      ${c.storedSize ? `<dt>${t("fStored")}</dt><dd>${c.compressed ? t("storedNote", { size: fmtSize(c.storedSize), p: Math.max(1, Math.round((1 - c.storedSize / Math.max(1, c.size)) * 100)) }) : t("storedRaw", { size: fmtSize(c.storedSize) })}</dd>` : ""}
+      ${c.mime ? `<dt>${t("fFormat")}</dt><dd class="mono">${esc(c.mime)}</dd>` : ""}${dims ? `<dt>${t("fDims")}</dt><dd class="num ltr">${dims}</dd>` : ""}${c.dur ? `<dt>${t("fDur")}</dt><dd class="num ltr">${fmtDur(c.dur)}</dd>` : ""}</dl>
+    <div class="d-actions">${confirmBlock("del-content-" + c.id, t("delContentQ"), "delete-content", c.id)}</div>`;
+  return [head, body];
+}
+
+/* Upload form */
+function uploadForm() {
+  const U = S.up; const n = U.files.length;
+  const head = `<h2>${t("uploadContent")}</h2>`;
+  const files = U.files.map((x, i) => `<div class="pfile"><span class="pth">${x.prev ? `<img src="${x.prev}" alt="">` : esc(extOf(x.f.name) || "file")}</span>
+    <div style="min-width:0"><b dir="auto" title="${esc(x.f.name)}">${esc(x.f.name)}</b><small>${fmtSize(x.f.size)} · ${x.info ? ctypeL(U.type === "auto" ? detectType(x.f, x.info) : U.type) + (x.info.dur ? " · " + fmtDur(x.info.dur) : "") : t("detecting")}</small>${x.f.size > MAX_UP ? `<small style="color:var(--bad);display:block">${esc(t("tooBig", { name: x.f.name }))}</small>` : ""}</div>
+    <button type="button" class="iconbtn" data-action="up-remove" data-i="${i}" aria-label="${t("removeFile")}">${ic("x")}</button></div>`).join("");
+  const choice = (name, opts) => `<div class="choice" role="radiogroup">${opts.map(([v, l, s]) => `<label><input type="radio" id="up-${name}-${v}" name="${name}" value="${v}" data-up="${name}" ${U[name] === v ? "checked" : ""}><b>${t(l)}</b><small>${t(s)}</small></label>`).join("")}</div>`;
+  const dest = U.purpose === "client"
+    ? `<div class="fld"><label for="up-client">${t("client")}</label><select class="sel" id="up-client" data-up="clientId">${contentClientOptions(U.clientId)}</select></div>`
+    : `<div class="fld"><span class="lbl">${t("demoAudience")}</span>${choice("audience", [["leads", "aud_leads", "audLeadsSub"], ["internal", "aud_internal", "audInternalSub"]])}</div>
+      ${U.audience === "leads" ? `<div class="fld"><span class="lbl">${t("pickLeads")}</span>${leadPicker(U.leadIds, "data-uplead", "upl")}<small class="lp-sub" style="font-size:12px">${t("pickLeadsHint")}</small></div>` : ""}`;
+  const body = `<form class="sec" data-form="upload" style="gap:18px">
+    <label class="dz" for="up-files">${ic("upload")}<b>${t("dropHere")}</b><small>${t("dropSub")}</small><small>${t("packNote")}</small></label>
+    <input type="file" id="up-files" multiple hidden data-upfiles>
+    ${n ? `<div class="sec" style="gap:8px"><div class="sec-h"><h3>${t("chosenN", { n })}</h3></div><div class="pfiles">${files}</div></div>` : ""}
+    ${n === 1 ? `<div class="fld"><label for="up-title">${t("titleLbl")}</label><input class="inp" id="up-title" data-up="title" dir="auto" value="${esc(U.title)}" placeholder="${esc(stemOf(U.files[0].f.name))}"></div>` : n > 1 ? `<p class="lp-sub" style="font-size:12.5px">${t("titleMulti")}</p>` : ""}
+    <div class="fld"><span class="lbl">${t("whoFor")}</span>${choice("purpose", [["client", "purposeClient", "purposeClientSub"], ["demo", "purposeDemo", "purposeDemoSub"]])}</div>
+    ${dest}
+    ${U.purpose === "client" ? `<div class="fld"><span class="lbl">${t("schedTitle")}</span><div class="fgrid">
+      <div class="fld"><label for="up-pdate">${t("postDate")}</label><input class="inp" type="date" id="up-pdate" data-up="postDate" value="${esc(U.postDate)}"></div>
+      <div class="fld"><label for="up-ptime">${t("postTime")}</label><input class="inp" type="time" id="up-ptime" data-up="postTime" value="${esc(U.postTime)}"></div>
+      <div class="fld full"><label for="up-cap">${t("caption")}</label><textarea class="inp" id="up-cap" data-up="caption" dir="auto" placeholder="${t("captionPh")}">${esc(U.caption)}</textarea></div></div>
+      <small class="lp-sub" style="font-size:12px">${t(n > 1 ? "schedHintMulti" : "schedHint")}</small></div>` : ""}
+    <div class="fgrid">
+      <div class="fld"><label for="up-type">${t("fileType")}</label><select class="sel" id="up-type" data-up="type"><option value="auto">${t("typeAuto")}</option>${CTYPES.map(k => `<option value="${k}" ${U.type === k ? "selected" : ""}>${ctypeL(k)}</option>`).join("")}</select></div>
+      <div class="fld full"><label for="up-note">${t("cNote")}</label><input class="inp" id="up-note" data-up="note" dir="auto" value="${esc(U.note)}" placeholder="${t("cNotePh")}"></div>
+    </div>
+    <div class="d-actions"><button class="btn primary" type="submit" ${n ? "" : "disabled"}>${ic("upload")} ${n > 1 ? t("uploadN", { n }) : t("upload1")}</button><button class="btn ghost" type="button" data-action="close">${t("cancel")}</button></div>
+  </form>`;
+  return [head, body];
+}
+
 /* ---------- Drawer ---------- */
-const FORM_DRAWERS = ["new-task","new-lead","project","sub","payment"];
+const FORM_DRAWERS = ["new-task","new-lead","project","sub","payment","upload"];
 function openDrawer(type, id, extra) {
+  if (S.drawer && S.drawer.type === "upload" && type !== "upload") freeUp();
   if (S.notesUnsub && !(type === "lead" && id === S.notesFor)) { S.notesUnsub(); S.notesUnsub = null; S.notes = []; S.notesFor = null; }
   S.drawer = { type, id, extra: extra || {} }; S.confirm = null;
   if (type === "lead" && S.db && S.notesFor !== id) {
@@ -2048,6 +2776,7 @@ function openDrawer(type, id, extra) {
 }
 function closeDrawer(silent) {
   if (S.notesUnsub) { S.notesUnsub(); S.notesUnsub = null; } S.notesFor = null; S.notes = [];
+  if (S.drawer && S.drawer.type === "upload") freeUp();
   S.drawer = null; S.confirm = null; $("#drawer-root").innerHTML = ""; document.body.style.overflow = ""; if (!silent) schedule();
 }
 function renderDrawer(fresh) {
@@ -2062,8 +2791,14 @@ function renderDrawer(fresh) {
   else if (D.type === "client") { const l = findLead(D.id); if (!l) { if (D.seen) closeDrawer(); return; } D.seen = true; [head, body] = clientDrawer(l); }
   else if (D.type === "sub") [head, body] = subForm();
   else if (D.type === "payment") [head, body] = paymentForm();
+  else if (D.type === "content") { const c = findContent(D.id); if (!c) { if (D.seen) closeDrawer(); return; } D.seen = true; [head, body] = contentDrawer(c); }
+  else if (D.type === "upload") { if (!S.up) { closeDrawer(); return; } [head, body] = uploadForm(); }
   const prevBody = $(".d-body", root); const sc = prevBody ? prevBody.scrollTop : 0;
-  root.innerHTML = `<div class="scrim" data-action="close"></div><aside class="drawer" role="dialog" aria-modal="true"><div class="d-head">${head}<button class="iconbtn" data-action="close" aria-label="${t("close")}">${ic("x")}</button></div><div class="d-body">${body}</div></aside>`;
+  // Keep a playing video alive across live re-renders: move the same element into the new markup.
+  const keepV = root.querySelector("video[data-keep]");
+  const anim = fresh ? " anim" : ""; // slide in only when the drawer opens, not on every refresh
+  root.innerHTML = `<div class="scrim${anim}" data-action="close"></div><aside class="drawer${anim}" role="dialog" aria-modal="true"><div class="d-head">${head}<button class="iconbtn" data-action="close" aria-label="${t("close")}">${ic("x")}</button></div><div class="d-body">${body}</div></aside>`;
+  if (keepV) { const nv = root.querySelector(`video[data-keep="${keepV.dataset.keep}"]`); if (nv) { nv.replaceWith(keepV); if (keepV.error) keepV.closest(".cv").classList.add("failed"); } }
   document.body.style.overflow = "hidden";
   const nb = $(".d-body", root); if (nb && !fresh) nb.scrollTop = sc;
   if (fresh && window.matchMedia("(min-width: 861px)").matches) { const first = $("[data-autofocus]", root); if (first) first.focus(); }
@@ -2141,6 +2876,7 @@ function leadDrawer(l) {
     <div class="sec"><div class="sec-h"><h3>${t("process")}</h3><small class="num">${t("ofDone", { d: steps.filter(s => s.done).length, n: steps.length })}</small></div>
       ${steps.length ? `<div class="steps">${steps.map(s => stepRow("lead", l.id, s)).join("")}</div>` : `<p class="lp-sub" style="font-size:13px">${t("processHint")}</p>`}
       <form class="addrow" data-form="add-lstep" data-id="${l.id}"><input class="inp" id="als-${l.id}" data-draft value="${esc(draft("als-" + l.id))}" placeholder="${t("addLeadStepPh")}" dir="auto" aria-label="${t("newStepAria")}"><button class="btn" type="submit">${ic("plus")} ${t("add")}</button></form></div>
+    ${contentStrip(l)}
     <div class="sec"><div class="sec-h"><h3>${t("notes")}</h3><small class="num">${t("savedN", { n: l.noteCount || 0 })}</small></div>
       <form class="sec" data-form="add-note" data-id="${l.id}" style="gap:8px"><textarea class="inp" id="nt-${l.id}" data-draft dir="auto" placeholder="${t("notePh")}" aria-label="${t("newNoteAria")}">${esc(draft("nt-" + l.id))}</textarea><button class="btn primary" type="submit" style="align-self:flex-start">${t("saveNote")}</button></form>
       ${notesHTML}</div>
@@ -2212,7 +2948,7 @@ function render() {
   renderShell(); renderNav();
   const main = $("#main"); const board = $(".board", main); const bl = board ? board.scrollLeft : 0;
   const v = S.view;
-  main.innerHTML = v === "tasks" ? renderTasks() : v === "leads" ? renderLeads() : v === "portfolio" ? renderPortfolio() : v === "tools" ? renderTools() : v === "activity" ? renderActivity() : renderOverview();
+  main.innerHTML = v === "tasks" ? renderTasks() : v === "leads" ? renderLeads() : v === "portfolio" ? renderPortfolio() : v === "content" ? renderContent() : v === "tools" ? renderTools() : v === "activity" ? renderActivity() : renderOverview();
   const nb = $(".board", main); if (nb && bl) nb.scrollLeft = bl;
   if (S.drawer && !FORM_DRAWERS.includes(S.drawer.type)) renderDrawer(!$("#drawer-root .drawer"));
   else if (S.drawer && !$("#drawer-root .drawer")) renderDrawer(true);
@@ -2236,6 +2972,7 @@ window.addEventListener("hashchange", route);
 
 /* ---------- Events ---------- */
 document.addEventListener("click", async e => {
+  if (e.target.closest("a.nodrawer")) return;
   const el = e.target.closest("[data-action]"); if (!el) return;
   const a = el.dataset.action, id = el.dataset.id;
   switch (a) {
@@ -2258,6 +2995,44 @@ document.addEventListener("click", async e => {
     case "renew-sub": { const sb = S.subs.find(x => x.id === id); if (!sb) break; Object.keys(S.drafts).forEach(k => { if (k.startsWith("sf-")) delete S.drafts[k]; });
       const ss = subStatus(sb); openDrawer("sub", null, { renew: true, tool: sb.tool, toolName: sb.toolName, amount: sb.amount, months: sb.months || 1, start: ss.k === "expired" ? todayStr() : sb.end }); break; }
     case "new-payment": openDrawer("payment", null, { client: el.dataset.client || "" }); break;
+    case "new-upload": openUpload({ client: el.dataset.client || "", lead: el.dataset.lead || "" }); break;
+    case "open-content": openDrawer("content", id); break;
+    case "up-remove": { const U = S.up; const x = U && U.files[+el.dataset.i]; if (x) { if (x.prev) URL.revokeObjectURL(x.prev); U.files.splice(+el.dataset.i, 1); renderUpload(); } break; }
+    case "up-cancel": { const j = S.uploads.find(x => x.key === el.dataset.key); if (j && (j.state === "queued" || j.state === "packing" || j.state === "uploading")) { const was = j.state; j.state = "canceled"; if (was === "uploading" && j.task) j.task.cancel(); renderTray(); setTimeout(() => { S.uploads = S.uploads.filter(x => x !== j); renderTray(); }, 2500); } break; }
+    case "up-dismiss": S.uploads = S.uploads.filter(x => x.key !== el.dataset.key); renderTray(); break;
+    case "cf-tab": S.cf.purpose = el.dataset.v; S.cf.aud = "all"; S.cf.res = "all"; S.cf.who = "all"; S.cf.type = "all"; render(); break;
+    case "cf-type": S.cf.type = el.dataset.v; render(); break;
+    case "cf-aud": S.cf.aud = el.dataset.v; if (el.dataset.v === "internal") S.cf.res = "all"; render(); break;
+    case "content-all": S.cf = { purpose: "all", aud: "all", res: "all", type: "all", who: id, q: "" }; closeDrawer(true); if (S.view !== "content") location.hash = "content"; else render(); break;
+    case "c-set": {
+      const c = findContent(id); const fld = el.dataset.f, v = el.dataset.v; if (!c || c[fld] === v) break;
+      const patch = { [fld]: v };
+      if (fld === "purpose" && v === "demo" && !c.audience) patch.audience = "leads";
+      await patchContent(id, patch, c.title); break;
+    }
+    case "delete-content": await deleteContent(id); break;
+    case "dl": await downloadContent(findContent(id), false); break;
+    case "dl-share": await downloadContent(findContent(id), true); break;
+    case "zoom": openZoom(id); break;
+    case "zoom-close": if (e.target.closest(".lb-img img")) break; S.zoom = null; renderLightbox(); break;
+    case "zoom-step": zoomStep(+el.dataset.d); break;
+    case "c-posted": el.classList.add("on"); await setPosted(id, true); break;
+    case "c-unposted": await setPosted(id, false); break;
+    case "ics": { const c = findContent(id); if (c && c.postDate) downloadIcs(c); break; }
+    case "notif-on": {
+      if (!("Notification" in window)) break;
+      await ensureSW();
+      const r = await Notification.requestPermission();
+      if (r === "granted") notify(t("notifTestT"), t("notifTestB"), "hm-test");
+      render(); if (S.drawer) renderDrawer(false); break;
+    }
+    case "lead-won": await setStage(id, "client"); break;
+    case "lead-reopen": await setStage(id, "discussion"); break;
+    case "copy-link": {
+      try { await navigator.clipboard.writeText(el.dataset.text); toast(t("linkCopied")); }
+      catch (err) { window.prompt(t("copyLink"), el.dataset.text); }
+      break;
+    }
     case "delete-work": await deleteWork(id); break;
     case "delete-pay": await deletePayment(id); break;
     case "delete-sub": await deleteSub(id); break;
@@ -2299,6 +3074,7 @@ document.addEventListener("keydown", e => {
     else if (e.key === "Backspace") { S.login.pin = S.login.pin.slice(0, -1); render(); }
     return;
   }
+  if (S.zoom) { if (e.key === "Escape") { S.zoom = null; renderLightbox(); } else if (e.key === "ArrowRight" || e.key === "ArrowLeft") zoomStep((e.key === "ArrowRight") === (LANG !== "ar") ? 1 : -1); return; }
   if (e.key === "Escape" && S.drawer) { closeDrawer(); return; }
   if ((e.key === "Enter" || e.key === " ") && e.target.matches('[role="button"][data-action]')) { e.preventDefault(); e.target.click(); }
 });
@@ -2310,6 +3086,8 @@ document.addEventListener("input", e => {
   if (x.dataset.sub) subFormSync(x);
   if (x.dataset.filter === "q") { S.tf.q = x.value; schedule(); }
   if (x.dataset.lfilter === "q") { S.lf.q = x.value; schedule(); }
+  if (x.dataset.cfilter === "q") { S.cf.q = x.value; schedule(); }
+  if (x.dataset.up && S.up && (x.tagName === "TEXTAREA" || ["text", "date", "time"].includes(x.type))) S.up[x.dataset.up] = x.value;
 });
 function subFormSync(x) {
   if (x.dataset.sub === "tool") { S.drafts["sf-tool"] = x.value; const w = document.getElementById("sf-other-wrap"); if (w) w.hidden = x.value !== "other"; if (x.value === "other") { const n = document.getElementById("sf-name"); if (n) n.focus(); } }
@@ -2326,6 +3104,15 @@ document.addEventListener("change", async e => {
   if (x.dataset.afilter) { S.af[x.dataset.afilter] = x.value; render(); return; }
   if (x.dataset.lfilter && x.dataset.lfilter !== "q") { S.lf[x.dataset.lfilter] = x.value; render(); return; }
   if (x.dataset.pfilter) { S.pf[x.dataset.pfilter] = x.value; render(); return; }
+  if (x.dataset.cfilter && x.dataset.cfilter !== "q") { S.cf[x.dataset.cfilter] = x.value; render(); return; }
+  if (x.hasAttribute("data-upfiles")) { addPicked(x.files); x.value = ""; return; }
+  if (x.hasAttribute("data-uplead")) { if (S.up) S.up.leadIds = Array.from(document.querySelectorAll("#drawer-root input[data-uplead]:checked")).map(i => i.value); return; }
+  if (x.dataset.up) { if (!S.up) return; S.up[x.dataset.up] = x.value; if (x.type === "radio" || x.tagName === "SELECT") renderUpload(x.id); return; }
+  if (x.dataset.clead) {
+    const c = findContent(x.dataset.clead); if (!c) return;
+    const ids = Array.from(document.querySelectorAll(`#drawer-root input[data-clead="${c.id}"]:checked`)).map(i => i.value);
+    await patchContent(c.id, { leadIds: ids }, c.title); schedule(); return;
+  }
   const field = x.dataset.field; if (!field) return;
   const val = x.value;
   if (x.dataset.task) {
@@ -2345,6 +3132,14 @@ document.addEventListener("change", async e => {
       if (act) logAct("task", act[0], act[1], tk.id);
     }
     schedule();
+  } else if (x.dataset.content) {
+    const c = findContent(x.dataset.content); if (!c) return;
+    if (field === "title" && !val.trim()) { x.value = c.title; delete S.drafts[x.id]; return; }
+    if ((c[field] || "") === val) { delete S.drafts[x.id]; return; }
+    const patch = { [field]: field === "title" ? val.trim() : val };
+    if (field === "clientId") patch.clientName = val ? leadName(findLead(val)) : "";
+    await patchContent(c.id, patch, field === "title" ? val.trim() : c.title);
+    delete S.drafts[x.id]; schedule();
   } else if (x.dataset.lead) {
     const lead = findLead(x.dataset.lead); if (!lead) return;
     if ((lead[field] || "") === val) { delete S.drafts[x.id]; return; }
@@ -2362,6 +3157,7 @@ document.addEventListener("submit", async e => {
     if (kind === "fb-login") { await fbSignIn((fd.get("username") || "").toString(), (fd.get("password") || "").toString()); return; }
     if (kind === "fb-create") { await fbCreate((fd.get("username") || "").toString(), (fd.get("password") || "").toString(), (fd.get("password2") || "").toString()); return; }
     if (kind === "target") { await setWeeklyTarget(g("target")); return; }
+    if (kind === "upload") { await startUploads(); return; }
     if (kind === "work") {
       const cid = f.dataset.id; const vals = { date: g("date"), note: g("note"), link: g("link") }; CT_KEYS.forEach(k => vals[k] = g(k));
       if (await addWork(cid, vals)) { Object.keys(S.drafts).forEach(k => { if (k.endsWith("-" + cid) && /^(ws-|wd-|wl-|wn-)/.test(k)) delete S.drafts[k]; }); f.reset(); f.querySelectorAll("output").forEach(o => { o.textContent = "0"; o.classList.remove("on"); }); const dd = f.querySelector('input[type="date"]'); if (dd) dd.value = todayStr(); }
@@ -2422,6 +3218,20 @@ document.addEventListener("drop", async e => {
   if (dragKind === "task") await setStatus(id, col.dataset.drop); else await setStage(id, col.dataset.ldrop);
 });
 
+/* Drop files onto the Content page or the upload form */
+const hasFiles = e => { try { return Array.from(e.dataTransfer.types || []).includes("Files"); } catch (x) { return false; } };
+const fileDropOk = () => S.me && (S.view === "content" || (S.drawer && S.drawer.type === "upload"));
+document.addEventListener("dragover", e => { if (!hasFiles(e) || !fileDropOk()) return; e.preventDefault(); try { e.dataTransfer.dropEffect = "copy"; } catch (x) {} document.body.classList.add("filedrag"); });
+document.addEventListener("dragleave", e => { if (!e.relatedTarget) document.body.classList.remove("filedrag"); });
+document.addEventListener("drop", e => {
+  document.body.classList.remove("filedrag");
+  if (!hasFiles(e) || !fileDropOk()) return; e.preventDefault();
+  const files = e.dataTransfer.files; if (!files || !files.length) return;
+  if (!(S.drawer && S.drawer.type === "upload")) { openUpload({}); if (!S.up) return; }
+  addPicked(files);
+});
+document.addEventListener("error", e => { const v = e.target; if (v && v.matches && v.matches("video[data-keep]")) { const cv = v.closest(".cv"); if (cv) cv.classList.add("failed"); } }, true);
+
 /* ---------- Boot ---------- */
 function subscribe() {
   const db = S.db;
@@ -2450,12 +3260,13 @@ function subscribe() {
   keep(db.collection("payments").onSnapshot(snap => { S.payments = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); schedule(); }, fail("payments")));
   keep(db.collection("clientwork").onSnapshot(snap => { S.work = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); schedule(); }, fail("clientwork")));
   keep(db.doc("settings/general").onSnapshot(d => { S.settings = (d && d.exists) ? (d.data() || {}) : {}; schedule(); }, () => {}) || (() => {}));
+  keep(db.collection("content").onSnapshot(snap => { S.content = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); done("content")(snap); schedule(); setTimeout(checkReminders, 500); }, fail("content")));
   keep(db.collection("portfolio").onSnapshot(snap => { S.portfolio = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); done("portfolio")(snap); schedule(); }, fail("portfolio")));
   keep(db.collection("activity").orderBy("at", "desc").limit(300).onSnapshot(snap => { S.activity = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); done("activity")(snap); schedule(); }, fail("activity")));
 }
 function stopData() {
   S.unsubs.forEach(u => { try { u(); } catch (e) {} }); S.unsubs = [];
-  S.dataErr = null; S.slow = false; S.tasks = []; S.leads = []; S.portfolio = []; S.activity = []; S.subs = []; S.payments = []; S.work = []; S.settings = {}; S.loaded = { seats: S.loaded.seats, members: S.loaded.members }; S.subscribed = false;
+  S.dataErr = null; S.slow = false; S.tasks = []; S.leads = []; S.portfolio = []; S.activity = []; S.subs = []; S.payments = []; S.work = []; S.content = []; S.settings = {}; S.loaded = { seats: S.loaded.seats, members: S.loaded.members }; S.subscribed = false;
 }
 
 /* ---------- Firebase mode (any device, outside claude.ai) ---------- */
@@ -2512,9 +3323,12 @@ async function bootFirebase(cfg) {
   S.mode = "firebase";
   const base = "https://www.gstatic.com/firebasejs/10.12.2/";
   try {
-    if (!window.firebase) { await loadScript(base + "firebase-app-compat.js"); await Promise.all([loadScript(base + "firebase-auth-compat.js"), loadScript(base + "firebase-firestore-compat.js")]); }
+    if (!window.firebase) { await loadScript(base + "firebase-app-compat.js"); await Promise.all([loadScript(base + "firebase-auth-compat.js"), loadScript(base + "firebase-firestore-compat.js"), loadScript(base + "firebase-storage-compat.js").catch(() => null)]); }
+    else if (!firebase.storage) await loadScript(base + "firebase-storage-compat.js").catch(() => null);
     if (!firebase.apps.length) firebase.initializeApp(cfg.firebase);
   } catch (e) { S.dbState = "failed"; render(); return; }
+  // File storage for the Content page. If it can't load, the rest of the portal still works.
+  try { S.storage = firebase.storage && cfg.firebase.storageBucket ? firebase.storage() : null; } catch (e) { S.storage = null; }
   const fdb = firebase.firestore();
   try { await fdb.enablePersistence({ synchronizeTabs: true }); } catch (e) {}
   S.db = fdb; S.auth = firebase.auth(); S.dbState = "ready"; S.loaded.members = true; S.seats = {};
@@ -2531,6 +3345,7 @@ async function bootFirebase(cfg) {
   });
 }
 async function boot() {
+  if (swOk()) ensureSW();
   const c = window.claude; const cfg = window.HM_CONFIG;
   const inArtifact = !!(c && c.use);
   if (inArtifact) {

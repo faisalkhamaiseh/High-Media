@@ -35,7 +35,8 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
-    // Everything else (tasks, leads, notes, portfolio, activity): the two of you only.
+    // Everything else (tasks, leads, notes, portfolio, content, activity): the two of you only.
+    // The files themselves live in Cloud Storage and are protected by storage.rules.
     match /{collection}/{document=**} {
       allow read, write: if collection != 'members' && collection != 'seats' && isTeam();
     }
