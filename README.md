@@ -13,7 +13,7 @@ Team work-management portal for HIGH MEDIA (Faisal & Abdulrahman): websites, onl
 - Task categories include Carousel and Stories, each with a standard checklist
 - Tools & finance: tool subscriptions that turn red when they expire (with renew), subscription history, client payments, revenue by client, monthly net profit and a 6-month revenue vs spending chart (amounts in JOD)
 - Weekly target on the overview (default 100 tasks, editable) with pace and each partner's share
-- Content library: upload and download images, Reels, videos and other files. Each file is marked as a client's content or as a demo — for specific leads (or any lead) or for internal use. Type is detected automatically (portrait videos become Reels) and can be changed. Every file shows a preview (image, or a frame from the video with its length), plays in the portal, and images open full size with previous / next. Filter by purpose, type, client, lead or demo result; each client and lead profile shows its own files
+- Content library: upload and download images, Reels, videos and other files. Each file is marked as a client's content (or HIGH MEDIA's own content, for our pages) or as a demo — for specific leads (or any lead) or for internal use. Type is detected automatically (portrait videos become Reels) and can be changed. Every file shows a preview (image, or a frame from the video with its length), plays in the portal, and images open full size with previous / next. Filter by purpose, type, client, lead or demo result; each client and lead profile shows its own files
   - **Posting schedule & reminders:** give client content a post date (and time, optional) and "what to post" (caption, hashtags, where). On the day, the portal reminds you which client it's for and what to post — inside the portal, as a notification on each device where you turned reminders on, and in your phone's calendar if you tap *Add to calendar*. Mark each post as posted; missed posts show as late. The schedule is on the Overview and the Content page, with a badge on Content
   - **Demo results:** on a demo made for leads, mark each lead *Converted to client* or *Lost* (with the reason), or reopen it. This updates the lead itself on Leads & clients
   - **Download on any device** with the original file name (Arabic names too); on phones, *Save / Share* saves to Photos or sends to WhatsApp
@@ -50,7 +50,7 @@ The Content page keeps files in **Cloud Storage for Firebase**. Everything else 
 2. **Create the storage.** *Build → Storage → Get started* → choose a location (pick `US-CENTRAL1`, `US-EAST1` or `US-WEST1` to stay within the no-cost allowance) → *Start in production mode*.
 3. **Paste the storage rules.** Storage → *Rules* → delete everything → paste the contents of `storage.rules` → *Publish*. When Firebase asks to let Storage read Firestore, click *Grant* (the rules use it to check that you're one of the two team accounts).
 
-Uploads are limited to 500 MB per file. Big reels upload with a progress bar; keep the page open until they finish.
+If Storage isn't set up yet, the upload form says so straight away (it no longer waits). Uploads are limited to 500 MB per file. Big reels upload with a progress bar; keep the page open until they finish.
 **Copy link** on a file gives a private link you can send to a client or lead (for example on WhatsApp). Anyone with that link can view the file, so only share it with the person it's for. Deleting the file in the portal stops the link working.
 
 ### Reminders on each device

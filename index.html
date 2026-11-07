@@ -987,6 +987,9 @@ en: {
   resAll: "All results", resOpen: "Waiting", resWon: "Converted", saveShare: "Save / Share", shareTapAgain: "Ready. Tap “Save / Share” again.", viewFull: "View full size",
   prevItem: "Previous", nextItem: "Next",
   upPacking: "Compressing…", fStored: "Stored as", storedNote: "{size} · compressed, {p}% smaller", storedRaw: "{size} · already compact (photo and video formats are compressed by design), stored as is",
+  ourCompany: "HIGH MEDIA (our company)", ourCompanyShort: "HIGH MEDIA",
+  stNotReady: "File storage isn't reachable, so files can't be uploaded yet. If you haven't yet: Firebase → Build → Storage → “Get started” (needs the Blaze plan), then publish storage.rules. Otherwise check your connection.",
+  stChecking: "Checking file storage…", upStalled: "No progress yet — checking the connection to file storage…",
   csumSaved: " · {size} saved by compression", packNote: "Files are compressed without any loss when that saves space, and restored to the exact original when downloaded."
 },
 ar: {
@@ -1178,6 +1181,9 @@ ar: {
   resAll: "كل النتائج", resOpen: "بالانتظار", resWon: "تحوّل لعميل", saveShare: "حفظ / مشاركة", shareTapAgain: "جاهز. اضغط «حفظ / مشاركة» مرة أخرى.", viewFull: "عرض بالحجم الكامل",
   prevItem: "السابق", nextItem: "التالي",
   upPacking: "جارٍ الضغط…", fStored: "المساحة المخزّنة", storedNote: "{size} · مضغوط، أصغر بنسبة {p}%", storedRaw: "{size} · حجمه مضغوط أصلًا (صيغ الصور والفيديو مضغوطة بطبيعتها)، خُزّن كما هو",
+  ourCompany: "HIGH MEDIA (شركتنا)", ourCompanyShort: "HIGH MEDIA",
+  stNotReady: "تعذّر الوصول إلى تخزين الملفات، لذلك لا يمكن رفع الملفات بعد. إن لم تفعل ذلك بعد: Firebase ← Build ← Storage ← «Get started» (يحتاج خطة Blaze)، ثم انشر storage.rules. وإلا فتحقق من اتصالك.",
+  stChecking: "جارٍ التحقق من تخزين الملفات…", upStalled: "لا تقدّم بعد — جارٍ التحقق من الاتصال بتخزين الملفات…",
   csumSaved: " · وُفّر {size} بالضغط", packNote: "تُضغط الملفات دون أي فقدان في الجودة عندما يوفّر ذلك مساحة، وتعود إلى نسختها الأصلية تمامًا عند التنزيل."
 }};
 function t(k, p) {
@@ -2261,6 +2267,7 @@ async function unpackIfNeeded(c, b) {
 const ctypeL = k => t("ct2_" + (CTYPES.includes(k) ? k : "file"));
 const isVid = c => c.type === "reel" || c.type === "video";
 const findContent = id => S.content.find(x => x.id === id);
+const COMPANY = "_company"; // content for our own company (HIGH MEDIA's own pages)
 // Who a file belongs to, by its current purpose (fields from an earlier purpose are kept so switching back restores them, but don't count).
 const linkedIds = c => c.purpose === "client" ? (c.clientId ? [c.clientId] : []) : c.audience === "internal" ? [] : (c.leadIds || []);
 const contentFor = id => S.content.filter(c => linkedIds(c).includes(id));
@@ -2269,7 +2276,7 @@ const stemOf = n => String(n || "").replace(/\.[a-z0-9]{1,6}$/i, "").replace(/[_
 function fmtSize(b) { b = +b || 0; const u = ["B","KB","MB","GB"]; let i = 0; while (b >= 1024 && i < 3) { b /= 1024; i++; } return "\u2066" + (i ? b.toFixed(b < 10 ? 1 : 0) : Math.round(b)) + " " + u[i] + "\u2069"; }
 function fmtDur(s) { s = Math.round(+s || 0); return Math.floor(s / 60) + ":" + pad(s % 60); }
 function contentDest(c) {
-  if (c.purpose === "client") { const l = findLead(c.clientId); return { cls: "for-client", text: l ? leadName(l) : (c.clientName || t("noClient")) }; }
+  if (c.purpose === "client") { if (c.clientId === COMPANY) return { cls: "for-internal", text: t("ourCompanyShort") }; const l = findLead(c.clientId); return { cls: "for-client", text: l ? leadName(l) : (c.clientName || t("noClient")) }; }
   if (c.audience === "internal") return { cls: "for-internal", text: t("demoInternal") };
   const ids = (c.leadIds || []).filter(findLead);
   return { cls: "for-leads", text: ids.length === 1 ? t("demoFor", { name: leadName(findLead(ids[0])) }) : ids.length ? t("demoForN", { n: ids.length }) : t("demoAnyLead") };
@@ -2293,6 +2300,7 @@ function stErr(e) {
   if (c.includes("unauthorized") || c.includes("permission")) return t("eStUnauthorized");
   if (c.includes("bucket-not-found") || c.includes("project-not-found") || (c.includes("unknown") && /404|not found/i.test(msg))) return t("eStMissing");
   if (c.includes("quota")) return t("eStQuota");
+  if (c.includes("not-ready")) return t("stNotReady");
   if (c.includes("retry-limit") || c.includes("network") || c.includes("unavailable")) return t("eStNet");
   return t("eStOther", { err: esc(c || msg || "error") });
 }
@@ -2347,7 +2355,7 @@ function renderTray() {
     const st = j.state === "uploading" ? pct + "%" : t({ queued: "upQueued", packing: "upPacking", saving: "upSaving", done: "upDone", canceled: "upCanceled" }[j.state] || "upFailed");
     const btn = j.state === "queued" || j.state === "packing" || j.state === "uploading" ? `<button class="x" data-action="up-cancel" data-key="${j.key}" aria-label="${t("cancelUpload")}">${ic("x")}</button>`
       : j.state === "error" ? `<button class="x" data-action="up-dismiss" data-key="${j.key}" aria-label="${t("dismiss")}">${ic("x")}</button>` : "";
-    return `<div class="upj ${j.state}"><span class="nm" dir="auto">${esc(j.file.name)}</span><span class="st"><span id="ups-${j.key}">${st}</span>${btn}</span><span class="bar"><span id="upb-${j.key}" style="width:${j.state === "done" ? 100 : pct}%"></span></span>${j.err ? `<small>${j.err}</small>` : ""}</div>`;
+    return `<div class="upj ${j.state}"><span class="nm" dir="auto">${esc(j.file.name)}</span><span class="st"><span id="ups-${j.key}">${st}</span>${btn}</span><span class="bar"><span id="upb-${j.key}" style="width:${j.state === "done" ? 100 : pct}%"></span></span>${j.err ? `<small>${j.err}</small>` : j.hint ? `<small style="color:var(--muted)">${j.hint}</small>` : ""}</div>`;
   }).join("")}</div>`;
 }
 function trayProgress(j) {
@@ -2367,7 +2375,9 @@ async function runUpload(job) {
   job.state = "uploading"; renderTray();
   const task = st.ref(path).put(body, meta);
   job.task = task;
-  await new Promise((res, rej) => task.on("state_changed", s => { job.pct = s.totalBytes ? s.bytesTransferred / s.totalBytes : 0; trayProgress(job); }, rej, res));
+  const stall = setTimeout(() => { if (!job.pct && job.state === "uploading") { job.hint = t("upStalled"); renderTray(); } }, 20000);
+  try { await new Promise((res, rej) => task.on("state_changed", s => { job.pct = s.totalBytes ? s.bytesTransferred / s.totalBytes : 0; if (job.pct && job.hint) { job.hint = ""; renderTray(); } trayProgress(job); }, rej, res)); }
+  finally { clearTimeout(stall); job.hint = ""; }
   job.state = "saving"; renderTray();
   const url = await task.snapshot.ref.getDownloadURL();
   let thumbPath = "", thumbUrl = "";
@@ -2376,9 +2386,10 @@ async function runUpload(job) {
     catch (e) { thumbPath = ""; thumbUrl = ""; }
   }
   const lead = c.purpose === "client" ? findLead(c.clientId) : null; const at = now();
+  const cname = c.purpose === "client" && c.clientId === COMPANY ? "HIGH MEDIA" : lead ? leadName(lead) : "";
   const doc = {
     title: job.title, note: c.note || "", type: job.type, purpose: c.purpose,
-    clientId: c.purpose === "client" ? c.clientId : "", clientName: lead ? leadName(lead) : "",
+    clientId: c.purpose === "client" ? c.clientId : "", clientName: cname,
     audience: c.purpose === "demo" ? c.audience : "", leadIds: c.purpose === "demo" && c.audience === "leads" ? c.leadIds.slice() : [],
     postDate: c.purpose === "client" ? (c.postDate || "") : "", postTime: c.purpose === "client" && c.postDate ? (c.postTime || "") : "",
     caption: c.purpose === "client" ? (c.caption || "") : "", postedAt: null, postedBy: null,
@@ -2390,10 +2401,24 @@ async function runUpload(job) {
   catch (e) { st.ref(path).delete().catch(() => {}); if (thumbPath) st.ref(thumbPath).delete().catch(() => {}); throw e; }
   logAct("content", "content_added", Object.assign({ title: doc.title }, destParams(doc)), id);
 }
+let stReady = null, stCheckP = null;
+function storageCheck() {
+  if (stReady === true) return Promise.resolve(true);
+  if (stCheckP) return stCheckP;
+  stCheckP = S.storage.ref("content/_check/_none").getMetadata().then(() => true, e => {
+    const c = String((e && e.code) || "");
+    if (c.includes("object-not-found")) return true;          // reachable and allowed: the bucket answered
+    throw (c.includes("unauthorized") ? e : { code: "storage/not-ready" });
+  }).then(v => { stReady = true; S.stIssue = ""; return v; }, e => { stReady = false; S.stIssue = String(e.code || "").includes("unauthorized") ? t("eStUnauthorized") : t("stNotReady"); throw e; })
+    .finally(() => { stCheckP = null; schedule(); if (S.drawer && S.drawer.type === "upload") renderUpload(); });
+  return stCheckP;
+}
 let pumping = false;
 async function pumpUploads() {
   if (pumping) return; pumping = true; let ok = 0;
   try {
+    try { await storageCheck(); }
+    catch (e) { S.uploads.filter(j => j.state === "queued").forEach(j => { j.state = "error"; j.err = S.stIssue; }); renderTray(); return; }
     for (;;) {
       const job = S.uploads.find(j => j.state === "queued"); if (!job) break;
       try { await runUpload(job); job.state = "done"; job.pct = 1; ok++; }
@@ -2420,6 +2445,7 @@ function openUpload(pre) {
   const asClient = !!(l && (pre.client || l.stage === "client"));
   S.up = { files: [], purpose: l ? (asClient ? "client" : "demo") : "client", clientId: asClient ? l.id : "", audience: "leads", leadIds: l && !asClient ? [l.id] : [], type: "auto", title: "", note: "", postDate: "", postTime: "", caption: "" };
   openDrawer("upload");
+  storageCheck().catch(() => {});
 }
 function renderUpload(focusId) {
   if (!S.drawer || S.drawer.type !== "upload") return;
@@ -2440,6 +2466,7 @@ async function startUploads() {
   const U = S.up; if (!U) return;
   if (!U.files.length) { toast(t("needFiles"), "bad"); return; }
   if (U.purpose === "client" && !U.clientId) { toast(t("needClientC"), "bad"); return; }
+  if (stReady === false) { try { await storageCheck(); } catch (e) { toast(S.stIssue, "bad"); return; } }
   const big = U.files.find(x => x.f.size > MAX_UP); if (big) { toast(esc(t("tooBig", { name: big.f.name })), "bad"); return; }
   if (!S.storage || !S.db) { toast(t("storageOnlyFb"), "bad"); return; }
   await Promise.all(U.files.map(x => x.pending));
@@ -2476,7 +2503,7 @@ async function deleteContent(id) {
 /* Content: shared pieces */
 function contentClientOptions(sel) {
   const ls = S.leads.filter(l => l.stage !== "lost").sort((a, b) => (b.stage === "client") - (a.stage === "client") || leadName(a).localeCompare(leadName(b)));
-  return `<option value="">${t("chooseClientC")}</option>` + ls.map(l => `<option value="${l.id}" ${sel === l.id ? "selected" : ""}>${esc(leadName(l))}${l.stage !== "client" ? " " + t("leadTag") : ""}</option>`).join("");
+  return `<option value="">${t("chooseClientC")}</option><option value="${COMPANY}" ${sel === COMPANY ? "selected" : ""}>${t("ourCompany")}</option>` + ls.map(l => `<option value="${l.id}" ${sel === l.id ? "selected" : ""}>${esc(leadName(l))}${l.stage !== "client" ? " " + t("leadTag") : ""}</option>`).join("");
 }
 function leadPicker(sel, attr, idp) {
   const ls = S.leads.filter(l => l.stage !== "lost" || (sel || []).includes(l.id)).sort((a, b) => (a.stage === "client") - (b.stage === "client") || leadName(a).localeCompare(leadName(b)));
@@ -2508,7 +2535,7 @@ function postState(c) {
   if (c.postDate === td) return { k: "today", cls: "st-closing", text: c.postTime ? t("postTodayAt", { time: c.postTime }) : t("postToday") };
   return { k: "soon", cls: "st-potential", text: t("postOn", { d: fmtDM(dateMs(c.postDate)) }) + (c.postTime ? " · " + c.postTime : "") };
 }
-const clientOf = c => { const l = findLead(c.clientId); return l ? leadName(l) : (c.clientName || ""); };
+const clientOf = c => { if (c.clientId === COMPANY) return t("ourCompanyShort"); const l = findLead(c.clientId); return l ? leadName(l) : (c.clientName || ""); };
 function reminderText(c) {
   return { title: t("remTitle", { name: clientOf(c) }), body: `${ctypeL(c.type)}: ${c.title}${c.postTime ? " · " + c.postTime : ""}${c.caption ? "\n" + c.caption.slice(0, 200) : ""}` };
 }
@@ -2676,10 +2703,11 @@ function renderContent() {
     return `<button class="fchip ${f.type === k ? "on" : ""}" data-action="cf-type" data-v="${k}">${k !== "all" ? `<span class="dot" style="background:${CT2_COLOR[k]}"></span>` : ""}${k === "all" ? t("allTypes") : t("ctp_" + k)}<em>${n}</em></button>`; }).join("")}</div>`;
   const aud = f.purpose === "demo" ? `<div class="seg" role="group">${["all", "leads", "internal"].map(k => `<button class="${f.aud === k ? "on" : ""}" data-action="cf-aud" data-v="${k}">${t(k === "all" ? "audAll" : "aud_" + k)}</button>`).join("")}</div>`
     + (f.aud !== "internal" ? `<select class="sel" id="cf-res" data-cfilter="res" aria-label="${t("leadStatusH")}">${[["all", "resAll"], ["open", "resOpen"], ["won", "resWon"], ["lost", "resLost"]].map(([k, l]) => `<option value="${k}" ${f.res === k ? "selected" : ""}>${t(l)}</option>`).join("")}</select>` : "") : "";
-  const ids = []; pool.forEach(c => linkedIds(c).forEach(id => { if (id && findLead(id) && !ids.includes(id)) ids.push(id); }));
-  if (f.who !== "all" && !ids.includes(f.who) && findLead(f.who)) ids.push(f.who);
-  ids.sort((a, b) => leadName(findLead(a)).localeCompare(leadName(findLead(b))));
-  const who = ids.length ? `<select class="sel" id="cf-who" data-cfilter="who" aria-label="${t("client")}"><option value="all">${t("allPeople")}</option>${ids.map(id => `<option value="${id}" ${f.who === id ? "selected" : ""}>${esc(leadName(findLead(id)))}</option>`).join("")}</select>` : "";
+  const ids = []; pool.forEach(c => linkedIds(c).forEach(id => { if (id && (findLead(id) || id === COMPANY) && !ids.includes(id)) ids.push(id); }));
+  if (f.who !== "all" && !ids.includes(f.who) && (findLead(f.who) || f.who === COMPANY)) ids.push(f.who);
+  const whoName = id => id === COMPANY ? t("ourCompany") : leadName(findLead(id));
+  ids.sort((a, b) => (b === COMPANY) - (a === COMPANY) || whoName(a).localeCompare(whoName(b)));
+  const who = ids.length ? `<select class="sel" id="cf-who" data-cfilter="who" aria-label="${t("client")}"><option value="all">${t("allPeople")}</option>${ids.map(id => `<option value="${id}" ${f.who === id ? "selected" : ""}>${esc(whoName(id))}</option>`).join("")}</select>` : "";
   const filters = `<div class="filters">${aud}${who}<label class="search">${ic("search")}<input class="inp" id="cf-q" data-cfilter="q" placeholder="${t("searchContent")}" value="${esc(f.q)}" aria-label="${t("searchContent")}"></label></div>`;
   const list = contentFiltered().sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
   let body;
@@ -2742,6 +2770,7 @@ function uploadForm() {
     : `<div class="fld"><span class="lbl">${t("demoAudience")}</span>${choice("audience", [["leads", "aud_leads", "audLeadsSub"], ["internal", "aud_internal", "audInternalSub"]])}</div>
       ${U.audience === "leads" ? `<div class="fld"><span class="lbl">${t("pickLeads")}</span>${leadPicker(U.leadIds, "data-uplead", "upl")}<small class="lp-sub" style="font-size:12px">${t("pickLeadsHint")}</small></div>` : ""}`;
   const body = `<form class="sec" data-form="upload" style="gap:18px">
+    ${stReady === false && S.stIssue ? `<div class="banner" role="alert">${S.stIssue}</div>` : ""}
     <label class="dz" for="up-files">${ic("upload")}<b>${t("dropHere")}</b><small>${t("dropSub")}</small><small>${t("packNote")}</small></label>
     <input type="file" id="up-files" multiple hidden data-upfiles>
     ${n ? `<div class="sec" style="gap:8px"><div class="sec-h"><h3>${t("chosenN", { n })}</h3></div><div class="pfiles">${files}</div></div>` : ""}
@@ -3137,7 +3166,7 @@ document.addEventListener("change", async e => {
     if (field === "title" && !val.trim()) { x.value = c.title; delete S.drafts[x.id]; return; }
     if ((c[field] || "") === val) { delete S.drafts[x.id]; return; }
     const patch = { [field]: field === "title" ? val.trim() : val };
-    if (field === "clientId") patch.clientName = val ? leadName(findLead(val)) : "";
+    if (field === "clientId") patch.clientName = val === COMPANY ? "HIGH MEDIA" : val ? leadName(findLead(val)) : "";
     await patchContent(c.id, patch, field === "title" ? val.trim() : c.title);
     delete S.drafts[x.id]; schedule();
   } else if (x.dataset.lead) {
@@ -3328,7 +3357,11 @@ async function bootFirebase(cfg) {
     if (!firebase.apps.length) firebase.initializeApp(cfg.firebase);
   } catch (e) { S.dbState = "failed"; render(); return; }
   // File storage for the Content page. If it can't load, the rest of the portal still works.
-  try { S.storage = firebase.storage && cfg.firebase.storageBucket ? firebase.storage() : null; } catch (e) { S.storage = null; }
+  try {
+    S.storage = firebase.storage && cfg.firebase.storageBucket ? firebase.storage() : null;
+    // The SDK retries silently for up to 10 minutes by default (e.g. when Storage isn't set up); fail fast and say why instead.
+    if (S.storage) { S.storage.setMaxOperationRetryTime(15000); S.storage.setMaxUploadRetryTime(60000); }
+  } catch (e) { S.storage = null; }
   const fdb = firebase.firestore();
   try { await fdb.enablePersistence({ synchronizeTabs: true }); } catch (e) {}
   S.db = fdb; S.auth = firebase.auth(); S.dbState = "ready"; S.loaded.members = true; S.seats = {};
